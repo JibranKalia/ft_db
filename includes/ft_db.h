@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/19 18:12:23 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/19 22:11:19 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@
 #include <stdbool.h>
 #include <libft.h>
 #define DB_NAME_BUFF 50
+#include <fcntl.h>
 
 void	db_create();
+void	db_load();
+void	table_create(char *st);
 
 #endif
