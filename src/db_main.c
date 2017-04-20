@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_db.h                                            :+:      :+:    :+:   */
+/*   db_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/19 17:34:15 by aakin-al         ###   ########.fr       */
+/*   Created: 2017/04/19 15:36:35 by aakin-al          #+#    #+#             */
+/*   Updated: 2017/04/19 17:54:51 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_DB_H
-# define FT_DB_H
+#include "ft_db.h"
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "libft/libft.h"
-#define BUFF_SIZE 50
+int main(void)
+{
+	int		ret;
 
-void	create_db();
-
-#endif
+	printf("Enter number to select option\n1.\tCreate New DB\n2.\tLoad Existing DB\n3.\tExit.\n");
+	scanf("%d", &ret);
+	if (ret == 1)
+		create_db();
+	return (0);
+}
