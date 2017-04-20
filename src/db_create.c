@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:53:25 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/19 18:11:16 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/19 18:12:04 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void			db_create(void)
 	else
 	{
 		printf("DB already exists with same name\n");
-		create_db();
+		db_create();
 	}
 }
 

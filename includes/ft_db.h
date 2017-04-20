@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/19 18:05:27 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/19 18:12:23 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@
 #include <libft.h>
 #define DB_NAME_BUFF 50
 
-void	create_db();
+void	db_create();
 
 #endif
