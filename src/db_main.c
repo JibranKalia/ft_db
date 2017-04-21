@@ -6,11 +6,11 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:36:35 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/19 21:53:08 by aakin-al         ###   ########.fr       */
+/*   Updated: 2017/04/21 13:47:00 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_db.h"
+#include <ft_db.h>
 
 void	start()
 {
@@ -31,8 +31,21 @@ void	start()
 	}
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
-	start();
-	return (0);
+	t_hashtable *hash;
+
+	hash = ht_create(65536);
+
+	ht_set(hash, "key1", "inky");
+	ht_set(hash, "key2", "pinky");
+	ht_set(hash, "key3", "blinky");
+	ht_set(hash, "key4", "floyd");
+
+	printf("%s\n", ht_get(hash, "key1"));
+	printf("%s\n", ht_get(hash, "key2"));
+	printf("%s\n", ht_get(hash, "key3"));
+	printf("%s\n", ht_get(hash, "key4"));
+
+	return 0;
 }
