@@ -6,9 +6,15 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:57:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/21 14:06:16 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/21 14:21:42 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+** Simple Hash C implementation
+** Copyright (c) 2012 Tony Thompson
+** <tony@thompson.name>
+*/
 
 #include <ft_db.h>
 
@@ -25,12 +31,9 @@ t_hashtable	*ht_create(int size)
 
 	i = 0;
 	hashtable = NULL;
-	if (size < 1)
-		return (NULL);
-	if ((hashtable = malloc(sizeof(t_hashtable))) == NULL)
-		return (NULL);
-	if ((hashtable->table = malloc(sizeof(t_entry*) * size)) == NULL)
-		return (NULL);
+	CHK(size < 1, NULL);
+	CHK((hashtable = ft_memalloc(sizeof(t_hashtable))) == NULL, NULL);
+	CHK1((hashtable->table = ft_memalloc(sizeof(t_entry*) * size)) == NULL, free(hashtable), NULL)
 	while (i < size)
 	{
 		hashtable->table[i] = NULL;
@@ -51,6 +54,7 @@ int			ht_hash(t_hashtable *hashtable, char *key)
 	int					i;
 
 	i = 0;
+	hashval = 0;
 	while (hashval < ULONG_MAX && i < strlen(key))
 	{
 		hashval = hashval << 8;
@@ -64,7 +68,7 @@ int			ht_hash(t_hashtable *hashtable, char *key)
 ** Create a key-value pair
 */
 
-t_entry		*ht_newpair(char *key, char *value)
+t_entry		*ht_newpair(char *key, void *value, int size)
 {
 	t_entry *newpair;
 
@@ -72,8 +76,8 @@ t_entry		*ht_newpair(char *key, char *value)
 		return (NULL);
 	if ((newpair->key = strdup(key)) == NULL)
 		return (NULL);
-	if ((newpair->value = strdup(value)) == NULL)
-		return (NULL);
+	CHK((newpair->value = ft_memalloc(size)) == NULL, NULL)
+	memcpy(newpair->value, value, size);
 	newpair->next = NULL;
 	return (newpair);
 }
@@ -87,7 +91,7 @@ t_entry		*ht_newpair(char *key, char *value)
 ** Middle of linked list (line 104)
 */
 
-void		ht_set(t_hashtable *hashtable, char *key, char *value)
+void		ht_set(t_hashtable *hashtable, char *key, void *value, int size)
 {
 	int		bin;
 	t_entry	*newpair;
@@ -104,11 +108,12 @@ void		ht_set(t_hashtable *hashtable, char *key, char *value)
 	if (next != NULL && next->key != NULL && strcmp(key, next->key) == 0)
 	{
 		free(next->value);
-		next->value = strdup(value);
+		next->value = ft_memalloc(size);
+		memcpy(next->value, value, size);
 	}
 	else
 	{
-		newpair = ht_newpair(key, value);
+		newpair = ht_newpair(key, value, size);
 		if (next == hashtable->table[bin])
 		{
 			newpair->next = next;
