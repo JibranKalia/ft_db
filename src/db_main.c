@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 19:56:09 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/21 23:08:44 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/21 23:25:43 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*db_read_line(void)
 	line = NULL;
 	getline(&line, &bufsize, stdin);
 	i = strlen(line) - 1;
+	line[i] = 0;
 	while (i > 0 && isspace(line[i]))
 	{
 		line[i] = 0;
@@ -92,7 +93,7 @@ void	db_loop(void)
 
 int		main(int argc, char **argv)
 {
-	ht_test();
+//	ht_test();
 	db_load();
 	db_loop();
 }
