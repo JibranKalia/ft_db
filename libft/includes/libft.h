@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 16:58:42 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/21 22:36:56 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/22 13:11:50 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@
 # define ISXDIGIT(a) (ISDIGIT(a)|| (a >= 65 && a <= 70) || (a >= 97 && a <= 102)
 # define TOLOWER(a) (a >= 'A' && a <= 'Z' ? a + 32 : a)
 # define TOUPPER(a) (a >= 'a' && a <= 'z' ? a - 32 : a)
+# define STRJOIN_FREE_SRC1 1
+# define STRJOIN_FREE_SRC2 2
+# define STRJOIN_FREE_BOTH 3
 
 /*
 ** Ctype
@@ -114,8 +117,7 @@ char				*ft_strmap(char const *src, char (*f)(char));
 char				*ft_strmapi(char const *src, char (*f)(unsigned int, char));
 char				*ft_strsub(char const *src, unsigned int start, size_t len);
 char				*ft_strjoin(char const *src1, char const *src2);
-char				*ft_strnjoinf(char *s1, size_t l1,
-		char const *s2, size_t l2);
+char				*ft_strjoinf(char *s1, char *s2, int d);
 char				*ft_strtrim(char const *src);
 char				**ft_strsplit(const char *src, char c);
 int					ft_countwords(char const *src, char c);
