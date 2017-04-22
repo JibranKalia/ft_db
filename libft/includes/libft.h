@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 16:58:42 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/17 11:55:19 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/21 22:32:00 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ char				*ft_strnjoinf(char *s1, size_t l1,
 		char const *s2, size_t l2);
 char				*ft_strtrim(char const *src);
 char				**ft_strsplit(const char *src, char c);
+int					ft_countwords(char const *src, char c);
 
 /*
 ** Mem

@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strclr.c                                        :+:      :+:    :+:   */
+/*   ft_countwords.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/03 17:44:19 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/21 22:15:43 by jkalia           ###   ########.fr       */
+/*   Created: 2017/04/21 22:29:24 by jkalia            #+#    #+#             */
+/*   Updated: 2017/04/21 22:30:52 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-void	ft_strclr(char *src)
+int		ft_countwords(char const *src, char c)
 {
-	if (!src)
-		return ;
+	int		i;
+	int		wrd_flag;
+
+	wrd_flag = 0;
+	i = 0;
 	while (*src)
 	{
-		*src = 0;
-		src++;
+		if (*src == c)
+			wrd_flag = 0;
+		else
+		{
+			if (wrd_flag == 0)
+				++i;
+			wrd_flag = 1;
+		}
+		++src;
 	}
-	src = NULL;
+	return (i);
 }

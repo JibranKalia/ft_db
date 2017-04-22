@@ -6,35 +6,11 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 17:26:38 by jkalia            #+#    #+#             */
-/*   Updated: 2017/03/12 10:44:16 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/21 22:30:54 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
-#include <stdlib.h>
-#include <stdio.h>
-
-static int	num_block(char const *src, char c)
-{
-	int		i;
-	int		wrd_flag;
-
-	wrd_flag = 0;
-	i = 0;
-	while (*src)
-	{
-		if (*src == c)
-			wrd_flag = 0;
-		else
-		{
-			if (wrd_flag == 0)
-				++i;
-			wrd_flag = 1;
-		}
-		++src;
-	}
-	return (i);
-}
 
 static char	*each_block(char const *src, char c)
 {
@@ -66,7 +42,7 @@ char		**ft_strsplit(char const *src, char c)
 	CHK(src == NULL, 0);
 	i = 0;
 	wrd_flag = 0;
-	num_b = num_block(src, c);
+	num_b = ft_countwords(src, c);
 	CHK((ret = (char**)ft_memalloc(sizeof(char*) * (num_b + 1))) == 0, 0);
 	while (*src)
 	{
