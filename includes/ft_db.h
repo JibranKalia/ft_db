@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/21 21:25:24 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/21 22:22:36 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <stdint.h>
 # include <string.h>
 # define DB_NAME_BUFF 50
+# define PROTO_FUNC_NUM (4)
 
 void				db_create();
 void				db_load();
@@ -44,11 +45,18 @@ typedef struct		s_hashtable
 	t_entry			**table;
 }					t_hashtable;
 
+typedef struct		s_client
+{
+	int				argc;
+	char			*line;
+	char			**args;
+}					t_client;
+
 t_hashtable			*ht_create(int size);
 char				*ht_get(t_hashtable *hashtable, char *key);
 void				ht_set(t_hashtable *hashtable, char *key, void *value, int size);
-int					db_set(char **args);
-int					db_get(char **args);
-int					db_delete(char **args);
-int					db_exit(char **args);
+int					db_set(t_client *client);
+int					db_get(t_client *client);
+int					db_delete(t_client *client);
+int					db_exit(t_client *client);
 #endif

@@ -6,13 +6,11 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 19:56:09 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/21 21:39:40 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/21 22:48:55 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
-
-#define PROTO_FUNC_NUM (4)
 
 char	*g_db_strtable[] =
 {
@@ -22,7 +20,7 @@ char	*g_db_strtable[] =
 	"EXIT"
 };
 
-int		(*g_db_functable[]) (char **) =
+int		(*g_db_functable[]) (t_client *) =
 {
 	&db_set,
 	&db_get,
@@ -30,56 +28,65 @@ int		(*g_db_functable[]) (char **) =
 	&db_exit
 };
 
+/*
+** Deletes Trailing Whitespace
+*/
+
 char	*db_read_line(void)
 {
 	char		*line;
 	size_t		bufsize;
+	int			i;
 
 	bufsize = 0;
 	line = NULL;
 	getline(&line, &bufsize, stdin);
+	i = strlen(line) - 1;
+	while (i > 0 && isspace(line[i]))
+	{
+		line[i] = 0;
+		--i;
+	}
 	return (line);
 }
 
-char	**db_split_line(char *line)
+void	db_split_line(t_client *client)
 {
-	char	**args;
-
-	args = ft_strsplit(line, ' ');
-	return (args);
+	client->argc = ft_countwords(client->line, ' ');
+	client->args = ft_strsplit(client->line, ' ');
+	return ;
 }
 
-int		db_execute(char **args)
+int		db_execute(t_client *client)
 {
 	int i;
 
 	i = 0;
-	if (args[0] == NULL)
-		return (-1);
+	if (client->args[0] == NULL)
+		return (0);
 	while (i < PROTO_FUNC_NUM)
 	{
-		if (strncmp(args[0], g_db_strtable[i], strlen(g_db_strtable[i])) == 0)
-			return (*g_db_functable[i])(args);
+		if (strncmp(client->args[0], g_db_strtable[i], strlen(g_db_strtable[i])) == 0)
+			return (*g_db_functable[i])(client);
 		++i;
 	}
 	printf("Command Not Recognized\n");
-	return (-1);
+	return (0);
 }
 
 void	db_loop(void)
 {
-	char	*line;
-	char	**args;
-	int		status;
+	t_client	*client;
 
+	client = (t_client *)ft_memalloc(sizeof(t_client));
 	while (1)
 	{
 		printf("> ");
-		line = db_read_line();
-		args = db_split_line(line);
-		free(line);
-		status = db_execute(args);
-		ft_tbldel(args);
+		client->line = db_read_line();
+		db_split_line(client);
+		db_execute(client);
+		ft_strclr(client->line);
+		ft_tbldel(client->args);
 	}
 }
 
