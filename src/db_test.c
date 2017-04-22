@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:36:35 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/21 19:55:58 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/21 23:06:20 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,69 +17,13 @@ static int tests = 0, fails = 0;
 #define expect(_s, _c) { test(_s); test_cond(_c); }
 
 
-struct gvtData {
-        char version[7];      /* protocol version */
-        char imei[16];        /* device IMEI */
-        char name[16];        /* device name */
-        char RS;              /* GPRS real-time/stored data flag */
-        char date[7];         /* date */
-        char time[7];         /* time */
-        char fixable;         /* GPS fixed flag */
-
-        char latitude[11];    /* latitude */
-        char NS;              /* north or south */
-        char longitude[13];   /* longitude */
-        char WE;              /* west or east? */
-
-        char usedBds[3];      /* used satellite number of BDS */
-        char usedGps[3];      /* used satellite number of GPS */
-        char usedGlonass[3];  /* used satellite number of GLONASS */
-
-        float hdop;           /* HDOP */
-        float speed;          /* speed */
-        float course;         /* course */
-        float altitude;       /* altitude */
-        float mileage;        /* mileage */
-
-        char mcc[4];          /* Mobile country code. */
-        char mnc[3];          /* Mobile network code. */
-        char lac[5];          /* Location area code */
-        char cellId[5];       /* Cell ID */
-        char gsmSignal;       /* GSM signal strength */
-        char digitalInFlags;  /* digital input */
-        char digitalOutFlags; /* digital output */
-        short analog1;        /* analog input 1 */
-        short analog2;        /* analog input 2 */
-        short analog3;        /* analog input 3 */
-        float temperature1;   /* temperature sensor 1 */
-        float temperature2;   /* temperature sensor 2 */
-        /* char rfid;         /\* (reserved) RFID *\/ */
-        /* char external;     /\* (reserved) external accessories status *\/ */
-        char battery;         /* battery level */
-        char alert[25];       /* alert event type */
+typedef struct	teststruct {
+	char strtest[16];        /* device strtest */
+	float floattest;          /* floattest */
         /* char checksum;     /\* (reserved) checksum *\/ */
-};
+}				t_test;
 
-void	start()
-{
-	int		ret;
-
-	printf("Enter number to select option\n1.\tCreate New DB\n2.\tLoad Existing DB\n3.\tExit.\n");
-	scanf("%d", &ret);
-	if (ret == 1)
-		db_create();
-	else if (ret == 2)
-		db_load();
-	else if (ret == 3)
-		exit(1);
-	else
-	{
-		printf("Enter a number between 1 and 3\n");
-		start();
-	}
-}
-
-void test_hashtable()
+void	ht_test()
 {
         struct hashtable *ht = ht_create(65536);
 
@@ -125,46 +69,40 @@ void test_hashtable()
         expect("hash key7 is 52", *ht_get(ht, "key7") == 52);
         expect("hash key8 is 53", *ht_get(ht, "key8") == 53);
 
-        struct gvtData *data;
-        struct gvtData gvtData;
+        t_test *data;
+        t_test teststruct;
 
-        strcpy(gvtData.imei, "IMEI");
-        gvtData.speed = 500.f;
-        ht_set(ht, "key9", &gvtData, sizeof(gvtData));
+        strcpy(teststruct.strtest, "strtest");
+        teststruct.floattest = 500.f;
+        ht_set(ht, "key9", &teststruct, sizeof(teststruct));
 
-        strcpy(gvtData.imei, "imei");
-        gvtData.speed = 1000.f;
-        ht_set(ht, "key10", &gvtData, sizeof(gvtData));
+        strcpy(teststruct.strtest, "strtest");
+        teststruct.floattest = 1000.f;
+        ht_set(ht, "key10", &teststruct, sizeof(teststruct));
 
-        data = (struct gvtData*)ht_get(ht, "key9");
-        expect("hash key9 imei is IMEI", strcmp(data->imei, "IMEI") == 0);
-        expect("hash key9 speed is 500.f", data->speed == 500.f);
+        data = (struct teststruct*)ht_get(ht, "key9");
+        expect("hash key9 strtest is strtest", strcmp(data->strtest, "strtest") == 0);
+        expect("hash key9 floattest is 500.f", data->floattest == 500.f);
 
-        data = (struct gvtData*)ht_get(ht, "key10");
-        expect("hash key10 imei is imei", strcmp(data->imei, "imei") == 0);
-        expect("hash key10 speed is 1000.f", data->speed == 1000.f);
+        data = (struct teststruct*)ht_get(ht, "key10");
+        expect("hash key10 strtest is strtest", strcmp(data->strtest, "strtest") == 0);
+        expect("hash key10 floattest is 1000.f", data->floattest == 1000.f);
 
-        strcpy(gvtData.imei, "new-IMEI");
-        gvtData.speed = 5000.f;
-        ht_set(ht, "key9", &gvtData, sizeof(gvtData));
+        strcpy(teststruct.strtest, "new-strtest");
+        teststruct.floattest = 5000.f;
+        ht_set(ht, "key9", &teststruct, sizeof(teststruct));
 
-        strcpy(gvtData.imei, "new-imei");
-        gvtData.speed = 10000.f;
-        ht_set(ht, "key10", &gvtData, sizeof(gvtData));
+        strcpy(teststruct.strtest, "new-strtest");
+        teststruct.floattest = 10000.f;
+        ht_set(ht, "key10", &teststruct, sizeof(teststruct));
 
-        data = (struct gvtData*)ht_get(ht, "key9");
-        expect("hash key9 imei is new-IMEI", strcmp(data->imei, "new-IMEI") == 0);
-        expect("hash key9 speed is 5000.f", data->speed == 5000.f);
+        data = (struct teststruct*)ht_get(ht, "key9");
+        expect("hash key9 strtest is new-strtest", strcmp(data->strtest, "new-strtest") == 0);
+        expect("hash key9 floattest is 5000.f", data->floattest == 5000.f);
 
-        data = (struct gvtData*)ht_get(ht, "key10");
-        expect("hash key10 imei is new-imei", strcmp(data->imei, "new-imei") == 0);
-        expect("hash key10 speed is 10000.f", data->speed == 10000.f);
-}
-
-int main(int argc, char **argv)
-{
-        test_hashtable();
+        data = (struct teststruct*)ht_get(ht, "key10");
+        expect("hash key10 strtest is new-strtest", strcmp(data->strtest, "new-strtest") == 0);
+        expect("hash key10 floattest is 10000.f", data->floattest == 10000.f);
 
         printf("Tests: %d, F: %d\n", tests, fails);
-        return 0;
 }

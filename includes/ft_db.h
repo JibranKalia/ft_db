@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/21 22:22:36 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/21 23:06:45 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct		s_client
 t_hashtable			*ht_create(int size);
 char				*ht_get(t_hashtable *hashtable, char *key);
 void				ht_set(t_hashtable *hashtable, char *key, void *value, int size);
+void 				ht_test();
 int					db_set(t_client *client);
 int					db_get(t_client *client);
 int					db_delete(t_client *client);

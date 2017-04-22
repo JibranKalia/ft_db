@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/04/21 21:28:38 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/04/21 23:06:32 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LDFLAGS		:= -L libft/ -lft
 
 LIBFT		:= libft/libft.a
 
-FILES		:= db_main db_create db_hash db_func
+FILES		:= db_main db_create db_hash db_func db_test
 
 SRC		:= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ		:= $(SRC:.c=.o)
