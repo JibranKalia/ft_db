@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:53:25 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/19 23:52:38 by aakin-al         ###   ########.fr       */
+/*   Updated: 2017/04/21 22:57:39 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,10 @@ void			table_create(char *path)
 }
 void			db_load()
 {
-	//
+	char	*path;
+
+	path = "./.DBFILES";
+	if (stat(path, &st) == -1)
+		if (mkdir(path, 0777) == -1)
+			perror("ERROR: ");
 }

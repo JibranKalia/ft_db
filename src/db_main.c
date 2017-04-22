@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 19:56:09 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/21 22:48:55 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/21 22:56:32 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ void	db_loop(void)
 
 int		main(int argc, char **argv)
 {
+	db_load();
 	db_loop();
 }
