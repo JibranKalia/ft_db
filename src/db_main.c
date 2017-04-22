@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 19:56:09 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/21 23:25:43 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/22 13:01:22 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,21 @@
 
 char	*g_db_strtable[] =
 {
+	"LOAD",
 	"SET",
 	"GET",
 	"DELETE",
-	"EXIT"
+	"EXIT",
+	"exit"
 };
 
 int		(*g_db_functable[]) (t_client *) =
 {
+	&db_load,
 	&db_set,
 	&db_get,
 	&db_delete,
+	&db_exit,
 	&db_exit
 };
 
@@ -75,11 +79,17 @@ int		db_execute(t_client *client)
 	return (0);
 }
 
-void	db_loop(void)
+t_client *db_client_init(void)
 {
 	t_client	*client;
 
 	client = (t_client *)ft_memalloc(sizeof(t_client));
+	client->flag_db_load = false;
+	return (client);
+}
+
+void	db_loop(t_client *client)
+{
 	while (1)
 	{
 		printf("> ");
@@ -93,7 +103,10 @@ void	db_loop(void)
 
 int		main(int argc, char **argv)
 {
+	t_client	*client;
+	
 //	ht_test();
-	db_load();
-	db_loop();
+	client = db_client_init();
+	db_init(client);
+	db_loop(client);
 }
