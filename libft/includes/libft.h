@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 16:58:42 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/21 22:32:00 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/21 22:36:56 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,14 +177,14 @@ int					get_next_line(const int fd, char **line);
 ** PRINTF
 */
 
-int		ft_printf(const char *in, ...);
-int		ft_dprintf(int fd, const char *in, ...);
-int		ft_sprintf(char *ret, const char *fmt, ...);
-int		ft_snprintf(char *ret, size_t size, const char *fmt, ...);
-int		ft_asprintf(char **ret, const char *fmt, ...);
-int		ft_vprintf(const char *fmt, va_list ap);
-int		ft_vsprintf(char *ret, const char *fmt, va_list ap);
-int		ft_vdprintf(int fd, const char *fmt, va_list ap);
-int		ft_vasprintf(char **ret, const char *fmt, va_list ap);
+int					ft_printf(const char *in, ...);
+int					ft_dprintf(int fd, const char *in, ...);
+int					ft_sprintf(char *ret, const char *fmt, ...);
+int					ft_snprintf(char *ret, size_t size, const char *fmt, ...);
+int					ft_asprintf(char **ret, const char *fmt, ...);
+int					ft_vprintf(const char *fmt, va_list ap);
+int					ft_vsprintf(char *ret, const char *fmt, va_list ap);
+int					ft_vdprintf(int fd, const char *fmt, va_list ap);
+int					ft_vasprintf(char **ret, const char *fmt, va_list ap);
 
 #endif
