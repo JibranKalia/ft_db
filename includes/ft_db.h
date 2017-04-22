@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/21 14:22:30 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/21 21:25:24 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,8 @@ typedef struct		s_hashtable
 t_hashtable			*ht_create(int size);
 char				*ht_get(t_hashtable *hashtable, char *key);
 void				ht_set(t_hashtable *hashtable, char *key, void *value, int size);
+int					db_set(char **args);
+int					db_get(char **args);
+int					db_delete(char **args);
+int					db_exit(char **args);
 #endif
