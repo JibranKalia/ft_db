@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:51:30 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/22 21:56:53 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/22 22:39:38 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int		db_get(t_client *client)
 {
 	CHK1(client->flag_db_load == false, db_msg(MSG_DB_MISSING), 0);
 	CHK1(client->argc != 2, printf("usage: GET key\n"), 0);
-	client->argc[1] = key;
 	printf("DB_GET Num of Args: %d\n", client->argc);
 	return (1);
 }
