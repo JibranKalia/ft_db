@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/22 13:01:13 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/22 17:41:20 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 # define DB_NAME_BUFF 50
 # define PROTO_FUNC_NUM 6
 
-
 typedef struct		s_entry
 {
 	char			*key;
@@ -49,20 +48,46 @@ typedef struct		s_client
 	char			*line;
 	char			**args;
 	bool			flag_db_load;
+	bool			flag_tbl_load;
 	char			*dbpath;
+	char			*tblpath;
+	char			*logpath;
 }					t_client;
+
+/*
+** INIT
+*/
+
+void				db_init();
+t_client			*db_client_init(void);
+void				db_client_clean(t_client *client);
+
+/*
+** DISPATCH
+*/
+
+int					db_load(t_client *client);
+int					db_set(t_client *client);
+int					db_get(t_client *client);
+int					db_delete(t_client *client);
+int					db_exit(t_client *client);
+int					db_exitclear(t_client *client);
+void				db_loop(t_client *client);
+
+/*
+** HASHTABLE
+*/
 
 t_hashtable			*ht_create(int size);
 char				*ht_get(t_hashtable *hashtable, char *key);
 void				ht_set(t_hashtable *hashtable, char *key, void *value, int size);
 void 				ht_test();
 
-void				table_create(char *st);
-void				db_init();
-void				db_create();
-int					db_load(t_client *client);
-int					db_set(t_client *client);
-int					db_get(t_client *client);
-int					db_delete(t_client *client);
-int					db_exit(t_client *client);
+/*
+** MESSAGE
+*/
+
+#define MSG_DB_MISSING 1
+void	db_msg(int code);
+
 #endif
