@@ -12,7 +12,6 @@ uint32_t	db_gethash(t_client *client, const char *key)
 	uint32_t	hash;
 
 	seed = 12345678;
-	printf("Seg Here\n");
 	hash = db_murmurhash(key, (uint32_t)strlen(key), seed);
 	return (hash % client->hashsize);
 }
