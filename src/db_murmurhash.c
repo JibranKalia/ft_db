@@ -6,7 +6,18 @@
 
 #include <ft_db.h>
 
-uint32_t murmurhash (const char *key, uint32_t len, uint32_t seed)
+uint32_t	db_gethash(t_client *client, const char *key)
+{
+	uint32_t	seed;
+	uint32_t	hash;
+
+	seed = 12345678;
+	printf("Seg Here\n");
+	hash = db_murmurhash(key, (uint32_t)strlen(key), seed);
+	return (hash % client->hashsize);
+}
+
+uint32_t	db_murmurhash(const char *key, uint32_t len, uint32_t seed)
 {
 	uint32_t c1 = 0xcc9e2d51;
 	uint32_t c2 = 0x1b873593;

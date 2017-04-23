@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:53:25 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/22 17:52:17 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/22 21:08:29 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int				db_load(t_client *client)
 		else
 			perror("MKDIR ERROR");
 	}
+	else
+		client->flag_tbl_load = true;
 	client->logpath = ft_strjoin(client->tblpath, "log");
 	if (stat(client->logpath, &st) == -1)
 		if (open(client->logpath, O_CREAT) == -1)

@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:57:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/22 20:39:15 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/22 21:00:04 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,8 @@ t_hashtable	*ht_create(int size)
 
 /*
 ** Hash a string for specific hash table
-** Conver string to integer (line 39)
 */
 
-int			ht_hash(t_hashtable *hashtable, char *key)
-{
-	uint32_t	seed;
-	uint32_t	hashval;
-	
-	seed = 12345678;
-	hashval = murmurhash(key, (uint32_t)strlen(key), seed);
-	printf("%d\n", hashtable->size);
-	return (hashval % hashtable->size);
-}
 
 /*
 ** Create a key-value pair

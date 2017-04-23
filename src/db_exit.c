@@ -6,32 +6,18 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 21:24:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/22 20:36:10 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/22 21:06:17 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
 
-
 void	db_msg(int code)
 {
 	if (code == 1)
 		printf("Error: Database not found. Use: LOAD --database database_name\n");
-}
-
-int		db_set(t_client *client)
-{
-	CHK1(client->flag_db_load == false, db_msg(MSG_DB_MISSING), 0);
-	CHK1(client->argc != 3, printf("usage: SET KEY VALUE\n"), 0);
-	return (1);
-}
-
-int		db_get(t_client *client)
-{
-	CHK1(client->flag_db_load == false, db_msg(MSG_DB_MISSING), 0);
-	CHK1(client->argc != 2, printf("usage: GET KEY\n"), 0);
-	printf("DB_GET Num of Args: %d\n", client->argc);
-	return (1);
+	else if (code == 2)
+		printf("Error: Table not found. Use: LOAD --table table_name\n");
 }
 
 int		db_deletetbl(t_client *client)

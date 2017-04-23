@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 16:19:31 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/22 16:46:37 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/22 21:17:25 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int		db_dispatch(t_client *client)
 	in = client->args[0];
 	while (i < PROTO_FUNC_NUM)
 	{
-		if (strncmp(in, g_db_strtable[i], strlen(in)) == 0)
+		if (strncasecmp(in, g_db_strtable[i], strlen(in)) == 0)
 			return (*g_db_functable[i])(client);
 		++i;
 	}

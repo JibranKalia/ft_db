@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/22 20:36:50 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/22 21:13:31 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <stdint.h>
 # include <string.h>
 # include <stdbool.h>
+# define PROTO_HASH_SIZE 10000000
 # define DB_NAME_BUFF 50
 # define PROTO_FUNC_NUM 6
 
@@ -52,6 +53,7 @@ typedef struct		s_client
 	char			*dbpath;
 	char			*tblpath;
 	char			*logpath;
+	size_t			hashsize;
 }					t_client;
 
 /*
@@ -78,12 +80,13 @@ void				db_loop(t_client *client);
 ** HASHTABLE
 */
 
-uint32_t 			murmurhash(const char *key,
-		uint32_t len, uint32_t seed);
-
+uint32_t			db_murmurhash(const char *key, uint32_t len, uint32_t seed);
+uint32_t			db_gethash(t_client *client, const char *key);
+/**
 t_hashtable			*ht_create(int size);
 char				*ht_get(t_hashtable *hashtable, char *key);
 void				ht_set(t_hashtable *hashtable, char *key, void *value, int size);
+**/
 void 				ht_test();
 
 /*
@@ -91,6 +94,7 @@ void 				ht_test();
 */
 
 #define MSG_DB_MISSING 1
-void	db_msg(int code);
+#define MSG_TBL_MISSING 2
+void				db_msg(int code);
 
 #endif
