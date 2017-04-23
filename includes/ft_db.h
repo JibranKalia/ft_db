@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/22 17:41:20 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/22 20:36:50 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ void				db_loop(t_client *client);
 /*
 ** HASHTABLE
 */
+
+uint32_t 			murmurhash(const char *key,
+		uint32_t len, uint32_t seed);
 
 t_hashtable			*ht_create(int size);
 char				*ht_get(t_hashtable *hashtable, char *key);
