@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 21:24:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/22 17:51:23 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/22 17:56:02 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		db_deletedb(t_client *client)
 	char	*buf;
 
 	buf = ft_strjoin("rm -rf ", client->dbpath);
-	printf("Delete Command: %s\n", buf);
+	printf("Delete Database: %s\n", buf);
 	system(buf);
 	return (0);
 }
@@ -56,14 +56,13 @@ int		db_delete(t_client *client)
 	CHK1(client->argc < 2, printf("usage: DELETE [--database || --table || --record]\n"), 0);
 	if (strcmp(client->args[1], "--database") == 0)
 		return (db_deletedb(client));
-	printf("DB_DELETE Num of Args: %d\n", client->argc);
 	return (1);
 }
 
 int		db_exit(t_client *client)
 {
 	CHK1(client->argc != 1, printf("usage: EXIT\n"), 0);
-	printf("DB_EXIT Num of Args: %d\n", client->argc);
+	printf("Goodbye!");
 	db_client_clean(client);
 	free(client);
 	client = NULL;
