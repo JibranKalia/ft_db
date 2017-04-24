@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 16:19:31 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/22 21:17:25 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/23 23:05:09 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static char		*g_db_strtable[] =
 	"GET",
 	"DELETE",
 	"EXIT",
-	"exit"
+	"HELP",
+	"CLEAR"
 };
 
 static int		(*g_db_functable[]) (t_client *) =
@@ -29,12 +30,27 @@ static int		(*g_db_functable[]) (t_client *) =
 	&db_get,
 	&db_delete,
 	&db_exit,
-	&db_exit
+	&db_help,
+	&db_clear
 };
 
 /*
 ** Deletes Trailing Whitespace
 */
+
+int				db_help(t_client *client)
+{
+	(void)client;
+	db_msg(MSG_HELP);
+	return (0);
+}
+
+int				db_clear(t_client *client)
+{
+	if (strncasecmp(client->args[0], "clear", 5) == 0)
+		system(client->args[0]);
+	return (0);
+}
 
 static char		*db_read_line(void)
 {

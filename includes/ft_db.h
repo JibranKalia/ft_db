@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/23 22:00:25 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/23 23:03:54 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <stdbool.h>
 # define PROTO_HASH_SIZE 10000000
 # define DB_NAME_BUFF 50
-# define PROTO_FUNC_NUM 6
+# define PROTO_FUNC_NUM 7
 
 typedef struct		s_entry
 {
@@ -69,6 +69,8 @@ void				db_client_clean(t_client *client);
 */
 
 int					db_load(t_client *client);
+int					db_clear(t_client *client);
+int					db_help(t_client *client);
 int					db_set(t_client *client);
 int					db_get(t_client *client);
 int					db_delete(t_client *client);
@@ -93,8 +95,10 @@ void 				ht_test();
 ** MESSAGE
 */
 
-#define MSG_DB_MISSING 1
-#define MSG_TBL_MISSING 2
+#define MSG_WELCOME 1
+#define MSG_HELP 2
+#define MSG_DB_MISSING 3
+#define MSG_TBL_MISSING 4
 #define MSG_DELETE_USAGE 5
 #define MSG_DELETE_USAGE2 6
 
