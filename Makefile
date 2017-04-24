@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/04/22 21:20:24 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/04/23 21:10:03 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LDFLAGS		:= -L libft/ -lft
 
 LIBFT		:= libft/libft.a
 
-FILES		:= db_main db_dispatch db_exit db_init db_set db_load db_murmurhash
+FILES		:= db_main db_dispatch db_delete db_error db_init db_set db_load db_murmurhash
 
 SRC		:= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ		:= $(SRC:.c=.o)
@@ -46,7 +46,7 @@ clean:
 fclean: clean
 	@make -C libft fclean
 	@rm -rf $(NAME)
-	@rm -rf database
+	@rm -rf database db
 	@echo "\033[32mRemoved Executable\033[0m"
 
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/22 21:13:31 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/23 22:00:25 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void				db_loop(t_client *client);
 */
 
 uint32_t			db_murmurhash(const char *key, uint32_t len, uint32_t seed);
-uint32_t			db_gethash(t_client *client, const char *key);
+char*				db_gethash(t_client *client, const char *key);
 /**
 t_hashtable			*ht_create(int size);
 char				*ht_get(t_hashtable *hashtable, char *key);
@@ -95,6 +95,9 @@ void 				ht_test();
 
 #define MSG_DB_MISSING 1
 #define MSG_TBL_MISSING 2
-void				db_msg(int code);
+#define MSG_DELETE_USAGE 5
+#define MSG_DELETE_USAGE2 6
+
+int				db_msg(int code);
 
 #endif
