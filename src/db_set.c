@@ -6,13 +6,13 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:51:30 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/23 23:09:15 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/23 23:15:54 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
 
-int		db_set(t_client *client)
+int			db_set(t_client *client)
 {
 	char		*hash;
 	char		*filename;
@@ -32,26 +32,19 @@ int		db_set(t_client *client)
 	return (0);
 }
 
-/**
- * Use Hash to create file
- * Write Value onto file
- * Close file
- * add hash to log file. (log file not yet)
-**/
-
-int		db_get_print(FILE *fp, size_t size, t_client *client)
+static int	db_get_print(FILE *fp, size_t size)
 {
 	char	*buf;
 
 	buf = (char *)malloc(size);
 	bzero(buf, size);
 	CHK2(fgets(buf, size, fp) == NULL, free(buf), perror("FGETS ERROR"), -1);
-	printf("Record Value: %s\n", buf);
+	printf("Record Value:\n%s\n", buf);
 	free(buf);
 	return (0);
 }
 
-int		db_get(t_client *client)
+int			db_get(t_client *client)
 {
 	char		*filename;
 	FILE		*fp;
@@ -66,16 +59,8 @@ int		db_get(t_client *client)
 	CHK2(((fp = fopen(filename, "r")) == NULL), free(filename), perror("FOPEN ERROR"), -1);
 	fd = fileno(fp);
 	CHK2(fstat(fd, &st) == -1, free(filename), perror("FSTAT ERROR"), -1);
-	db_get_print(fp, st.st_size * 2, client);
+	db_get_print(fp, st.st_size * 2);
 	CHK2(fclose(fp) == EOF, free(filename), perror("FCLOSE ERROR"), -1);
 	free(filename);
 	return (0);
 }
-
-/*
- * Ignore LOG file.
- * man opendir()
- * Find the file.
- * Open file / Read. Put it to output.
- * Close file.
-**/

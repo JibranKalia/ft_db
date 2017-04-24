@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:53:25 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/23 20:29:02 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/23 23:17:12 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	db_loaddb(t_client *client)
 
 static int	db_loadtbl(t_client *client)
 {
-	struct stat	st = {0};
+	struct stat	st;
 
 	printf("Table Path = %s\n", client->tblpath);
 	if (mkdir(client->tblpath, 0777) == -1)
@@ -45,7 +45,7 @@ static int	db_loadtbl(t_client *client)
 		client->flag_tbl_load = true;
 	client->logpath = ft_strjoin(client->tblpath, "/");
 	client->logpath = ft_strjoinf(client->logpath, "log", STRJOIN_FREE_SRC1);
-	printf("Log Path = %s\n", client->logpath);
+	//printf("Log Path = %s\n", client->logpath);
 	if (stat(client->logpath, &st) == -1)
 		if (open(client->logpath, O_CREAT) == -1)
 			perror("OPEN ERROR");

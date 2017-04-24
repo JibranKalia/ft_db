@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/23 20:39:36 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/23 23:08:36 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/23 23:18:40 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ int	db_msg(int code)
 				"Step 3: Save Record. Use: SET Key Value\n"
 				"Step 4: Retrieve Record: Use: GET Key\n"
 				"Step 5: Delete Record. Use: DELETE --record KEY\n"
-				"Step 6: Delete Table. Use: DELETE --table\n"
-				"Step 7: Delete Database. Use: DELETE --database\n"
-				"Step 8: Exit. Use: EXIT\n"
+				"Step 6: Exit. Use: EXIT\n"
 				"**********************************************************\n");
 	}
 	else if (code == MSG_DB_MISSING)
