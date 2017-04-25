@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/04/23 23:12:41 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/04/25 14:09:27 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,11 @@ clean:
 fclean: clean
 	@make -C libft fclean
 	@rm -rf $(NAME)
-	@rm -rf database db
+	@rm -rf database db server client
 	@echo "\033[32mRemoved Executable\033[0m"
 
 re: fclean all
+
+socket:
+	@$(CC) src/db_server.c -o server
+	@$(CC) src/db_client.c -o client
