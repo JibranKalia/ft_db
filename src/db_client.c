@@ -1,7 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   db_client.c                                        :+:      :+:    :+:   */
+/*                                                        :::      ::::::::   */ /*   db_client.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -27,12 +26,12 @@ void error(char *msg)
 
 int main(int argc, char *argv[])
 {
-	int 				sockfd;
-	int					portno;
-	int					n;
+	int			sockfd;
+	int			portno;
+	int			n;
 	struct sockaddr_in	serv_addr;
 	struct hostent 		*server;
-	char 				buffer[256];
+	char			buffer[256];
 
 	if (argc < 3)
 	{
