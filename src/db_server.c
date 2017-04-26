@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/25 11:49:59 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/25 19:45:24 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/25 20:46:04 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,47 @@
 
 #include <ft_db.h>
 
-int main(int argc, char **argv)
+int		db_tcpparse(t_server *server)
+{
+	char		buffer[256];
+	int			n;
+
+	bzero(buffer, 256);
+	CHK1((n = read(server->sockfd, buffer, 255)) == -1, perror("ERROR READ"), -1);
+	printf("Here is the message: %s\n",buffer);
+	CHK1((n = write(server->sockfd,"Message Recieved", 18)) == -1, perror("ERROR WRITE"), 0);
+	server->line = strdup(buffer);
+	db_split_line(server);
+	db_dispatch(server);
+	ft_tbldel(server->args);
+	ft_strclr(server->line);
+	return (0);
+}
+
+int		db_stdinparse(t_server *server)
+{
+	db_msg(MSG_WELCOME);
+	while (1)
+	{
+		printf("> ");
+		server->line = db_read_line();
+		db_split_line(server);
+		db_dispatch(server);
+		ft_tbldel(server->args);
+		ft_strclr(server->line);
+	}
+}
+
+int		db_tcpbegin(t_server *server)
 {
 	int					pid;
 	int					sockfd;
 	int					newsockfd;
 	int					portno;
 	int					clilen;
-	t_server			*server;
 	struct sockaddr_in	serv_addr;
 	struct sockaddr_in	cli_addr;
 
-
-	CHK1((argc != 3), printf("Usage: %s --mode [stdin || tcp]", argv[0]), -1);
-	server = db_server_init();
-	db_msg(MSG_WELCOME);
 	CHK1((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1, perror("ERROR SOCKET"), -1)
 	bzero((void *)&serv_addr, sizeof(serv_addr));
 	portno = PORTNUMBER;
@@ -47,31 +73,27 @@ int main(int argc, char **argv)
 		if (pid == 0)
 		{
 			close(sockfd);
-			CHK(db_loop(server, newsockfd) == -1, -1);
+			server->sockfd = newsockfd;
+			CHK(db_tcpparse(server) == -1, -1);
 			exit(EXIT_SUCCESS);
 		}
 		else
 			close(newsockfd);
 	}
-	return (0);
 }
 
-int		db_loop(t_server *server, int sockfd)
+int main(int argc, char **argv)
 {
-	char		buffer[256];
-	int			n;
+	t_server	*server;
 
-	bzero(buffer, 256);
-	CHK1((n = read(sockfd, buffer, 255)) == -1, perror("ERROR READ"), -1);
-	printf("Here is the message: %s\n",buffer);
-	CHK1((n = write(sockfd,"I got your message",18)) == -1, perror("ERROR WRITE"), 0);
-	printf("> ");
-
-
-	server->line = db_read_line();
-	db_split_line(server);
-	db_dispatch(server);
-	ft_tbldel(server->args);
-	ft_strclr(server->line);
+	CHK1((argc != 2), printf("Usage: %s [stdin || tcp]", argv[0]), -1);
+	server = db_server_init();
+	if (strncasecmp(argv[1], "stdin", 5) == 0)
+		db_stdinparse(server);
+	else if (strncasecmp(argv[1], "tcp", 3) == 0)
+		db_tcpbegin(server);
+	else
+		printf("Usage: %s [stdin || tcp]", argv[0]);
+	db_server_clean(server);
 	return (0);
 }
