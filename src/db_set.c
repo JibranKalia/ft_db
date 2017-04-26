@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:51:30 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/23 23:15:54 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/26 04:01:33 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,21 @@ int			db_get(t_client *client)
 	CHK1(client->flag_db_load == false, db_msg(MSG_DB_MISSING), 0);
 	CHK1(client->flag_tbl_load == false, db_msg(MSG_TBL_MISSING), 0);
 	CHK1(client->argc != 2, printf("usage: GET key\n"), 0);
-	filename = ft_strjoinf("/", db_gethash(client, client->args[1]), STRJOIN_FREE_SRC2);
-	filename = ft_strjoinf(client->tblpath, filename, STRJOIN_FREE_SRC2);
-	CHK2(((fp = fopen(filename, "r")) == NULL), free(filename), perror("FOPEN ERROR"), -1);
-	fd = fileno(fp);
-	CHK2(fstat(fd, &st) == -1, free(filename), perror("FSTAT ERROR"), -1);
-	db_get_print(fp, st.st_size * 2);
-	CHK2(fclose(fp) == EOF, free(filename), perror("FCLOSE ERROR"), -1);
+	if (strncmp(client->args[1], "ALL", 3) == 0)
+	{
+		filename = ft_strjoin(client->tblpath, "/"); //FREE!!
+		db_all(filename);
+	}
+	else
+	{
+		filename = ft_strjoinf("/", db_gethash(client, client->args[1]), STRJOIN_FREE_SRC2);
+		filename = ft_strjoinf(client->tblpath, filename, STRJOIN_FREE_SRC2);
+		CHK2(((fp = fopen(filename, "r")) == NULL), free(filename), perror("FOPEN ERROR"), -1);
+		fd = fileno(fp);
+		CHK2(fstat(fd, &st) == -1, free(filename), perror("FSTAT ERROR"), -1);
+		db_get_print(fp, st.st_size * 2);
+		CHK2(fclose(fp) == EOF, free(filename), perror("FCLOSE ERROR"), -1);
+	}
 	free(filename);
 	return (0);
 }

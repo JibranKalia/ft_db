@@ -18,7 +18,7 @@ LDFLAGS		:= -L libft/ -lft
 
 LIBFT		:= libft/libft.a
 
-FILES		:= db_main db_dispatch db_delete db_error db_init db_set db_load db_murmurhash
+FILES		:= db_main db_dispatch db_delete db_error db_init db_set db_load db_murmurhash db_all
 
 SRC		:= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ		:= $(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 21:24:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/23 23:18:17 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/26 04:05:42 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		db_delete(t_client *client)
 int		db_exit(t_client *client)
 {
 	CHK1(client->argc != 1, printf("usage: EXIT\n"), 0);
-	printf("GOODBYE!");
+	printf("GOODBYE!\n");
 //	fcloseall();
 	db_client_clean(client);
 	free(client);

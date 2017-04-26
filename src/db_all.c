@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/26 03:32:24 by aakin-al         ###   ########.fr       */
+/*   Updated: 2017/04/26 04:22:18 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_list		**get_all(char *path)
 	t_list	**all;
 	t_list	*node;
 
+	all = NULL;
 	if ((dir = opendir (path)) != NULL)
 	{
 		/* print all the files and directories within directory */
@@ -27,6 +28,7 @@ t_list		**get_all(char *path)
 		{
 		    printf ("%s\n", ent->d_name);
 			node = ft_lstnew(ent->d_name, 0);
+			printf("Seg: %s\n", (char *)node->content);
 			ft_lstappend(all, node);
 		}
   		closedir (dir);
@@ -35,8 +37,9 @@ t_list		**get_all(char *path)
 	{
 	  /* could not open directory */
 	  perror ("");
-	  return EXIT_FAILURE;
+	  exit(1); //more appropriate exit required!!!
 	}
+	return (all);
 }
 
 void		db_all(char *path)
@@ -52,10 +55,14 @@ void		db_all(char *path)
 	path = ft_strjoin(path, "/");
 	while (temp)
 	{
-		t_path = ft_strjoin(path, temp->content);//free later
-		fd = open(t_path, O_RDONLY);
-		line = get_next_line(fd, &line);
-		printf("%s\n", line);
-		temp->next;
+		if (strncmp(temp->content, ".", 1) != 0)
+		{
+			t_path = ft_strjoin(path, temp->content);//free later
+			fd = open(t_path, O_RDONLY);
+			get_next_line(fd, &line);
+			printf("%s\n", line);
+		}
+		temp = temp->next;
 	}
+	close(fd);
 }
