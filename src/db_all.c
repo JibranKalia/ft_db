@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/26 14:05:33 by aakin-al         ###   ########.fr       */
+/*   Updated: 2017/04/26 14:21:16 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,33 @@ t_list		*get_all(char *path)
 	return (all);
 }
 
-void		db_all(char *path)
+int		db_all(char *path)
 {
 	t_list	*list;
 	t_list	*temp;
-	int		fp;
-	char	*t_path;
-	char	*line;
+	char		*filename;
+	FILE		*fp;
+	int 		fd;
+	struct stat	st;
 
-	printf("Path = %s\n", path);
 	list = get_all(path);
 	temp = list;
 	while (temp)
 	{
-		if (temp->content && strncmp(temp->content, ".", 1) != 0)
+		if (temp->content && strncmp(temp->content, ".", 1) != 0 )
 		{
-			t_path = ft_strjoin(path, temp->content);//free later
-			printf("%s\n", temp->content);
-			fd = open(t_path, O_RDONLY);
-			get_next_line(fd, &line);
-			printf("FILE: %s\n", line);
-			free(line);
+			filename = ft_strjoin(path, temp->content);//free later
+			CHK2(((fp = fopen(filename, "r")) == NULL), free(filename), perror("FOPEN ERROR"), -1);
+			fd = fileno(fp);
+			CHK2(fstat(fd, &st) == -1, free(filename), perror("FSTAT ERROR"), -1);
+			db_get_print(fp, st.st_size * 2);
+			CHK2(fclose(fp) == EOF, free(filename), perror("FCLOSE ERROR"), -1);
 		}
 		temp = temp->next;
 	}
-	close(fd);
+	free(list);
+	list = NULL;
+	free(temp);
+	temp = NULL;
+	return (0);
 }
