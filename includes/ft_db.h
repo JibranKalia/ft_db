@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/26 04:16:00 by aakin-al         ###   ########.fr       */
+/*   Updated: 2017/04/26 14:13:57 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int					db_delete(t_client *client);
 int					db_exit(t_client *client);
 int					db_exitclear(t_client *client);
 void				db_loop(t_client *client);
-void				db_all(char *path);
+int				db_all(char *path);
 
 /*
 ** HASHTABLE
@@ -105,4 +105,5 @@ void 				ht_test();
 
 int				db_msg(int code);
 
+int			db_get_print(FILE *fp, size_t size);
 #endif
