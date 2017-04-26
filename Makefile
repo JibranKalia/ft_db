@@ -12,7 +12,7 @@
 
 NAME		:= ftdb
 CC		:= gcc
-CFLAGS		+= -Wall -Wextra -Werror
+#CFLAGS		+= -Wall -Wextra -Werror
 CFLAGS		+= -I includes/ -I libft/includes/
 LDFLAGS		:= -L libft/ -lft
 

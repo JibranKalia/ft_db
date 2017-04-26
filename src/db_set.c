@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:51:30 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/26 04:01:33 by aakin-al         ###   ########.fr       */
+/*   Updated: 2017/04/26 14:04:05 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,11 @@ int			db_get(t_client *client)
 	int		fd;
 	struct stat	st;
 
-	CHK1(client->flag_db_load == false, db_msg(MSG_DB_MISSING), 0);
-	CHK1(client->flag_tbl_load == false, db_msg(MSG_TBL_MISSING), 0);
+	//CHK1(client->flag_db_load == false, db_msg(MSG_DB_MISSING), 0);
+	//CHK1(client->flag_tbl_load == false, db_msg(MSG_TBL_MISSING), 0);
 	CHK1(client->argc != 2, printf("usage: GET key\n"), 0);
+	client->dbpath = strdup("./db");
+	client->tblpath = strdup("./db/tbl");
 	if (strncmp(client->args[1], "ALL", 3) == 0)
 	{
 		filename = ft_strjoin(client->tblpath, "/"); //FREE!!

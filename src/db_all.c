@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/26 04:22:18 by aakin-al         ###   ########.fr       */
+/*   Updated: 2017/04/26 14:05:33 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,24 @@
 
 DIR		*dir;
 struct	dirent *ent;
-t_list		**get_all(char *path)
+t_list		*get_all(char *path)
 {
-	t_list	**all;
+	t_list	*all;
 	t_list	*node;
+	char	*tmp;
 
-	all = NULL;
-	if ((dir = opendir (path)) != NULL)
+	all = ft_lstnew(NULL, 0);
+	if ((dir = opendir(path)) != NULL)
 	{
 		/* print all the files and directories within directory */
 		while ((ent = readdir (dir)) != NULL)
 		{
-		    printf ("%s\n", ent->d_name);
-			node = ft_lstnew(ent->d_name, 0);
-			printf("Seg: %s\n", (char *)node->content);
-			ft_lstappend(all, node);
+		    //printf ("%s\n", ent->d_name);
+			tmp = strndup((char *)ent->d_name, ent->d_namlen);
+		   	node = ft_lstnew(tmp, ent->d_namlen);
+			//printf("Seg: {%s}, CS: %zu\n", (char *)node->content, node->content_size);
+			ft_lstappend(&all, node);
+			//printf("Seg Here2?\n");
 		}
   		closedir (dir);
 	} 
@@ -44,23 +47,25 @@ t_list		**get_all(char *path)
 
 void		db_all(char *path)
 {
-	t_list	**list;
+	t_list	*list;
 	t_list	*temp;
-	int		fd;
+	int		fp;
 	char	*t_path;
 	char	*line;
 
+	printf("Path = %s\n", path);
 	list = get_all(path);
-	temp = *list;
-	path = ft_strjoin(path, "/");
+	temp = list;
 	while (temp)
 	{
-		if (strncmp(temp->content, ".", 1) != 0)
+		if (temp->content && strncmp(temp->content, ".", 1) != 0)
 		{
 			t_path = ft_strjoin(path, temp->content);//free later
+			printf("%s\n", temp->content);
 			fd = open(t_path, O_RDONLY);
 			get_next_line(fd, &line);
-			printf("%s\n", line);
+			printf("FILE: %s\n", line);
+			free(line);
 		}
 		temp = temp->next;
 	}
