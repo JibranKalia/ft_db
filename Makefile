@@ -6,19 +6,19 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/04/25 14:09:27 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/04/25 19:37:54 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= ftdb
-CC		:= gcc
-CFLAGS		+= -Wall -Wextra -Werror
+CC			:= gcc
+#CFLAGS		+= -Wall -Wextra -Werror
 CFLAGS		+= -I includes/ -I libft/includes/
 LDFLAGS		:= -L libft/ -lft
 
 LIBFT		:= libft/libft.a
 
-FILES		:= db_main db_dispatch db_delete db_error db_init db_set db_load db_murmurhash
+FILES		:= db_dispatch db_delete db_error db_init db_set db_server db_load db_murmurhash
 
 SRC		:= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ		:= $(SRC:.c=.o)

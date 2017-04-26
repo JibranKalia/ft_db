@@ -12,23 +12,23 @@
 
 #include <ft_db.h>
 
-t_client	*db_client_init(void)
+t_server	*db_server_init(void)
 {
-	t_client	*client;
+	t_server	*server;
 
-	client = (t_client *)ft_memalloc(sizeof(t_client));
-	client->flag_db_load = false;
-	client->flag_tbl_load = false;
-	return (client);
+	server = (t_server *)ft_memalloc(sizeof(t_server));
+	server->flag_db_load = false;
+	server->flag_tbl_load = false;
+	return (server);
 }
 
-void		db_client_clean(t_client *client)
+void		db_server_clean(t_server *server)
 {
-	if (client == 0)
+	if (server == 0)
 		return ;
-	if (client->args)
-		ft_tbldel(client->args);
-	ft_strclr(client->line);
-	ft_strclr(client->dbpath);
-	ft_strclr(client->logpath);
+	if (server->args)
+		ft_tbldel(server->args);
+	ft_strclr(server->line);
+	ft_strclr(server->dbpath);
+	ft_strclr(server->logpath);
 }

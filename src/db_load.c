@@ -12,66 +12,66 @@
 
 #include "ft_db.h"
 
-static int	db_loaddb(t_client *client)
+static int	db_loaddb(t_server *server)
 {
-	if (client->dbpath == NULL)
-		client->dbpath = strdup("./DBFILES");
-	printf("Database Path = %s\n", client->dbpath);
-	if (mkdir(client->dbpath, 0777) == -1)
+	if (server->dbpath == NULL)
+		server->dbpath = strdup("./DBFILES");
+	printf("Database Path = %s\n", server->dbpath);
+	if (mkdir(server->dbpath, 0777) == -1)
 	{
 		if (errno == EEXIST)
-			client->flag_db_load = true;
+			server->flag_db_load = true;
 		else
 			perror("MKDIR ERROR");
 	}
 	else
-		client->flag_db_load = true;
+		server->flag_db_load = true;
 	return (0);
 }
 
-static int	db_loadtbl(t_client *client)
+static int	db_loadtbl(t_server *server)
 {
 	struct stat	st;
 
-	printf("Table Path = %s\n", client->tblpath);
-	if (mkdir(client->tblpath, 0777) == -1)
+	printf("Table Path = %s\n", server->tblpath);
+	if (mkdir(server->tblpath, 0777) == -1)
 	{
 		if (errno == EEXIST)
-			client->flag_tbl_load = true;
+			server->flag_tbl_load = true;
 		else
 			perror("MKDIR ERROR");
 	}
 	else
-		client->flag_tbl_load = true;
-	client->logpath = ft_strjoin(client->tblpath, "/");
-	client->logpath = ft_strjoinf(client->logpath, "log", STRJOIN_FREE_SRC1);
-	//printf("Log Path = %s\n", client->logpath);
-	if (stat(client->logpath, &st) == -1)
-		if (open(client->logpath, O_CREAT) == -1)
+		server->flag_tbl_load = true;
+	server->logpath = ft_strjoin(server->tblpath, "/");
+	server->logpath = ft_strjoinf(server->logpath, "log", STRJOIN_FREE_SRC1);
+	//printf("Log Path = %s\n", server->logpath);
+	if (stat(server->logpath, &st) == -1)
+		if (open(server->logpath, O_CREAT) == -1)
 			perror("OPEN ERROR");
 	return (0);
 
 }
 
-int		db_load(t_client *client)
+int		db_load(t_server *server)
 {
 	char		*tmp;
 
-	CHK1(client->argc != 3, printf("usage: LOAD [--database || --table] name\n"), 0);
-	tmp = client->args[2];
-	if (strcmp(client->args[1], "--database") == 0)
+	CHK1(server->argc != 3, printf("usage: LOAD [--database || --table] name\n"), 0);
+	tmp = server->args[2];
+	if (strcmp(server->args[1], "--database") == 0)
 	{
-		ft_strclr(client->dbpath);
-		client->dbpath = ft_strjoin("./", tmp);
-		return (db_loaddb(client));
+		ft_strclr(server->dbpath);
+		server->dbpath = ft_strjoin("./", tmp);
+		return (db_loaddb(server));
 	}
-	else if (strcmp(client->args[1], "--table") == 0)
+	else if (strcmp(server->args[1], "--table") == 0)
 	{
-		CHK1(client->flag_db_load == false, db_msg(MSG_DB_MISSING), 0);
-		ft_strclr(client->tblpath);
-		client->tblpath = ft_strjoin(client->dbpath, "/");
-		client->tblpath = ft_strjoinf(client->tblpath, tmp, STRJOIN_FREE_SRC1);
-		return (db_loadtbl(client));
+		CHK1(server->flag_db_load == false, db_msg(MSG_DB_MISSING), 0);
+		ft_strclr(server->tblpath);
+		server->tblpath = ft_strjoin(server->dbpath, "/");
+		server->tblpath = ft_strjoinf(server->tblpath, tmp, STRJOIN_FREE_SRC1);
+		return (db_loadtbl(server));
 	}
 	else
 		return (printf("usage: LOAD [--database || --table] name\n"));

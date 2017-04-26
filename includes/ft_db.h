@@ -6,26 +6,29 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/23 23:03:54 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/25 19:44:38 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_DB_H
 # define FT_DB_H
 
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <unistd.h>
+# include <fcntl.h>
 # include <errno.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
-# include <libft.h>
-# include <fcntl.h>
-# include <limits.h>
 # include <stdint.h>
 # include <string.h>
+# include <unistd.h>
 # include <stdbool.h>
+# include <libft.h>
+# include <limits.h>
+# include <sys/types.h>
+# include <sys/socket.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <netinet/in.h>
 # define PROTO_HASH_SIZE 10000000
 # define DB_NAME_BUFF 50
 # define PROTO_FUNC_NUM 7
@@ -43,7 +46,7 @@ typedef struct		s_hashtable
 	t_entry			**table;
 }					t_hashtable;
 
-typedef struct		s_client
+typedef struct		s_server
 {
 	int				argc;
 	char			*line;
@@ -54,36 +57,41 @@ typedef struct		s_client
 	char			*tblpath;
 	char			*logpath;
 	size_t			hashsize;
-}					t_client;
+}					t_server;
 
 /*
 ** INIT
 */
 
 void				db_init();
-t_client			*db_client_init(void);
-void				db_client_clean(t_client *client);
+t_server			*db_server_init(void);
+void				db_server_clean(t_server *server);
 
 /*
 ** DISPATCH
 */
 
-int					db_load(t_client *client);
-int					db_clear(t_client *client);
-int					db_help(t_client *client);
-int					db_set(t_client *client);
-int					db_get(t_client *client);
-int					db_delete(t_client *client);
-int					db_exit(t_client *client);
-int					db_exitclear(t_client *client);
-void				db_loop(t_client *client);
+int					db_load(t_server *server);
+int					db_clear(t_server *server);
+int					db_help(t_server *server);
+int					db_set(t_server *server);
+int					db_get(t_server *server);
+int					db_delete(t_server *server);
+int					db_exit(t_server *server);
+int					db_exitclear(t_server *server);
+int					db_loop(t_server *server, int sock);
+
+int					db_dispatch(t_server *server);
+void				db_split_line(t_server *server);
 
 /*
 ** HASHTABLE
 */
 
 uint32_t			db_murmurhash(const char *key, uint32_t len, uint32_t seed);
-char*				db_gethash(t_client *client, const char *key);
+char				*db_gethash(t_server *server, const char *key);
+char				*db_read_line(void);
+
 /**
 t_hashtable			*ht_create(int size);
 char				*ht_get(t_hashtable *hashtable, char *key);

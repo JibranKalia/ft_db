@@ -6,18 +6,18 @@
 
 #include <ft_db.h>
 
-char	*db_gethash(t_client *client, const char *key)
+char	*db_gethash(t_server *server, const char *key)
 {
 	uint32_t	seed;
 	uint32_t	hash;
 	uint32_t	out;
 	char		*filename;
 
-	if (client->hashsize == 0)
-		client->hashsize = PROTO_HASH_SIZE;
+	if (server->hashsize == 0)
+		server->hashsize = PROTO_HASH_SIZE;
 	seed = 123456789;
 	hash = db_murmurhash(key, (uint32_t)strlen(key), seed);
-	out = hash % client->hashsize;
+	out = hash % server->hashsize;
 	filename = ft_itoa_base(out, 10, "0123456789");
 	return (filename);
 }
@@ -37,7 +37,7 @@ uint32_t	db_murmurhash(const char *key, uint32_t len, uint32_t seed)
 	const uint8_t *tail = NULL; // tail - last 8 bytes
 	int i = 0;
 	int l = len / 4; // chunk length
-	
+
 	h = seed;
 	chunks = (const uint32_t *) (d + l * 4); // body
 	tail = (const uint8_t *) (d + l * 4); // last 8 byte chunk of `key'
@@ -56,10 +56,10 @@ uint32_t	db_murmurhash(const char *key, uint32_t len, uint32_t seed)
 		h = (h << r2) | (h >> (32 - r2));
 		h = h * m + n;
 	}
-	
+
 	k = 0;
 	// remainder
-	switch (len & 3) 
+	switch (len & 3)
 	{ // `len % 4'
 		case 3: k ^= (tail[2] << 16);
 		case 2: k ^= (tail[1] << 8);

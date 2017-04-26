@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 16:19:31 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/23 23:05:09 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/25 19:42:51 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char		*g_db_strtable[] =
 	"CLEAR"
 };
 
-static int		(*g_db_functable[]) (t_client *) =
+static int		(*g_db_functable[]) (t_server *) =
 {
 	&db_load,
 	&db_set,
@@ -38,21 +38,21 @@ static int		(*g_db_functable[]) (t_client *) =
 ** Deletes Trailing Whitespace
 */
 
-int				db_help(t_client *client)
+int				db_help(t_server *server)
 {
-	(void)client;
+	(void)server;
 	db_msg(MSG_HELP);
 	return (0);
 }
 
-int				db_clear(t_client *client)
+int				db_clear(t_server *server)
 {
-	if (strncasecmp(client->args[0], "clear", 5) == 0)
-		system(client->args[0]);
+	if (strncasecmp(server->args[0], "clear", 5) == 0)
+		system(server->args[0]);
 	return (0);
 }
 
-static char		*db_read_line(void)
+char			*db_read_line(void)
 {
 	char		*line;
 	size_t		bufsize;
@@ -71,41 +71,28 @@ static char		*db_read_line(void)
 	return (line);
 }
 
-static void		db_split_line(t_client *client)
+void			db_split_line(t_server *server)
 {
-	client->argc = ft_countwords(client->line, ' ');
-	client->args = ft_strsplit(client->line, ' ');
+	server->argc = ft_countwords(server->line, ' ');
+	server->args = ft_strsplit(server->line, ' ');
 	return ;
 }
 
-static int		db_dispatch(t_client *client)
+int				db_dispatch(t_server *server)
 {
 	int		i;
 	char	*in;
 
 	i = 0;
-	if (client->args[0] == NULL)
+	if (server->args[0] == NULL)
 		return (0);
-	in = client->args[0];
+	in = server->args[0];
 	while (i < PROTO_FUNC_NUM)
 	{
 		if (strncasecmp(in, g_db_strtable[i], strlen(in)) == 0)
-			return (*g_db_functable[i])(client);
+			return (*g_db_functable[i])(server);
 		++i;
 	}
 	printf("Command Not Recognized\n");
 	return (0);
-}
-
-void			db_loop(t_client *client)
-{
-	while (1)
-	{
-		printf("> ");
-		client->line = db_read_line();
-		db_split_line(client);
-		db_dispatch(client);
-		ft_tbldel(client->args);
-		ft_strclr(client->line);
-	}
 }
