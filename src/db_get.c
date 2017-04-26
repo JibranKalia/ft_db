@@ -6,71 +6,64 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/26 16:22:22 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/26 16:43:32 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
 
-DIR		*dir;
-struct	dirent *ent;
 t_list		*db_ls(char *path)
 {
-	t_list	*all;
-	t_list	*node;
-	char	*tmp;
+	t_list			*head;
+	t_list			*node;
+	char			*tmp;
+	DIR				*dir;
+	struct	dirent	*ent;
 
-	all = ft_lstnew(NULL, 0);
-	if ((dir = opendir(path)) != NULL)
+	head = ft_lstnew(NULL, 0);
+	CHK1((dir = opendir(path)) == NULL, perror("OPENDIR ERROR"), NULL);
+	while ((ent = readdir (dir)) != NULL)
 	{
-		/* print all the files and directories within directory */
-		while ((ent = readdir (dir)) != NULL)
-		{
-		    //printf ("%s\n", ent->d_name);
-			tmp = strndup((char *)ent->d_name, ent->d_namlen);
-		   	node = ft_lstnew(tmp, ent->d_namlen);
-			//printf("Seg: {%s}, CS: %zu\n", (char *)node->content, node->content_size);
-			ft_lstappend(&all, node);
-			//printf("Seg Here2?\n");
-		}
-  		closedir (dir);
-	} 
-	else 
-	{
-	  /* could not open directory */
-	  perror ("");
-	  exit(1); //more appropriate exit required!!!
+		tmp = strndup((char *)ent->d_name, ent->d_namlen);
+		node = ft_lstnew(tmp, ent->d_namlen);
+		ft_lstappend(&head, node);
 	}
-	return (all);
+	closedir(dir);
+	return (head);
 }
 
 int			db_getall(t_client *client)
 {
 	t_list			*list;
-	t_list			*temp;
+	t_list			*tmp;
 	char			*filename;
 	char			*path;
 	FILE			*fp;
 	int 			fd;
 	struct stat		st;
+	int				i;
 
 	path = ft_strjoin(client->tblpath, "/");
 	list = db_ls(path);
-	temp = list;
-	while (temp)
+	tmp = list;
+	i = 0;
+	while (tmp)
 	{
-		if (temp->content && strncmp(temp->content, ".", 1) != 0 )
+		if (tmp->content && strncmp(tmp->content, ".", 1) != 0 )
 		{
-			filename = ft_strjoin(path, temp->content);
+			filename = ft_strjoin(path, tmp->content);
 			CHK2(((fp = fopen(filename, "r")) == NULL), free(filename), perror("FOPEN ERROR"), -1);
 			fd = fileno(fp);
 			CHK2(fstat(fd, &st) == -1, free(filename), perror("FSTAT ERROR"), -1);
 			db_get_print(fp, st.st_size * 2);
 			CHK2(fclose(fp) == EOF, free(filename), perror("FCLOSE ERROR"), -1);
+			++i;
 		}
-		temp = temp->next;
+		tmp = tmp->next;
 	}
 	ft_lstfree(&list);
+	if (i == 0)
+		printf("No records found\n");
 	return (0);
 }
 
