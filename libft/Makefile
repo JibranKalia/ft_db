@@ -3,7 +3,7 @@ CFLAGS		+= -Wall -Wextra -Werror
 CFLAGS		+= -I includes/
 
 CHR 		:= ft_putchar ft_putchar_fd
-LST			:= ft_lstadd ft_lstdel ft_lstdelone ft_lstiter ft_lstmap ft_lstnew
+LST			:= ft_lstadd ft_lstdel ft_lstdelone ft_lstiter ft_lstmap ft_lstnew ft_lstappend
 NBR			:= ft_atoi ft_itoa ft_itoa_base ft_nbrlen ft_nbrlen_base ft_putnbr ft_putnbr_fd
 MEM			:= ft_bzero ft_memalloc ft_memccpy ft_memchr ft_memcmp \
 					ft_memcpy ft_memdel ft_memmove ft_memset ft_realloc
