@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/25 20:45:53 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/25 20:48:57 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define PROTO_HASH_SIZE 10000000
 # define DB_NAME_BUFF 50
 # define PROTO_FUNC_NUM 7
+# define PORTNUMBER 12345
 
 typedef struct		s_entry
 {

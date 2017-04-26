@@ -6,11 +6,10 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/25 11:49:59 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/25 20:46:04 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/25 20:49:23 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define PORTNUMBER 12345
 
 #include <ft_db.h>
 
@@ -50,17 +49,15 @@ int		db_tcpbegin(t_server *server)
 	int					pid;
 	int					sockfd;
 	int					newsockfd;
-	int					portno;
 	int					clilen;
 	struct sockaddr_in	serv_addr;
 	struct sockaddr_in	cli_addr;
 
 	CHK1((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1, perror("ERROR SOCKET"), -1)
 	bzero((void *)&serv_addr, sizeof(serv_addr));
-	portno = PORTNUMBER;
 	serv_addr.sin_family = AF_INET;
 	serv_addr.sin_addr.s_addr = INADDR_ANY;
-	serv_addr.sin_port = htons(portno);
+	serv_addr.sin_port = htons(PORTNUMBER);
 	CHK1((bind(sockfd, (struct sockaddr *)&serv_addr,
 					sizeof(serv_addr))) == -1, perror("ERROR BIND"), -1);
 	listen(sockfd, 5);
