@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:53:25 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/23 23:17:12 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/26 12:55:53 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,17 @@ static int	db_loadtbl(t_server *server)
 		if (open(server->logpath, O_CREAT) == -1)
 			perror("OPEN ERROR");
 	return (0);
+}
 
+char	*cleanstr(char *str)
+{
+	int		i;
+	i = 0;
+
+	while (isalnum(str[i]) != 0)
+		i++;
+	str[i] = 0;
+	return (str);
 }
 
 int		db_load(t_server *server)
@@ -58,7 +68,7 @@ int		db_load(t_server *server)
 	char		*tmp;
 
 	CHK1(server->argc != 3, printf("usage: LOAD [--database || --table] name\n"), 0);
-	tmp = server->args[2];
+	tmp = cleanstr(server->args[2]);
 	if (strcmp(server->args[1], "--database") == 0)
 	{
 		ft_strclr(server->dbpath);

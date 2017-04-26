@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/25 20:48:57 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/26 12:59:40 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct		s_server
 	char			*tblpath;
 	char			*logpath;
 	size_t			hashsize;
+	int				portno;
 }					t_server;
 
 /*
@@ -113,5 +114,6 @@ void 				ht_test();
 #define MSG_DELETE_USAGE2 6
 
 int				db_msg(int code);
+char			*cleanstr(char *str)
 
 #endif
