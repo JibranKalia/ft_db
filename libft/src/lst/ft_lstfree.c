@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 14:19:59 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/26 14:25:56 by aakin-al         ###   ########.fr       */
+/*   Updated: 2017/04/26 14:37:08 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,22 @@
 
 void		ft_lstfree(t_list **alst)
 {
-	t_list	*temp;
+	t_list	*to_free;
+	t_list	*tmp;
 
-	temp = *alst;
+	tmp = *alst;
+	to_free = *alst;
+
 	if (!*alst)
 		return ;
-	while(*alst)
+	while (tmp)
 	{
-		temp = *alst;
-		*alst = *(alst)->next;
-		free(temp->content);
-		temp->content = NULL;
-		free(temp);
-		temp = NULL;
+		to_free = tmp;
+		tmp = tmp->next;
+		free(to_free->content);
+		to_free->content = NULL;
+		free(to_free);
+		to_free = NULL;
 	}
+	alst = NULL;
 }

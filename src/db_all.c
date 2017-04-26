@@ -6,12 +6,11 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/26 14:21:16 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/26 14:38:44 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_db.h"
-#include <dirent.h>
+#include <ft_db.h>
 
 DIR		*dir;
 struct	dirent *ent;
@@ -69,9 +68,6 @@ int		db_all(char *path)
 		}
 		temp = temp->next;
 	}
-	free(list);
-	list = NULL;
-	free(temp);
-	temp = NULL;
+	ft_lstfree(&list);
 	return (0);
 }

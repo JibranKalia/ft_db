@@ -6,12 +6,14 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/26 14:13:57 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/26 14:39:11 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_DB_H
 # define FT_DB_H
+
+# include <libft.h>
 
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -20,12 +22,12 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
-# include <libft.h>
 # include <fcntl.h>
 # include <limits.h>
 # include <stdint.h>
 # include <string.h>
 # include <stdbool.h>
+# include <dirent.h>
 # define PROTO_HASH_SIZE 10000000
 # define DB_NAME_BUFF 50
 # define PROTO_FUNC_NUM 7
