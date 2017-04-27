@@ -6,20 +6,19 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/04/26 16:50:45 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/04/26 19:54:37 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= ftdb
-CC			:= gcc
+CC		:= gcc
 #CFLAGS		+= -Wall -Wextra -Werror
 CFLAGS		+= -I includes/ -I libft/includes/
 LDFLAGS		:= -L libft/ -lft
 
 LIBFT		:= libft/libft.a
 
-FILES		:= db_dispatch db_delete db_error db_init db_set db_server db_load db_murmurhash
-
+FILES		:= db_main db_dispatch db_delete db_error db_init db_set db_load db_murmurhash db_get
 SRC		:= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ		:= $(SRC:.c=.o)
 
@@ -46,10 +45,7 @@ clean:
 fclean: clean
 	@make -C libft fclean
 	@rm -rf $(NAME)
-	@rm -rf database client
+	@rm -rf client
 	@echo "\033[32mRemoved Executable\033[0m"
 
 re: fclean all
-
-socket:
-	@$(CC) src/db_client.c -o client

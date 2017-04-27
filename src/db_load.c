@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:53:25 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/26 17:23:06 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/26 19:59:36 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,11 @@ static int	db_loadtbl(t_server *server)
 	server->logpath = ft_strjoin(server->tblpath, "/");
 	server->logpath = ft_strjoinf(server->logpath, "log", STRJOIN_FREE_SRC1);
 	//db_reply(server, "Log Path = %s\n", server->logpath);
-	if (stat(server->logpath, &st) == -1)
-		if (open(server->logpath, O_CREAT) == -1)
+	/**
+	if (stat(client->logpath, &st) == -1)
+		if (open(client->logpath, O_CREAT) == -1)
 			perror("OPEN ERROR");
+	**/
 	return (0);
 }
 
