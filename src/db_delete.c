@@ -6,8 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 21:24:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/26 19:57:43 by jkalia           ###   ########.fr       */
->>>>>>> master
+/*   Updated: 2017/04/26 20:03:55 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +71,6 @@ int		db_delete(t_server *server)
 
 int		db_exit(t_server *server)
 {
-<<<<<<< HEAD
 	CHK1(server->argc != 1, db_reply(server, "usage: EXIT\n"), 0);
 	db_reply(server, "GOODBYE!");
 //	fcloseall();

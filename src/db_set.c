@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:51:30 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/26 20:00:12 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/26 20:04:17 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int			db_set(t_server *server)
 	return (0);
 }
 
-static int	db_get_print(t_server *server, FILE *fp, size_t size)
+int	db_get_print(t_server *server, FILE *fp, size_t size)
 {
 	char	*buf;
 

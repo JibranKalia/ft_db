@@ -32,7 +32,7 @@ t_list		*db_ls(char *path)
 	return (head);
 }
 
-int			db_getall(t_client *client)
+int			db_getall(t_server *server)
 {
 	t_list			*list;
 	t_list			*tmp;
@@ -43,7 +43,7 @@ int			db_getall(t_client *client)
 	struct stat		st;
 	int				i;
 
-	path = ft_strjoin(client->tblpath, "/");
+	path = ft_strjoin(server->tblpath, "/");
 	list = db_ls(path);
 	tmp = list;
 	i = 0;
@@ -79,22 +79,22 @@ int			db_get_print(FILE *fp, size_t size)
 	return (0);
 }
 
-int			db_get(t_client *client)
+int			db_get(t_server *server)
 {
 	char			*filename;
 	FILE			*fp;
 	int				fd;
 	struct stat		st;
 
-	CHK1(client->flag_db_load == false, db_msg(MSG_DB_MISSING), 0);
-	CHK1(client->flag_tbl_load == false, db_msg(MSG_TBL_MISSING), 0);
-	CHK1(client->argc != 2, printf("usage: GET key\n"), 0);
-	if (strncasecmp(client->args[1], "all", 3) == 0)
-		db_getall(client);
+	CHK1(server->flag_db_load == false, db_msg(MSG_DB_MISSING), 0);
+	CHK1(server->flag_tbl_load == false, db_msg(MSG_TBL_MISSING), 0);
+	CHK1(server->argc != 2, printf("usage: GET key\n"), 0);
+	if (strncasecmp(server->args[1], "all", 3) == 0)
+		db_getall(server);
 	else
 	{
-		filename = ft_strjoinf("/", db_gethash(client, client->args[1]), STRJOIN_FREE_SRC2);
-		filename = ft_strjoinf(client->tblpath, filename, STRJOIN_FREE_SRC2);
+		filename = ft_strjoinf("/", db_gethash(server, server->args[1]), STRJOIN_FREE_SRC2);
+		filename = ft_strjoinf(server->tblpath, filename, STRJOIN_FREE_SRC2);
 		CHK2(((fp = fopen(filename, "r")) == NULL), free(filename), perror("FOPEN ERROR"), -1);
 		fd = fileno(fp);
 		CHK2(fstat(fd, &st) == -1, free(filename), perror("FSTAT ERROR"), -1);

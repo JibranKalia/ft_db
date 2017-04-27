@@ -6,47 +6,31 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/26 19:57:07 by jkalia           ###   ########.fr       */
->>>>>>> master
+/*   Updated: 2017/04/26 20:04:46 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_DB_H
 # define FT_DB_H
 
-<<<<<<< HEAD
-# include <fcntl.h>
-=======
-# include <libft.h>
-
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <unistd.h>
->>>>>>> master
+# include <dirent.h>
 # include <errno.h>
+# include <fcntl.h>
+# include <limits.h>
+# include <libft.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
-<<<<<<< HEAD
-=======
-# include <fcntl.h>
-# include <limits.h>
->>>>>>> master
 # include <stdint.h>
 # include <string.h>
 # include <unistd.h>
-# include <stdbool.h>
-<<<<<<< HEAD
-# include <libft.h>
-# include <limits.h>
 # include <sys/types.h>
 # include <sys/socket.h>
 # include <sys/types.h>
+# include <sys/types.h>
 # include <sys/stat.h>
 # include <netinet/in.h>
-=======
-# include <dirent.h>
->>>>>>> master
+
 # define PROTO_HASH_SIZE 10000000
 # define DB_NAME_BUFF 50
 # define PROTO_FUNC_NUM 7
@@ -136,5 +120,5 @@ int			db_msg(t_server *server, int code);
 char			*cleanstr(char *str);
 int			db_reply(t_server *server, const char *fmt, ...);
 
-int			db_get_print(FILE *fp, size_t size);
+int			db_get_print(t_server *server, FILE *fp, size_t size);
 #endif
