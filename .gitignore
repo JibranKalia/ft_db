@@ -1,5 +1,6 @@
 ftdb
 db
+client
 # Object files #
 ###################
 *.o

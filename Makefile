@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/04/26 20:01:28 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/04/26 20:14:15 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,3 +49,6 @@ fclean: clean
 	@echo "\033[32mRemoved Executable\033[0m"
 
 re: fclean all
+
+socket:
+	@gcc src/db_client.c -o client
