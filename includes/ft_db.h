@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/26 12:59:40 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/26 17:21:08 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct		s_server
 	int				argc;
 	char			*line;
 	char			**args;
-	int				sockfd;
+	int				fd;
 	bool			flag_db_load;
 	bool			flag_tbl_load;
 	char			*dbpath;
@@ -113,7 +113,8 @@ void 				ht_test();
 #define MSG_DELETE_USAGE 5
 #define MSG_DELETE_USAGE2 6
 
-int				db_msg(int code);
-char			*cleanstr(char *str)
+int				db_msg(t_server *server, int code);
+char			*cleanstr(char *str);
+int				db_reply(t_server *server, const char *fmt, ...);
 
 #endif

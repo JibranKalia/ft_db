@@ -6,17 +6,17 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/23 20:39:36 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/23 23:18:40 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/26 17:20:53 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
 
-int	db_msg(int code)
+int	db_msg(t_server *server, int code)
 {
 	if (code == MSG_WELCOME)
 	{
-		printf("*********************************************\n"
+		db_reply(server, "*********************************************\n"
 				"Welcome to FT_DB!\n"
 				"Type HELP to get started\n"
 				"Have Fun and make sure to enjoy responsibly.\n"
@@ -24,7 +24,7 @@ int	db_msg(int code)
 	}
 	else if (code == MSG_HELP)
 	{
-		printf( "**********************************************************\n"
+		db_reply(server,  "**********************************************************\n"
 				"Step 1: Choose Database. Use: LOAD --database database_name\n"
 				"Step 2: Choose Table. Use: LOAD --table table_name\n"
 				"Step 3: Save Record. Use: SET Key Value\n"
@@ -34,12 +34,12 @@ int	db_msg(int code)
 				"**********************************************************\n");
 	}
 	else if (code == MSG_DB_MISSING)
-		printf("Error: Database not found. Use: LOAD --database database_name\n");
+		db_reply(server, "Error: Database not found. Use: LOAD --database database_name\n");
 	else if (code == MSG_TBL_MISSING)
-		printf("Error: Table not found. Use: LOAD --table table_name\n");
+		db_reply(server, "Error: Table not found. Use: LOAD --table table_name\n");
 	else if (code == MSG_DELETE_USAGE)
-		printf("usage: DELETE [--database || --table || --record] KEY\n");
+		db_reply(server, "usage: DELETE [--database || --table || --record] KEY\n");
 	else if (code == MSG_DELETE_USAGE2)
-		printf("usage: DELETE --record KEY\n");
+		db_reply(server, "usage: DELETE --record KEY\n");
 	return (0);
 }

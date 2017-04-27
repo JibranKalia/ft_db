@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/04/25 19:37:54 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/04/26 16:50:45 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ OBJ		:= $(SRC:.c=.o)
 
 .PHONY = all clean fclean clean re
 
-all: $(NAME)
+all: $(NAME) socket
 
 $(LIBFT):
 	@make -C libft	
@@ -46,11 +46,10 @@ clean:
 fclean: clean
 	@make -C libft fclean
 	@rm -rf $(NAME)
-	@rm -rf database db server client
+	@rm -rf database client
 	@echo "\033[32mRemoved Executable\033[0m"
 
 re: fclean all
 
 socket:
-	@$(CC) src/db_server.c -o server
 	@$(CC) src/db_client.c -o client

@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 16:19:31 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/25 19:42:51 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/26 17:23:27 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ static int		(*g_db_functable[]) (t_server *) =
 
 int				db_help(t_server *server)
 {
-	(void)server;
-	db_msg(MSG_HELP);
+	db_msg(server, MSG_HELP);
 	return (0);
 }
 
@@ -93,6 +92,6 @@ int				db_dispatch(t_server *server)
 			return (*g_db_functable[i])(server);
 		++i;
 	}
-	printf("Command Not Recognized\n");
+	db_reply(server, "Command Not Recognized\n");
 	return (0);
 }
