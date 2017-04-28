@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/26 20:04:46 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/27 18:42:16 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,6 @@
 # define PROTO_FUNC_NUM 7
 # define PORTNUMBER 12345
 
-typedef struct		s_entry
-{
-	char		*key;
-	void		*value;
-	struct s_entry	*next;
-}			t_entry;
-
-typedef struct		s_hashtable
-{
-	int		size;
-	t_entry		**table;
-}			t_hashtable;
-
 typedef struct		s_server
 {
 	int		argc;
@@ -76,34 +63,46 @@ void			db_server_clean(t_server *server);
 ** DISPATCH
 */
 
-int			db_load(t_server *server);
 int			db_clear(t_server *server);
 int			db_help(t_server *server);
 int			db_set(t_server *server);
-int			db_get(t_server *server);
 int			db_delete(t_server *server);
 int			db_exit(t_server *server);
 int			db_exitclear(t_server *server);
 int			db_loop(t_server *server, int sock);
 
 int			db_dispatch(t_server *server);
+char			*db_read_line(void);
 void			db_split_line(t_server *server);
 int			db_all(char *path);
+
+/*
+** REPLY
+*/
+
+int			db_reply(t_server *server, const char *fmt, ...);
+
+/*
+** GET
+*/
+
+int			db_get(t_server *server);
+int			db_get_print(t_server *server, FILE *fp, size_t size);
+
+/*
+** LOAD
+*/
+
+int			db_load(t_server *server);
+int			db_loadtbl(t_server *server);
+int			db_loaddb(t_server *server);
+char			*cleanstr(char *str);
 
 /*
 ** HASHTABLE
 */
 
-uint32_t		db_murmurhash(const char *key, uint32_t len, uint32_t seed);
 char			*db_gethash(t_server *server, const char *key);
-char			*db_read_line(void);
-
-/**
-t_hashtable			*ht_create(int size);
-char				*ht_get(t_hashtable *hashtable, char *key);
-void				ht_set(t_hashtable *hashtable, char *key, void *value, int size);
-**/
-void 			ht_test();
 
 /*
 ** MESSAGE
@@ -117,8 +116,5 @@ void 			ht_test();
 #define MSG_DELETE_USAGE2 6
 
 int			db_msg(t_server *server, int code);
-char			*cleanstr(char *str);
-int			db_reply(t_server *server, const char *fmt, ...);
 
-int			db_get_print(t_server *server, FILE *fp, size_t size);
 #endif

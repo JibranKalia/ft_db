@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/26 20:44:43 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/27 18:46:38 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,14 @@ int			db_get(t_server *server)
 		return(db_getall(server));
 	filename = ft_strjoinf("/", db_gethash(server, server->args[1]), STRJOIN_FREE_SRC2);
 	filename = ft_strjoinf(server->tblpath, filename, STRJOIN_FREE_SRC2);
-	CHK2(((fp = fopen(filename, "r")) == NULL), free(filename), perror("FOPEN ERROR"), -1);
+	//CHK2(((fp = fopen(filename, "r")) == NULL), free(filename), perror("FOPEN ERROR"), -1);
+	fp = fopen(filename, "r");
+	if (fp == NULL)
+	{
+		(errno == ENOENT) ? db_reply(server, "Record Not Found\n") : perror("FOPEN ERROR");
+		free(filename);
+		return (-1);
+	}
 	fd = fileno(fp);
 	CHK2(fstat(fd, &st) == -1, free(filename), perror("FSTAT ERROR"), -1);
 	db_get_print(server, fp, st.st_size * 2);

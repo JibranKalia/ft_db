@@ -6,16 +6,16 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:53:25 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/26 19:59:36 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/27 18:43:08 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_db.h"
 
-static int	db_loaddb(t_server *server)
+int	db_loaddb(t_server *server)
 {
 	if (server->dbpath == NULL)
-		server->dbpath = strdup("./DBFILES");
+		server->dbpath = strdup("./db");
 	db_reply(server, "Database Path = %s\n", server->dbpath);
 	if (mkdir(server->dbpath, 0777) == -1)
 	{
@@ -29,10 +29,13 @@ static int	db_loaddb(t_server *server)
 	return (0);
 }
 
-static int	db_loadtbl(t_server *server)
+int	db_loadtbl(t_server *server)
 {
 	struct stat	st;
 
+	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
+	if (server->tblpath == NULL)
+		server->tblpath = strdup("./tbl");
 	db_reply(server, "Table Path = %s\n", server->tblpath);
 	if (mkdir(server->tblpath, 0777) == -1)
 	{
@@ -65,7 +68,7 @@ char	*cleanstr(char *str)
 	return (str);
 }
 
-int		db_load(t_server *server)
+int	db_load(t_server *server)
 {
 	char		*tmp;
 

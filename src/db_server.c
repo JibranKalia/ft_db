@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/25 11:49:59 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/26 17:35:25 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/27 18:43:46 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,12 @@ int main(int argc, char **argv)
 		else
 			server->portno = PORTNUMBER;
 		db_tcpbegin(server);
+	}
+	else if (strncasecmp(argv[1], "debug", 5) == 0)
+	{
+		db_loaddb(server);
+		db_loadtbl(server);
+		db_stdinparse(server);
 	}
 	else
 		db_reply(server, "Usage: %s [stdin || tcp]", argv[0]);
