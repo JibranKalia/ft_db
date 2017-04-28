@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/27 18:46:38 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/27 19:06:31 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int			db_get(t_server *server)
 	fp = fopen(filename, "r");
 	if (fp == NULL)
 	{
-		(errno == ENOENT) ? db_reply(server, "Record Not Found\n") : perror("FOPEN ERROR");
+		(errno == ENOENT) ? db_reply(server, "Record Not Found\n") : db_err(server, "FOPEN ERROR");
 		free(filename);
 		return (-1);
 	}

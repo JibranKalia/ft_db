@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/27 18:42:16 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/27 19:02:02 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,6 @@ void			db_split_line(t_server *server);
 int			db_all(char *path);
 
 /*
-** REPLY
-*/
-
-int			db_reply(t_server *server, const char *fmt, ...);
-
-/*
 ** GET
 */
 
@@ -105,7 +99,7 @@ char			*cleanstr(char *str);
 char			*db_gethash(t_server *server, const char *key);
 
 /*
-** MESSAGE
+** REPLY
 */
 
 #define MSG_WELCOME 1
@@ -116,5 +110,7 @@ char			*db_gethash(t_server *server, const char *key);
 #define MSG_DELETE_USAGE2 6
 
 int			db_msg(t_server *server, int code);
+int			db_err(t_server *server, const char *str);
+int			db_reply(t_server *server, const char *fmt, ...);
 
 #endif

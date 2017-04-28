@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/23 20:39:36 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/27 18:50:18 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/27 19:05:28 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,18 @@ int	db_msg(t_server *server, int code)
 		db_reply(server, "usage: DELETE [--database || --table || --record] KEY\n");
 	else if (code == MSG_DELETE_USAGE2)
 		db_reply(server, "usage: DELETE --record KEY\n");
+	return (0);
+}
+
+int		db_err(t_server *server, const char *str)
+{
+	char	*buf;
+	char	err[256];
+
+	strerror_r(errno, err, 255);
+	asprintf(&buf, "%s: %s\n", str, err);
+	db_reply(server, "%s", buf);
+	free(buf);
 	return (0);
 }
 
