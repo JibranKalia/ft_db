@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/23 20:39:36 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/23 23:18:40 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/28 11:24:32 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	db_msg(int code)
 		printf( "**********************************************************\n"
 				"Step 1: Choose Database. Use: LOAD --database database_name\n"
 				"Step 2: Choose Table. Use: LOAD --table table_name\n"
-				"Step 3: Save Record. Use: SET Key Value\n"
+				"Step 3: Save Record. Use: SET Key (Value1,Value2,...)\n"
 				"Step 4: Retrieve Record: Use: GET Key\n"
 				"Step 5: Delete Record. Use: DELETE --record KEY\n"
 				"Step 6: Exit. Use: EXIT\n"
