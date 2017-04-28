@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 16:58:42 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/26 14:39:29 by aakin-al         ###   ########.fr       */
+/*   Updated: 2017/04/28 13:10:54 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,5 +190,21 @@ int					ft_vprintf(const char *fmt, va_list ap);
 int					ft_vsprintf(char *ret, const char *fmt, va_list ap);
 int					ft_vdprintf(int fd, const char *fmt, va_list ap);
 int					ft_vasprintf(char **ret, const char *fmt, va_list ap);
+
+/*
+** Binary Search Trees
+*/
+
+typedef struct		s_btree
+{
+	int				item;
+	struct s_btree	*left;
+	struct s_btree	*right;
+}					t_btree;
+t_btree				*btree_create_node(int item);
+void				btree_add_node(t_btree **root, t_btree *node);
+void				btree_apply_inorder(t_btree *root, void (*applyf)(int));
+void				btree_apply_postorder(t_btree *root, void (*applyf)(int));
+void				btree_apply_preorder(t_btree *root, void (*applyf)(int));
 
 #endif
