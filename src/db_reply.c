@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/23 20:39:36 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/26 17:20:53 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/27 18:50:18 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,20 @@ int	db_msg(t_server *server, int code)
 	else if (code == MSG_DELETE_USAGE2)
 		db_reply(server, "usage: DELETE --record KEY\n");
 	return (0);
+}
+
+int		db_reply(t_server *server, const char *fmt, ...)
+{
+	va_list		ap;
+	va_list		clone1;
+	va_list		clone2;
+	int			i;
+
+	va_start(ap, fmt);
+	va_copy(clone1, ap);
+	va_copy(clone2, ap);
+	if (server->fd != STDOUT_FILENO)
+		i = vdprintf(server->fd, fmt, clone1);
+	i = vprintf(fmt, clone2);
+	return (i);
 }

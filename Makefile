@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/04/26 20:14:15 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/04/27 18:50:50 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LDFLAGS		:= -L libft/ -lft
 
 LIBFT		:= libft/libft.a
 
-FILES		:= db_dispatch db_delete db_error db_init db_set db_load db_murmurhash db_get db_server
+FILES		:= db_dispatch db_delete db_reply db_init db_set db_load db_murmurhash db_get db_server
 SRC		:= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ		:= $(SRC:.c=.o)
 

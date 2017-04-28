@@ -6,27 +6,11 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/25 11:49:59 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/27 18:43:46 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/27 18:50:16 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
-
-int		db_reply(t_server *server, const char *fmt, ...)
-{
-	va_list		ap;
-	va_list		clone1;
-	va_list		clone2;
-	int			i;
-
-	va_start(ap, fmt);
-	va_copy(clone1, ap);
-	va_copy(clone2, ap);
-	if (server->fd != STDOUT_FILENO)
-		i = vdprintf(server->fd, fmt, clone1);
-	i = vprintf(fmt, clone2);
-	return (i);
-}
 
 int		db_tcpparse(t_server *server)
 {
