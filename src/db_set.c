@@ -25,15 +25,15 @@ int			db_set(t_server *server)
 	hash = db_gethash(server, cleanstr(server->args[1]));
 	filename = ft_strjoinf("/", hash, STRJOIN_FREE_SRC2);
 	filename = ft_strjoinf(server->tblpath, filename, STRJOIN_FREE_SRC2);
-	CHK2((fp = fopen(filename, "w+")) == NULL, free(filename), perror("FOPEN ERROR: "), -1);
+	CHK2((fp = fopen(filename, "w+")) == NULL, free(filename), db_err(server, "FOPEN ERROR: "), -1);
 	values = db_values(server->args[2]);
 	while (*values)
 	{
-		CHK2(fputs(*values, fp) == EOF, free(filename), perror("FPUTS ERROR"), -1);
-		CHK2(fputs("\t", fp) == EOF, free(filename), perror("FPUTS ERROR"), -1);
+		CHK2(fputs(*values, fp) == EOF, free(filename), db_err(server, "FPUTS ERROR"), -1);
+		CHK2(fputs("\t", fp) == EOF, free(filename), db_err(server, "FPUTS ERROR"), -1);
 		values++;
 	}
-	CHK2((fclose(fp) == EOF), free(filename), perror("FCLOSE ERROR"), -1);
+	CHK2((fclose(fp) == EOF), free(filename), db_err(server, "FCLOSE ERROR"), -1);
 	db_reply(server, "Record Saved\n");
 	free(filename);
 	return (0);

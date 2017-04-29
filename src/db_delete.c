@@ -48,7 +48,7 @@ int		db_deletekey(t_server *server)
 	CHK1(server->argc != 3, db_msg(server, MSG_DELETE_USAGE2), 0);
 	filename = ft_strjoinf("/", db_gethash(server, server->args[2]), STRJOIN_FREE_SRC2);
 	filename = ft_strjoinf(server->tblpath, filename, STRJOIN_FREE_SRC2);
-	CHK2(remove(filename) == -1, free(filename), perror("REMOVE ERROR"), -1);
+	CHK2(remove(filename) == -1, free(filename), db_err(server, "REMOVE ERROR"), -1);
 	db_reply(server, "Removing: %s\n", filename);
 	free(filename);
 	return (0);

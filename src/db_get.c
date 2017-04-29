@@ -21,7 +21,7 @@ t_list		*db_ls(char *path)
 	struct	dirent	*ent;
 
 	head = ft_lstnew(NULL, 0);
-	CHK1((dir = opendir(path)) == NULL, perror("OPENDIR ERROR"), NULL);
+	CHK1((dir = opendir(path)) == NULL, db_err(server, "OPENDIR ERROR"), NULL);
 	while ((ent = readdir (dir)) != NULL)
 	{
 		tmp = strndup((char *)ent->d_name, ent->d_namlen);
@@ -52,11 +52,11 @@ int			db_getall(t_server *server)
 		if (tmp->content && strncmp(tmp->content, ".", 1) != 0 )
 		{
 			filename = ft_strjoin(path, tmp->content);
-			CHK2(((fp = fopen(filename, "r")) == NULL), free(filename), perror("FOPEN ERROR"), -1);
+			CHK2(((fp = fopen(filename, "r")) == NULL), free(filename), db_err(server, "FOPEN ERROR"), -1);
 			fd = fileno(fp);
-			CHK2(fstat(fd, &st) == -1, free(filename), perror("FSTAT ERROR"), -1);
+			CHK2(fstat(fd, &st) == -1, free(filename), db_err(server, "FSTAT ERROR"), -1);
 			db_get_print(server, fp, st.st_size * 2);
-			CHK2(fclose(fp) == EOF, free(filename), perror("FCLOSE ERROR"), -1);
+			CHK2(fclose(fp) == EOF, free(filename), db_err(server, "FCLOSE ERROR"), -1);
 			++i;
 		}
 		tmp = tmp->next;
@@ -73,7 +73,7 @@ int			db_get_print(t_server *server, FILE *fp, size_t size)
 
 	buf = (char *)malloc(size);
 	bzero(buf, size);
-	CHK2(fgets(buf, size, fp) == NULL, free(buf), perror("FGETS ERROR"), -1);
+	CHK2(fgets(buf, size, fp) == NULL, free(buf), db_err(server, "FGETS ERROR"), -1);
 	db_reply(server, "Record Value:\n%s\n", buf);
 	free(buf);
 	return (0);
@@ -93,7 +93,7 @@ int			db_get(t_server *server)
 		return(db_getall(server));
 	filename = ft_strjoinf("/", db_gethash(server, server->args[1]), STRJOIN_FREE_SRC2);
 	filename = ft_strjoinf(server->tblpath, filename, STRJOIN_FREE_SRC2);
-	//CHK2(((fp = fopen(filename, "r")) == NULL), free(filename), perror("FOPEN ERROR"), -1);
+	//CHK2(((fp = fopen(filename, "r")) == NULL), free(filename), db_err(server, "FOPEN ERROR"), -1);
 	fp = fopen(filename, "r");
 	if (fp == NULL)
 	{
@@ -102,9 +102,9 @@ int			db_get(t_server *server)
 		return (-1);
 	}
 	fd = fileno(fp);
-	CHK2(fstat(fd, &st) == -1, free(filename), perror("FSTAT ERROR"), -1);
+	CHK2(fstat(fd, &st) == -1, free(filename), db_err(server, "FSTAT ERROR"), -1);
 	db_get_print(server, fp, st.st_size * 2);
-	CHK2(fclose(fp) == EOF, free(filename), perror("FCLOSE ERROR"), -1);
+	CHK2(fclose(fp) == EOF, free(filename), db_err(server, "FCLOSE ERROR"), -1);
 	free(filename);
 	return (0);
 }

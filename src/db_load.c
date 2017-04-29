@@ -22,7 +22,7 @@ int	db_loaddb(t_server *server)
 		if (errno == EEXIST)
 			server->flag_db_load = true;
 		else
-			perror("MKDIR ERROR");
+			db_err(server, "MKDIR ERROR");
 	}
 	else
 		server->flag_db_load = true;
@@ -42,7 +42,7 @@ int	db_loadtbl(t_server *server)
 		if (errno == EEXIST)
 			server->flag_tbl_load = true;
 		else
-			perror("MKDIR ERROR");
+			db_err(server, "MKDIR ERROR");
 	}
 	else
 		server->flag_tbl_load = true;
@@ -52,7 +52,7 @@ int	db_loadtbl(t_server *server)
 	/**
 	if (stat(client->logpath, &st) == -1)
 		if (open(client->logpath, O_CREAT) == -1)
-			perror("OPEN ERROR");
+			db_err(server, "OPEN ERROR");
 	**/
 	return (0);
 }
