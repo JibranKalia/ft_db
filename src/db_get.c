@@ -6,13 +6,13 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/27 19:06:31 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/28 22:42:59 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
 
-t_list		*db_ls(char *path)
+t_list		*db_ls(char *path, t_server *server)
 {
 	t_list			*head;
 	t_list			*node;
@@ -79,7 +79,7 @@ int			db_get_print(t_server *server, FILE *fp, size_t size)
 	return (0);
 }
 
-int			db_get(t_server *server)
+int			db_get(t_server *server, t_server *server)
 {
 	char			*filename;
 	FILE			*fp;
