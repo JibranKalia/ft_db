@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 10:58:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/03/03 22:41:10 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/28 23:16:28 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strtrim(char const *src)
 	size_t	len;
 	size_t	i;
 
-	CHK((dst = (char*)malloc(sizeof(char))) == 0, 0);
+	CHK((dst = (char*)ft_memalloc(sizeof(char))) == 0, 0);
 	CHK(!src || !*src, dst);
 	len = 0;
 	i = -1;

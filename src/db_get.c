@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/28 23:01:51 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/28 23:20:25 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int			db_get_print(t_server *server, FILE *fp, size_t size)
 	buf = (char *)malloc(size);
 	bzero(buf, size);
 	CHK2(fgets(buf, size, fp) == NULL, free(buf), db_err(server, "FGETS ERROR"), -1);
-	db_reply(server, "Record Value:\n%s\n", buf);
+	db_reply(server, "VALUE:\t%s\n", buf);
 	free(buf);
 	return (0);
 }
@@ -91,7 +91,7 @@ int			db_get(t_server *server)
 	CHK1(server->argc != 2, db_reply(server, "usage: GET key\n"), 0);
 	if (strncasecmp(server->args[1], "all", 3) == 0)
 		return(db_getall(server));
-	filename = ft_strjoinf("/", db_gethash(server, cleanstr(server->args[1])), STRJOIN_FREE_SRC2);
+	filename = ft_strjoinf("/", db_gethash(server, server->args[1]), STRJOIN_FREE_SRC2);
 	filename = ft_strjoinf(server->tblpath, filename, STRJOIN_FREE_SRC2);
 	fp = fopen(filename, "r");
 	if (fp == NULL)

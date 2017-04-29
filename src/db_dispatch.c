@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 16:19:31 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/28 20:13:01 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/28 23:23:08 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,19 @@ char			*db_read_line(void)
 
 void			db_split_line(t_server *server)
 {
+	char	**tmp;
+	int	i;
+
+	i = 0;
+
 	server->argc = ft_countwords(server->line, ' ');
-	server->args = ft_strsplit(server->line, ' ');
+	tmp = ft_strsplit(server->line, ' ');
+	while (i < server->argc)
+	{
+		tmp[i] = db_endtrim(tmp[i]);
+		++i;
+	}
+	server->args = tmp;
 	return ;
 }
 
