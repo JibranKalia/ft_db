@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/28 22:44:21 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/28 23:01:51 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,8 @@ int			db_get(t_server *server)
 	CHK1(server->argc != 2, db_reply(server, "usage: GET key\n"), 0);
 	if (strncasecmp(server->args[1], "all", 3) == 0)
 		return(db_getall(server));
-	filename = ft_strjoinf("/", db_gethash(server, server->args[1]), STRJOIN_FREE_SRC2);
+	filename = ft_strjoinf("/", db_gethash(server, cleanstr(server->args[1])), STRJOIN_FREE_SRC2);
 	filename = ft_strjoinf(server->tblpath, filename, STRJOIN_FREE_SRC2);
-	//CHK2(((fp = fopen(filename, "r")) == NULL), free(filename), db_err(server, "FOPEN ERROR"), -1);
 	fp = fopen(filename, "r");
 	if (fp == NULL)
 	{

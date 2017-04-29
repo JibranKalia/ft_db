@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:51:30 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/28 20:14:34 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/28 23:02:00 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int			db_set(t_server *server)
 	CHK2((fclose(fp) == EOF), free(filename), db_err(server, "FCLOSE ERROR"), -1);
 	db_reply(server, "Record Saved\n");
 	free(filename);
+	ft_tbldel(values);
 	return (0);
 }
 

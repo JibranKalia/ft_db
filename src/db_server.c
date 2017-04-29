@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/25 11:49:59 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/28 21:38:11 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/28 22:54:05 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int		db_tcpbegin(t_server *server)
 	clilen = sizeof(cli_addr);
 	while ((newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, (socklen_t *)&clilen)))
 	{
-		server->fd = newsockfd;
 		db_reply(server, "Connection Established\n");
+		server->fd = newsockfd;
 		CHK(db_tcpparse(server) == -1, -1);
 	}
 	CHK1(newsockfd == -1, db_err(server, "ACCEPT ERROR"), 0);
