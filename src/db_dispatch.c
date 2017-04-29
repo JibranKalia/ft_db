@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 16:19:31 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/28 23:32:37 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/28 23:51:45 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,26 @@ int				db_clear(t_server *server)
 	return (0);
 }
 
-char	*db_endtrim(char *str)
+char	*db_strtrim(char *src)
 {
+	char		*to_free;
+	char		*dst;
 	size_t		i;
 	size_t		len;
 
-	len = strlen(str);
-	i = 0;
-	while (isgraph(str[i]))
-		i++;
-	while (i < len)
-		str[i++] = 0;
-	return (str);
+	to_free = src;
+	i = -1;
+	while (*src && !isgraph(*src))
+		++src;
+	len = strlen(src);
+	while (!isgraph(src[len - 1]) && len > 0)
+		--len;
+	CHK((dst = (char*)ft_memalloc(sizeof(char) * (len + 1))) == 0, NULL);
+	while (++i < len)
+		dst[i] = src[i];
+	dst[i] = 0;
+	free(to_free);
+	return (dst);
 }
 
 char			*db_read_line(void)
@@ -90,12 +98,11 @@ void			db_split_line(t_server *server)
 	int	i;
 
 	i = 0;
-
 	server->argc = ft_countwords(server->line, ' ');
 	tmp = ft_strsplit(server->line, ' ');
 	while (i < server->argc)
 	{
-		tmp[i] = db_endtrim(tmp[i]);
+		tmp[i] = db_strtrim(tmp[i]);
 		++i;
 	}
 	server->args = tmp;
