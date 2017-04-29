@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/28 22:42:59 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/28 22:44:21 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int			db_getall(t_server *server)
 	int				i;
 
 	path = ft_strjoin(server->tblpath, "/");
-	list = db_ls(path);
+	list = db_ls(path, server);
 	tmp = list;
 	i = 0;
 	while (tmp)
@@ -79,7 +79,7 @@ int			db_get_print(t_server *server, FILE *fp, size_t size)
 	return (0);
 }
 
-int			db_get(t_server *server, t_server *server)
+int			db_get(t_server *server)
 {
 	char			*filename;
 	FILE			*fp;
