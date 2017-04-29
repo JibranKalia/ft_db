@@ -6,13 +6,13 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/04/27 18:50:50 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/04/28 23:55:53 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= ftdb
 CC		:= gcc
-#CFLAGS		+= -Wall -Wextra -Werror
+CFLAGS		+= -Wall -Wextra -Werror
 CFLAGS		+= -I includes/ -I libft/includes/
 LDFLAGS		:= -L libft/ -lft
 

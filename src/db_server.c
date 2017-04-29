@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/25 11:49:59 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/28 22:54:05 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/28 23:56:31 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int		db_stdinparse(t_server *server)
 
 int		db_tcpbegin(t_server *server)
 {
-	int					pid;
 	int					sockfd;
 	int					newsockfd;
 	int					clilen;
