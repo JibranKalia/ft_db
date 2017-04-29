@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 16:19:31 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/28 23:23:08 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/28 23:32:37 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,20 @@ int				db_clear(t_server *server)
 	if (strncasecmp(server->args[0], "clear", 5) == 0)
 		system(server->args[0]);
 	return (0);
+}
+
+char	*db_endtrim(char *str)
+{
+	size_t		i;
+	size_t		len;
+
+	len = strlen(str);
+	i = 0;
+	while (isgraph(str[i]))
+		i++;
+	while (i < len)
+		str[i++] = 0;
+	return (str);
 }
 
 char			*db_read_line(void)

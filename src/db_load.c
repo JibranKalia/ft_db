@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:53:25 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/28 23:19:46 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/28 23:34:03 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,12 @@ int	db_loadtbl(t_server *server)
 	return (0);
 }
 
-char	*db_endtrim(char *str)
-{
-	size_t		i;
-	size_t		len;
-
-	len = strlen(str);
-	i = 0;
-	while (isgraph(str[i]))
-		i++;
-	while (i < len)
-		str[i++] = 0;
-	return (str);
-}
-
 int	db_load(t_server *server)
 {
 	char		*tmp;
 
 	CHK1(server->argc != 3, db_reply(server, "usage: LOAD [--database || --table] name\n"), 0);
-	tmp = db_endtrim(server->args[2]);
+	tmp = server->args[2];
 	if (strcmp(server->args[1], "--database") == 0)
 	{
 		ft_strclr(server->dbpath);

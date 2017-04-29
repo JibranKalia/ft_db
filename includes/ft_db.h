@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/28 23:22:15 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/28 23:33:03 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int			db_get_print(t_server *server, FILE *fp, size_t size);
 int			db_load(t_server *server);
 int			db_loadtbl(t_server *server);
 int			db_loaddb(t_server *server);
-char			*db_endtrim(char *str);
 
 /*
 ** HASHTABLE
