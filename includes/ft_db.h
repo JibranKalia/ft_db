@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/27 19:02:02 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/28 20:12:28 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int			db_dispatch(t_server *server);
 char			*db_read_line(void);
 void			db_split_line(t_server *server);
 int			db_all(char *path);
+char			**db_values(char *str);
 
 /*
 ** GET

@@ -19,6 +19,8 @@ STR			:=  ft_putendl ft_putendl_fd ft_putstr ft_putstr_fd ft_strcat ft_strchr \
 PRINTF		:= ft_printf_1 ft_printf_2 ft_printf_dispatcher ft_printf_handle ft_printf_flags \
 					ft_printf_array_1 ft_printf_array_2 ft_printf_c ft_printf_dp \
 					ft_printf_nf ft_printf_s ft_printf_b ft_printf_uox
+TREES		:= btree_add_node btree_apply_inorder btree_apply_postorder btree_apply_preorder \
+					btree_create_node
 
 FILES		:= $(addprefix chr/, $(CHR)) \
 				$(addprefix ctype/, $(CTYPE)) \
@@ -27,6 +29,7 @@ FILES		:= $(addprefix chr/, $(CHR)) \
 				$(addprefix nbr/, $(NBR)) \
 				$(addprefix str/, $(STR)) \
 				$(addprefix printf/, $(PRINTF)) \
+				$(addprefix trees/, $(TREES)) \
 
 .PHONY = all clean fclean
 
