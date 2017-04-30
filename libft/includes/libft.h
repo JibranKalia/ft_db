@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 16:58:42 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/28 13:10:54 by aakin-al         ###   ########.fr       */
+/*   Updated: 2017/04/30 09:51:07 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,19 @@
 # include <sys/uio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <errno.h>
 
 # define CHK(a, b) if(1){if(a){return(b);}}
 # define CHK1(a, b, c) if(1){if(a){b; return(c);}}
 # define CHK2(a, b, c, d) if(1){if(a){b; c; return(d);}}
 # define CHK3(a, b, c, d, e) if(1){if(a){b; c; d; return(e);}}
 # define CHK4(a, b, c, d, e, f) if(1){if(a){b; c; d; e; return(f);}}
+
+# define LP(M,...) ft_log_err(__FILE__, __LINE__, M, ##__VA_ARGS__)
+# define CHECK(a,M,...) if(1){if(a){return(LP(M, ##__VA_ARGS__));}}
+# define CHECK1(a,b,M,...) if(1){if(a){b;return(LP(M, ##__VA_ARGS__));}}
+# define CHECK2(a,b,c,M,...) if(1){if(a){b;c;return(LP(M, ##__VA_ARGS__));}}
+# define CHECK3(a,b,c,d,M,...) if(1){if(a){b;c;d;return(LP(M, ##__VA_ARGS__));}}
 
 # define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 # define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
@@ -117,7 +124,7 @@ char				*ft_strmap(char const *src, char (*f)(char));
 char				*ft_strmapi(char const *src, char (*f)(unsigned int, char));
 char				*ft_strsub(char const *src, unsigned int start, size_t len);
 char				*ft_strjoin(char const *src1, char const *src2);
-char				*ft_strjoinf(char *s1, char *s2, int d);
+char				*ft_strjoinf(char *s1, char *s2, size_t d);
 char				*ft_strtrim(char const *src);
 char				**ft_strsplit(const char *src, char c);
 int					ft_countwords(char const *src, char c);
@@ -207,4 +214,9 @@ void				btree_apply_inorder(t_btree *root, void (*applyf)(int));
 void				btree_apply_postorder(t_btree *root, void (*applyf)(int));
 void				btree_apply_preorder(t_btree *root, void (*applyf)(int));
 
+/*
+** Binary Search Trees
+*/
+
+int					ft_log_err(char *file, int line, char *message, ...);
 #endif
