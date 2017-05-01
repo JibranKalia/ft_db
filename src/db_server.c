@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/25 11:49:59 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/28 23:56:31 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/30 19:18:18 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int main(int argc, char **argv)
 {
 	t_server	*server;
 
-	CHK1((argc < 2), printf("Usage: %s [stdin || tcp]", argv[0]), -1);
+	CHK1((argc < 2), printf("Usage: %s [stdin || tcp] (FOR MVP use STDIN)", argv[0]), -1);
 	server = db_server_init();
 	if (strncasecmp(argv[1], "stdin", 5) == 0)
 		db_stdinparse(server);
