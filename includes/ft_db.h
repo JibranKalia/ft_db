@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/03 14:00:05 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 14:31:56 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define DB_NAME_BUFF 50
 # define PROTO_FUNC_NUM 7
 # define PORTNUMBER 12345
+# define ERR(M) db_err(server, M)
 
 typedef struct		s_server
 {
@@ -96,6 +97,7 @@ char			**db_values(char *str);
 
 int			db_get(t_server *server);
 int			db_get_print(t_server *server, FILE *fp, size_t size);
+int			db_getall(t_server *server);
 
 /*
 ** LOAD

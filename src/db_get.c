@@ -6,73 +6,17 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/28 23:20:25 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 14:47:04 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
 
-t_list		*db_ls(char *path, t_server *server)
-{
-	t_list			*head;
-	t_list			*node;
-	char			*tmp;
-	DIR				*dir;
-	struct	dirent	*ent;
-
-	head = ft_lstnew(NULL, 0);
-	CHK1((dir = opendir(path)) == NULL, db_err(server, "OPENDIR ERROR"), NULL);
-	while ((ent = readdir (dir)) != NULL)
-	{
-		tmp = strndup((char *)ent->d_name, ent->d_namlen);
-		node = ft_lstnew(tmp, ent->d_namlen);
-		ft_lstappend(&head, node);
-	}
-	closedir(dir);
-	return (head);
-}
-
-int			db_getall(t_server *server)
-{
-	t_list			*list;
-	t_list			*tmp;
-	char			*filename;
-	char			*path;
-	FILE			*fp;
-	int 			fd;
-	struct stat		st;
-	int				i;
-
-	path = ft_strjoin(server->tblpath, "/");
-	list = db_ls(path, server);
-	tmp = list;
-	i = 0;
-	while (tmp)
-	{
-		if (tmp->content && strncmp(tmp->content, ".", 1) != 0 )
-		{
-			filename = ft_strjoin(path, tmp->content);
-			CHK2(((fp = fopen(filename, "r")) == NULL), free(filename), db_err(server, "FOPEN ERROR"), -1);
-			fd = fileno(fp);
-			CHK2(fstat(fd, &st) == -1, free(filename), db_err(server, "FSTAT ERROR"), -1);
-			db_get_print(server, fp, st.st_size * 2);
-			CHK2(fclose(fp) == EOF, free(filename), db_err(server, "FCLOSE ERROR"), -1);
-			++i;
-		}
-		tmp = tmp->next;
-	}
-	ft_lstfree(&list);
-	if (i == 0)
-		printf("No records found\n");
-	return (0);
-}
-
 int			db_get_print(t_server *server, FILE *fp, size_t size)
 {
 	char	*buf;
 
-	buf = (char *)malloc(size);
-	bzero(buf, size);
+	buf = ft_strnew(size);
 	CHK2(fgets(buf, size, fp) == NULL, free(buf), db_err(server, "FGETS ERROR"), -1);
 	db_reply(server, "VALUE:\t%s\n", buf);
 	free(buf);
