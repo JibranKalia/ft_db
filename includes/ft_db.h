@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/28 23:33:03 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 14:00:05 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,19 @@ typedef struct		s_server
 	size_t		hashsize;
 	int		portno;
 }			t_server;
+
+/*
+** LSFILE
+*/
+
+typedef struct stat		t_stat;
+typedef struct dirent	t_dir;
+typedef struct			s_ls_file
+{
+	char				*path;
+	char				*name;
+	t_stat				statinfo;
+}						t_ls_file;
 
 /*
 ** INIT
