@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/28 23:33:03 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 15:23:06 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define DB_NAME_BUFF 50
 # define PROTO_FUNC_NUM 7
 # define PORTNUMBER 12345
+# define ERR(M) db_err(server, M)
 
 typedef struct		s_server
 {
@@ -50,6 +51,20 @@ typedef struct		s_server
 	size_t		hashsize;
 	int		portno;
 }			t_server;
+
+/*
+** LSFILE
+*/
+
+typedef struct stat		t_stat;
+typedef struct dirent	t_dir;
+typedef struct			s_db_file
+{
+	char				*path;
+	char				*name;
+	char				*value;
+	t_stat				statinfo;
+}						t_db_file;
 
 /*
 ** INIT
@@ -83,6 +98,7 @@ char			**db_values(char *str);
 
 int			db_get(t_server *server);
 int			db_get_print(t_server *server, FILE *fp, size_t size);
+int			db_getall(t_server *server);
 
 /*
 ** LOAD

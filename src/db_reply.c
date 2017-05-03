@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   db_error.c                                         :+:      :+:    :+:   */
+/*   db_reply.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/23 20:39:36 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/28 20:13:17 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 14:54:02 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,6 @@ int		db_reply(t_server *server, const char *fmt, ...)
 	va_copy(clone2, ap);
 	if (server->fd != STDOUT_FILENO)
 		i = vdprintf(server->fd, fmt, clone1);
-	i = vprintf(fmt, clone2);
+	i = vdprintf(STDOUT_FILENO, fmt, clone2);
 	return (i);
 }
