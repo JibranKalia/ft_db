@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/03 14:31:56 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 15:23:06 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,13 @@ typedef struct		s_server
 
 typedef struct stat		t_stat;
 typedef struct dirent	t_dir;
-typedef struct			s_ls_file
+typedef struct			s_db_file
 {
 	char				*path;
 	char				*name;
+	char				*value;
 	t_stat				statinfo;
-}						t_ls_file;
+}						t_db_file;
 
 /*
 ** INIT
