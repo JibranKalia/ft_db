@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/03 21:33:12 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 22:41:59 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define PORTNUMBER 12345
 # define ERR(M) db_err(server, M)
 # define REPLY(M, ...) db_reply(server, M, ##__VA_ARGS__)
+# define GETVAL_CODE 5
 
 /*
 ** MAIN STRUCT

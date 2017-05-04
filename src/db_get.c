@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/03 22:19:21 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 22:51:07 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ char	*db_printer(char *value)
 	int	len;
 	char	*buf;
 
+	j = 0;
 	len = strlen(value) * 2;
 	buf = ft_strnew(len);
+	if (*value == '\n')
+		++value;
 	memcpy(buf, "KEY: ", 5);
 	j = 5;
 	i = 0;
@@ -46,8 +49,8 @@ char	*db_printer(char *value)
 		}
 		else if (*value == ',')
 		{
-			buf[j] = '\t';
-			++j;
+			memcpy(&buf[j], "\t\t", 2);
+			j += 2;
 			++value;
 		}
 		else

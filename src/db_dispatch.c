@@ -6,12 +6,14 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 16:19:31 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 20:53:27 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 22:47:54 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
 # define FUNC_NUM 10
+
+int8_t			g_commandcode = 0;
 
 static char		*g_db_strtable[FUNC_NUM] =
 {
@@ -128,7 +130,10 @@ int				db_dispatch(t_server *server)
 	while (i < FUNC_NUM)
 	{
 		if (strncasecmp(in, g_db_strtable[i], strlen(in)) == 0)
+		{
+			g_commandcode = i;
 			return (*g_db_functable[i])(server);
+		}
 		++i;
 	}
 	REPLY("Command Not Recognized");

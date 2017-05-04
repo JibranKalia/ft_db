@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:48 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 21:34:47 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 22:36:00 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int			db_getall_print(t_server *server)
 	parsed = db_printer(tmp);
 	REPLY(parsed);
 	free(tmp);
+	free(parsed);
 	return (0);
 }
 
