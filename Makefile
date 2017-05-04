@@ -6,12 +6,13 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/05/04 11:21:26 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/05/04 11:46:32 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= ftdb
 CLIENT		:= client
+TEST		:= test
 CC		:= gcc
 CFLAGS		+= -Wall -Wextra -Werror
 CFLAGS		+= -I includes/ -I libft/includes/
@@ -24,13 +25,18 @@ FILES		:= db_dispatch db_delete db_reply db_init db_set db_load \
 SRC		:= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ		:= $(SRC:.c=.o)
 
-CLIENTFILES	:= db_client
+CLIENTFILES	:= db_client_main
 CLIENTSRC	:= $(addprefix src/, $(addsuffix .c, $(CLIENTFILES)))
 CLIENTOBJ	:= $(CLIENTSRC:.c=.o)
 
+TESTFILES	:= db_test_main
+TESTSRC		:= $(addprefix src/, $(addsuffix .c, $(TESTFILES)))
+TESTOBJ		:= $(TESTSRC:.c=.o)
+
+
 .PHONY = all clean fclean clean re
 
-all: $(NAME) $(CLIENT)
+all: $(NAME) $(CLIENT) $(TEST)
 
 $(LIBFT):
 	@make -C libft	
@@ -49,6 +55,13 @@ $(CLIENTOBJ): %.o: %.c
 $(CLIENT): $(LIBFT) $(CLIENTOBJ)
 	@$(CC) $(LDFLAGS) -o $@ $^
 	@echo "\033[32mCompiled Client\033[0m"
+
+$(TESTOBJ): %.o: %.c
+	@$(CC) -c $(CFLAGS) $< -o $@
+
+$(TEST): $(LIBFT) $(TESTOBJ)
+	@$(CC) $(LDFLAGS) -o $@ $^
+	@echo "\033[32mCompiled Test\033[0m"
 
 clean:
 	@make -C libft clean
