@@ -6,44 +6,73 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/03 20:38:55 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 22:19:21 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
 
-char	*db_parser(char *value)
+char	*db_printer(char *value)
 {
-	int	j;
-	size_t	len;
+	int 	j; 
+	int	i;
+	int	len;
 	char	*buf;
-	
-	j = 0;
-	len = strlen(value);
-	len *= 2;
-	buf = (char *)ft_memalloc(len);
-	//strncpy(buf, "KEY: ", 5);
-	buf[0] = 'a';
-	printf("%s\n", buf);
-	j += 5;
-	while (*value != '}')
-	{
-		buf[j] = *value;
-		++value;
-		++j;
-	}
 
-	return (0);
+	len = strlen(value) * 2;
+	buf = ft_strnew(len);
+	memcpy(buf, "KEY: ", 5);
+	j = 5;
+	i = 0;
+	while (*value)
+	{
+		if (*value == '\n')
+		{
+			memcpy(&buf[j], "\nKEY: ", 6);
+			++value;
+			j += 6;
+			i = 0;
+		}
+		else if (*value == ':')
+		{
+			if (i < 3)
+			{
+				memcpy(&buf[j], "\t", 1);
+				++j;
+			}
+			memcpy(&buf[j], "\t\t| VALUE: ", 11);
+			++value;
+			j += 11;
+		}
+		else if (*value == ',')
+		{
+			buf[j] = '\t';
+			++j;
+			++value;
+		}
+		else
+		{
+			buf[j] = *value;
+			++j;
+			++value;
+			++i;
+		}
+	}
+	buf[j] = 0;
+	return (buf);
 }
 
 int			db_get_print(t_server *server, FILE *fp, size_t size)
 {
 	char	*buf;
+	char	*parsed;
 
 	buf = ft_strnew(size);
 	CHK2(fgets(buf, size, fp) == NULL, free(buf), db_err(server, "FGETS ERROR"), -1);
-	REPLY("%s", buf);
+	parsed = db_printer(buf);
+	REPLY(parsed);
 	free(buf);
+	free(parsed);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:51:30 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 21:05:27 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 21:15:19 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ static int		db_stringcheck(char *s)
 {
 	while (*s)
 	{
-		if (*s == '(' || *s == ')' || *s == '{'
-				|| *s == '}' || *s == '[' || *s == ']')
+		if (*s == ':')
 			return (*s);
 		++s;
 	}
@@ -25,8 +24,6 @@ static int		db_stringcheck(char *s)
 }
 static int		db_writefile(char *filename, char *key, t_server *server)
 {
-	char		*tmp1;
-	char		*tmp2;
 	FILE		*fp;
 	int		illegal;
 
@@ -34,13 +31,10 @@ static int		db_writefile(char *filename, char *key, t_server *server)
 	CHK1(illegal != 0, REPLY("Illegal Character: %c", illegal), -1);
 	fp = fopen(filename, "w+");
 	CHK2(fp == NULL, free(filename), ERR("FOPEN ERROR: "), -1);
-	asprintf(&tmp1, "{%s}", key);
-	CHK2(fputs(tmp1, fp) == EOF, free(tmp1), ERR("FPUTS ERROR"), -1);
-	asprintf(&tmp2, "[%s]", server->args[2]);
-	CHK3(fputs(tmp2, fp) == EOF, free(tmp1), free(tmp2), ERR("FPUTS ERROR"), -1);
-	CHK3(fclose(fp) == EOF, free(tmp1), free(tmp2), ERR("FCLOSE ERROR"), -1);
-	free(tmp1);
-	free(tmp2);
+	CHK1(fputs(key, fp) == EOF, ERR("FPUTS ERROR"), -1);
+	CHK1(fputs(":", fp) == EOF, ERR("FPUTS ERROR"), -1);
+	CHK1(fputs(server->args[2], fp) == EOF, ERR("FPUTS ERROR"), -1);
+	CHK1(fclose(fp) == EOF, ERR("FCLOSE ERROR"), -1);
 	return (0);
 }
 

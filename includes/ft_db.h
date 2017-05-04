@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/03 20:55:27 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 21:33:12 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int			db_get(t_server *server);
 int			db_getval(t_server *server);
 int			db_getall(t_server *server);
 char			*db_catvalue(t_server *server);
+char			*db_printer(char *value);
 
 /*
 ** LOAD

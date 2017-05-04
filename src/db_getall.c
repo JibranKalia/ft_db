@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:48 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 20:49:48 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 21:34:47 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@ char			*db_catvalue(t_server *server)
 int			db_getall_print(t_server *server)
 {
 	char	*tmp;
+	char	*parsed;
 	
 	CHK1(server->files == NULL, ERR("File Array not present"), -1);
 	tmp = db_catvalue(server);
-	REPLY(tmp);
+	parsed = db_printer(tmp);
+	REPLY(parsed);
 	free(tmp);
 	return (0);
 }
