@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 16:19:31 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/28 23:51:45 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 17:50:29 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int				db_clear(t_server *server)
 	return (0);
 }
 
-char	*db_strtrim(char *src)
+char				*db_strtrim(char *src)
 {
 	char		*to_free;
 	char		*dst;

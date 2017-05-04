@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/03 15:23:06 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 17:49:44 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,22 +75,30 @@ t_server		*db_server_init(void);
 void			db_server_clean(t_server *server);
 
 /*
-** DISPATCH
+** UTIL
 */
 
 int			db_clear(t_server *server);
 int			db_help(t_server *server);
-int			db_set(t_server *server);
 int			db_delete(t_server *server);
 int			db_exit(t_server *server);
 int			db_exitclear(t_server *server);
-int			db_loop(t_server *server, int sock);
 
+/*
+** DISPATCH
+*/
+
+int			db_loop(t_server *server, int sock);
 int			db_dispatch(t_server *server);
 char			*db_read_line(void);
 void			db_split_line(t_server *server);
-int			db_all(char *path);
-char			**db_values(char *str);
+
+/*
+** DISPATCH
+*/
+
+int			db_update(t_server *server)
+int			db_set(t_server *server);
 
 /*
 ** GET
