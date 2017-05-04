@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/03 22:51:07 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/04 16:10:59 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int			db_get(t_server *server)
 {
 	char			*filename;
 	FILE			*fp;
-	int			fd;
+	int				fd;
 	struct stat		st;
 
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
@@ -91,8 +91,7 @@ int			db_get(t_server *server)
 	CHK1(server->argc != 2, REPLY("usage: GET key"), 0);
 	if (strncasecmp(server->args[1], "all", 3) == 0)
 		return(db_getall(server));
-	filename = ft_strjoinf("/", db_gethash(server, server->args[1]), STRJOIN_FREE_SRC2);
-	filename = ft_strjoinf(server->tblpath, filename, STRJOIN_FREE_SRC2);
+	asprintf(&filename, "%s/%s", server->tblpath, db_gethash(server, server->args[1]));
 	fp = fopen(filename, "r");
 	if (fp == NULL)
 	{

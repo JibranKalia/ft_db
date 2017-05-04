@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/23 20:39:36 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 18:46:47 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/04 16:13:26 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		db_err(t_server *server, const char *str)
 	asprintf(&buf, "%s: %s", str, err);
 	REPLY("%s", buf);
 	free(buf);
-	return (0);
+	return (-1);
 }
 
 int		db_reply(t_server *server, const char *fmt, ...)
@@ -75,5 +75,8 @@ int		db_reply(t_server *server, const char *fmt, ...)
 	}
 	i = vdprintf(STDOUT_FILENO, fmt, clone2);
 	dprintf(STDOUT_FILENO, "\n");
+	va_end(clone1);
+	va_end(clone2);
+	va_end(ap);
 	return (i);
 }

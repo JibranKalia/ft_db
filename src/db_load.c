@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:53:25 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/04 14:50:22 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/04 16:03:29 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	db_loaddb(t_server *server)
 {
+	server->flag_value = false;
 	if (server->dbpath == NULL)
 		server->dbpath = strdup("./db");
 	REPLY("Database Path = %s", server->dbpath);
@@ -31,6 +32,7 @@ int	db_loaddb(t_server *server)
 
 int	db_loadtbl(t_server *server)
 {
+	server->flag_value = false;
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
 	if (server->tblpath == NULL)
 		server->tblpath = strdup("./db/tbl");
@@ -59,7 +61,7 @@ int	db_load(t_server *server)
 {
 	char		*tmp;
 
-	DEBUG("Server argc = %d\n", server->argc);
+	///DEBUG("Server argc = %d\n", server->argc);
 	CHK1(server->argc < 3, REPLY("usage: LOAD [--database || --table] name"), 0);
 	tmp = server->args[2];
 	if (strcmp(server->args[1], "--database") == 0)
