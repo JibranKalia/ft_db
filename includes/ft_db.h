@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/03 22:41:59 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/04 11:12:47 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,16 @@
 # include <limits.h>
 # include <libft.h>
 # include <stdio.h>
-# include <stdlib.h>
 # include <stdbool.h>
 # include <stdint.h>
 # include <string.h>
-# include <unistd.h>
 # include <sys/types.h>
 # include <sys/socket.h>
 # include <sys/types.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <netinet/in.h>
+#include <netdb.h>
 
 # define PROTO_HASH_SIZE 10000000
 # define PROTO_ARRAY_SIZE 10
