@@ -6,14 +6,14 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 16:19:31 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 17:52:22 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 17:56:17 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
-# define PROTO_FUNC_NUM 9
+# define FUNC_NUM 9
 
-static char		*g_db_strtable[] =
+static char		*g_db_strtable[FUNC_NUM] =
 {
 	"LOAD",
 	"SET",
@@ -123,7 +123,7 @@ int				db_dispatch(t_server *server)
 	if (server->args[0] == NULL)
 		return (0);
 	in = server->args[0];
-	while (i < PROTO_FUNC_NUM)
+	while (i < FUNC_NUM)
 	{
 		if (strncasecmp(in, g_db_strtable[i], strlen(in)) == 0)
 			return (*g_db_functable[i])(server);

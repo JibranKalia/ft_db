@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/23 20:39:36 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 14:54:02 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 17:59:05 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,13 @@ int	db_msg(t_server *server, int code)
 		db_reply(server,  "**********************************************************\n"
 				"Step 1: Choose Database. Use: LOAD --database database_name\n"
 				"Step 2: Choose Table. Use: LOAD --table table_name\n"
-				"Step 3: Save Record. Use: SET Key (Value1,Value2,...)\n"
+				"Step 3: Save Record. Use: CREATE Key Value\n"
 				"Step 4: Retrieve Record: Use: GET Key\n"
-				"Step 5: Delete Record. Use: DELETE --record KEY\n"
-				"Step 6: Exit. Use: EXIT\n"
+				"Step 5: Update Record: Use: UPDATE Key Value\n"
+				"Step 6: Retrieve Updated Record: Use: GET Key\n"
+				"Step 7: Delete Record. Use: DELETE --record KEY\n"
+				"Step 8: Check if deleted correctly: Use: GET Key\n"
+				"Step 9: Exit. Use: EXIT\n"
 				"**********************************************************\n");
 	}
 	else if (code == MSG_DB_MISSING)
