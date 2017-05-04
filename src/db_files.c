@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 18:35:33 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 18:39:47 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 19:41:12 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int			db_readvalue(t_server *server)
 	{
 		fp = fopen(tmp[i]->path, "r");
 		CHK1(fp == NULL, ERR("FOPEN ERROR"), -1);
-		readsize = tmp[i]->statinfo.st_size;
+		readsize = tmp[i]->statinfo.st_size + 1;
 		tmp[i]->value = ft_strnew(readsize);
 		CHK1(fgets(tmp[i]->value, readsize, fp) == NULL, ERR("FGETS ERROR"), -1);
 		CHK1(fclose(fp) == EOF, ERR("FCLOSE ERROR"), -1);

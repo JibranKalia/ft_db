@@ -6,32 +6,32 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:51:30 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 17:55:05 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 19:36:00 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
 
-static int		db_writefile(char *filename, t_server *server)
+static int		db_writefile(char *filename, char *key, t_server *server)
 {
-	int		count;
-	int		i;
+	char		*tmp;
+	char		*tmp2;
 	FILE		*fp;
 	char		**values;
 
-	i = 0;
 	fp = fopen(filename, "w+");
 	CHK2(fp == NULL, free(filename), ERR("FOPEN ERROR: "), -1);
-	count = ft_countwords(server->args[2], ',');
+	asprintf(&tmp, "KEY: {%15s} | VALUE: ", key);
+	CHK2(fputs(tmp, fp) == EOF, free(filename), ERR("FPUTS ERROR"), -1);
 	values = ft_strsplit(server->args[2], ',');
-	while (i < count)
+	CHK2(fputs("[", fp) == EOF, free(filename), ERR("FPUTS ERROR"), -1);
+	while (*values)
 	{
-		++i;
-		CHK2(fputs(*values, fp) == EOF, free(filename), ERR("FPUTS ERROR"), -1);
-		if (i < count)
-			CHK2(fputs("\t", fp) == EOF, free(filename), ERR("FPUTS ERROR"), -1);
+		asprintf(&tmp2, "%15s", *values);
+		CHK2(fputs(tmp2, fp) == EOF, free(filename), ERR("FPUTS ERROR"), -1);
 		values++;
 	}
+	CHK2(fputs("]", fp) == EOF, free(filename), ERR("FPUTS ERROR"), -1);
 	CHK2(fclose(fp) == EOF, free(filename), ERR("FCLOSE ERROR"), -1);
 	ft_tbldel(values);
 	return (0);
@@ -56,7 +56,7 @@ int			db_set(t_server *server)
 	{
 		CHK(ERR("ACCESS ERROR: "), -1);
 	}
-	chk = db_writefile(filename, server);
+	chk = db_writefile(filename, server->args[1], server);
 	free(hash);
 	free(filename);
 	if (chk != -1)
@@ -75,8 +75,7 @@ int			db_update(t_server *server)
 	CHK1(server->argc != 3, REPLY("usage: UPDATE key value"), 0);
 	hash = db_gethash(server, server->args[1]);
 	asprintf(&filename, "%s/%s", server->tblpath, hash);
-	db_writefile(filename, server);
-	chk = db_writefile(filename, server);
+	chk = db_writefile(filename, server->args[1], server);
 	free(hash);
 	free(filename);
 	if (chk != -1)
