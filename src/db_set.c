@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:51:30 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 17:48:12 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 17:55:05 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static int		db_writefile(char *filename, t_server *server)
 		values++;
 	}
 	CHK2(fclose(fp) == EOF, free(filename), ERR("FCLOSE ERROR"), -1);
-	db_reply(server, "Record Saved\n");
 	ft_tbldel(values);
 	return (0);
 }
@@ -60,6 +59,8 @@ int			db_set(t_server *server)
 	chk = db_writefile(filename, server);
 	free(hash);
 	free(filename);
+	if (chk != -1)
+		db_reply(server, "Record Saved\n");
 	return ((chk == 0) ? 0 : -1);
 }
 
@@ -78,5 +79,7 @@ int			db_update(t_server *server)
 	chk = db_writefile(filename, server);
 	free(hash);
 	free(filename);
+	if (chk != -1)
+		db_reply(server, "Record Updated\n");
 	return ((chk == 0) ? 0 : -1);
 }

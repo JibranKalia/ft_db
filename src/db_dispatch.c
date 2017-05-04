@@ -6,16 +6,19 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 16:19:31 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 17:50:29 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 17:52:22 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
+# define PROTO_FUNC_NUM 9
 
 static char		*g_db_strtable[] =
 {
 	"LOAD",
 	"SET",
+	"CREATE",
+	"UPDATE",
 	"GET",
 	"DELETE",
 	"EXIT",
@@ -27,6 +30,8 @@ static int		(*g_db_functable[]) (t_server *) =
 {
 	&db_load,
 	&db_set,
+	&db_set,
+	&db_update,
 	&db_get,
 	&db_delete,
 	&db_exit,

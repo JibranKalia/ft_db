@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/03 17:49:44 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 17:52:34 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 
 # define PROTO_HASH_SIZE 10000000
 # define DB_NAME_BUFF 50
-# define PROTO_FUNC_NUM 7
 # define PORTNUMBER 12345
 # define ERR(M) db_err(server, M)
 
@@ -97,7 +96,7 @@ void			db_split_line(t_server *server);
 ** DISPATCH
 */
 
-int			db_update(t_server *server)
+int			db_update(t_server *server);
 int			db_set(t_server *server);
 
 /*
