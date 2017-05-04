@@ -45,12 +45,12 @@ int			db_set(t_server *server)
 
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
 	CHK1(server->flag_tbl_load == false, db_msg(server, MSG_TBL_MISSING), 0);
-	CHK1(server->argc != 3, db_reply(server, "usage: SET key value\n"), 0);
+	CHK1(server->argc != 3, REPLY("usage: SET key value"), 0);
 	hash = db_gethash(server, server->args[1]);
 	asprintf(&filename, "%s/%s", server->tblpath, hash);
 	if (access(filename, F_OK) != -1)
 	{
-		CHK(db_reply(server, "Record exists. Use UPDATE\n"), 0);
+		CHK(REPLY("Record exists. Use UPDATE"), 0);
 	}
 	else if (errno != ENOENT)
 	{
@@ -60,7 +60,7 @@ int			db_set(t_server *server)
 	free(hash);
 	free(filename);
 	if (chk != -1)
-		db_reply(server, "Record Saved\n");
+		REPLY("Record Saved");
 	return ((chk == 0) ? 0 : -1);
 }
 
@@ -72,7 +72,7 @@ int			db_update(t_server *server)
 
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
 	CHK1(server->flag_tbl_load == false, db_msg(server, MSG_TBL_MISSING), 0);
-	CHK1(server->argc != 3, db_reply(server, "usage: UPDATE key value\n"), 0);
+	CHK1(server->argc != 3, REPLY("usage: UPDATE key value"), 0);
 	hash = db_gethash(server, server->args[1]);
 	asprintf(&filename, "%s/%s", server->tblpath, hash);
 	db_writefile(filename, server);
@@ -80,6 +80,6 @@ int			db_update(t_server *server)
 	free(hash);
 	free(filename);
 	if (chk != -1)
-		db_reply(server, "Record Updated\n");
+		REPLY("Record Updated");
 	return ((chk == 0) ? 0 : -1);
 }

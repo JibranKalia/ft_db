@@ -18,7 +18,7 @@ int			db_get_print(t_server *server, FILE *fp, size_t size)
 
 	buf = ft_strnew(size);
 	CHK2(fgets(buf, size, fp) == NULL, free(buf), db_err(server, "FGETS ERROR"), -1);
-	db_reply(server, "VALUE:\t%s\n", buf);
+	REPLY("VALUE:\t%s\n", buf);
 	free(buf);
 	return (0);
 }
@@ -32,7 +32,7 @@ int			db_get(t_server *server)
 
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
 	CHK1(server->flag_tbl_load == false, db_msg(server, MSG_TBL_MISSING), 0);
-	CHK1(server->argc != 2, db_reply(server, "usage: GET key\n"), 0);
+	CHK1(server->argc != 2, REPLY("usage: GET key"), 0);
 	if (strncasecmp(server->args[1], "all", 3) == 0)
 		return(db_getall(server));
 	filename = ft_strjoinf("/", db_gethash(server, server->args[1]), STRJOIN_FREE_SRC2);
@@ -40,7 +40,7 @@ int			db_get(t_server *server)
 	fp = fopen(filename, "r");
 	if (fp == NULL)
 	{
-		(errno == ENOENT) ? db_reply(server, "Record Not Found\n") : db_err(server, "FOPEN ERROR");
+		(errno == ENOENT) ? REPLY("Record Not Found") : db_err(server, "FOPEN ERROR");
 		free(filename);
 		return (-1);
 	}

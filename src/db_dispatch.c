@@ -129,6 +129,6 @@ int				db_dispatch(t_server *server)
 			return (*g_db_functable[i])(server);
 		++i;
 	}
-	db_reply(server, "Command Not Recognized\n");
+	REPLY("Command Not Recognized");
 	return (0);
 }

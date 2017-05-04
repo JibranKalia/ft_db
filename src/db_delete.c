@@ -19,7 +19,7 @@ static int	db_deletetbl(t_server *server)
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
 	CHK1(server->flag_tbl_load == false, db_msg(server, MSG_TBL_MISSING), 0);
 	buf = ft_strjoin("rm -rf ", server->tblpath);
-	db_reply(server, "Removing: %s\n", server->tblpath);
+	REPLY("Removing: %s", server->tblpath);
 	system(buf);
 	server->flag_tbl_load = false;
 	free(buf);
@@ -32,7 +32,7 @@ static int	db_deletedb(t_server *server)
 
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
 	buf = ft_strjoin("rm -rf ", server->dbpath);
-	db_reply(server, "Removing: %s\n", server->dbpath);
+	REPLY("Removing: %s", server->dbpath);
 	system(buf);
 	server->flag_db_load = false;
 	free(buf);
@@ -49,7 +49,7 @@ int		db_deletekey(t_server *server)
 	filename = ft_strjoinf("/", db_gethash(server, server->args[2]), STRJOIN_FREE_SRC2);
 	filename = ft_strjoinf(server->tblpath, filename, STRJOIN_FREE_SRC2);
 	CHK2(remove(filename) == -1, free(filename), db_err(server, "REMOVE ERROR"), -1);
-	db_reply(server, "Removing: %s\n", filename);
+	REPLY("Removing: %s", filename);
 	free(filename);
 	return (0);
 }
@@ -71,8 +71,8 @@ int		db_delete(t_server *server)
 
 int		db_exit(t_server *server)
 {
-	CHK1(server->argc != 1, db_reply(server, "usage: EXIT\n"), 0);
-	db_reply(server, "GOODBYE!");
+	CHK1(server->argc != 1, REPLY("usage: EXIT"), 0);
+	REPLY("GOODBYE!");
 //	fcloseall();
 	db_server_clean(server);
 	free(server);

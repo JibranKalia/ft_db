@@ -36,7 +36,7 @@
 # define DB_NAME_BUFF 50
 # define PORTNUMBER 12345
 # define ERR(M) db_err(server, M)
-# define REPLY(M) db_reply(server, M)
+# define REPLY(M, ...) db_reply(server, M, ##__VA_ARGS__)
 
 /*
 ** MAIN STRUCT

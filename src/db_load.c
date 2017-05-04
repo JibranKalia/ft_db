@@ -16,7 +16,7 @@ int	db_loaddb(t_server *server)
 {
 	if (server->dbpath == NULL)
 		server->dbpath = strdup("./db");
-	db_reply(server, "Database Path = %s\n", server->dbpath);
+	REPLY("Database Path = %s", server->dbpath);
 	if (mkdir(server->dbpath, 0777) == -1)
 	{
 		if (errno == EEXIST)
@@ -34,7 +34,7 @@ int	db_loadtbl(t_server *server)
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
 	if (server->tblpath == NULL)
 		server->tblpath = strdup("./db/tbl");
-	db_reply(server, "Table Path = %s\n", server->tblpath);
+	REPLY("Table Path = %s", server->tblpath);
 	if (mkdir(server->tblpath, 0777) == -1)
 	{
 		if (errno == EEXIST)
@@ -46,7 +46,7 @@ int	db_loadtbl(t_server *server)
 		server->flag_tbl_load = true;
 	server->logpath = ft_strjoin(server->tblpath, "/");
 	server->logpath = ft_strjoinf(server->logpath, "log", STRJOIN_FREE_SRC1);
-	//db_reply(server, "Log Path = %s\n", server->logpath);
+	//REPLY("Log Path = %s", server->logpath);
 	/**
 	if (stat(client->logpath, &st) == -1)
 		if (open(client->logpath, O_CREAT) == -1)
@@ -59,7 +59,7 @@ int	db_load(t_server *server)
 {
 	char		*tmp;
 
-	CHK1(server->argc != 3, db_reply(server, "usage: LOAD [--database || --table] name\n"), 0);
+	CHK1(server->argc != 3, REPLY("usage: LOAD [--database || --table] name"), 0);
 	tmp = server->args[2];
 	if (strcmp(server->args[1], "--database") == 0)
 	{
@@ -76,5 +76,5 @@ int	db_load(t_server *server)
 		return (db_loadtbl(server));
 	}
 	else
-		return (db_reply(server, "usage: LOAD [--database || --table] name\n"));
+		return (REPLY("usage: LOAD [--database || --table] name"));
 }

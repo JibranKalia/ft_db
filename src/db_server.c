@@ -62,7 +62,7 @@ int		db_tcpbegin(t_server *server)
 	clilen = sizeof(cli_addr);
 	while ((newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, (socklen_t *)&clilen)))
 	{
-		db_reply(server, "Connection Established\n");
+		REPLY("Connection Established");
 		server->fd = newsockfd;
 		CHK(db_tcpparse(server) == -1, -1);
 	}
@@ -93,7 +93,7 @@ int main(int argc, char **argv)
 		db_stdinparse(server);
 	}
 	else
-		db_reply(server, "Usage: %s [stdin || tcp]", argv[0]);
+		REPLY("Usage: %s [stdin || tcp]", argv[0]);
 	db_server_clean(server);
 	return (0);
 }

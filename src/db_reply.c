@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/23 20:39:36 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 17:59:05 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 18:46:47 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ int	db_msg(t_server *server, int code)
 {
 	if (code == MSG_WELCOME)
 	{
-		db_reply(server, "*********************************************\n"
+		REPLY("*********************************************\n"
 				"Welcome to FT_DB!\n"
 				"Type HELP to get started\n"
 				"Have Fun and make sure to enjoy responsibly.\n"
-				"*********************************************\n");
+				"*********************************************");
 	}
 	else if (code == MSG_HELP)
 	{
-		db_reply(server,  "**********************************************************\n"
+		REPLY( "**********************************************************\n"
 				"Step 1: Choose Database. Use: LOAD --database database_name\n"
 				"Step 2: Choose Table. Use: LOAD --table table_name\n"
 				"Step 3: Save Record. Use: CREATE Key Value\n"
@@ -34,16 +34,16 @@ int	db_msg(t_server *server, int code)
 				"Step 7: Delete Record. Use: DELETE --record KEY\n"
 				"Step 8: Check if deleted correctly: Use: GET Key\n"
 				"Step 9: Exit. Use: EXIT\n"
-				"**********************************************************\n");
+				"**********************************************************");
 	}
 	else if (code == MSG_DB_MISSING)
-		db_reply(server, "Error: Database not found. Use: LOAD --database database_name\n");
+		REPLY("Error: Database not found. Use: LOAD --database database_name");
 	else if (code == MSG_TBL_MISSING)
-		db_reply(server, "Error: Table not found. Use: LOAD --table table_name\n");
+		REPLY("Error: Table not found. Use: LOAD --table table_name");
 	else if (code == MSG_DELETE_USAGE)
-		db_reply(server, "usage: DELETE [--database || --table || --record] KEY\n");
+		REPLY("usage: DELETE [--database || --table || --record] KEY");
 	else if (code == MSG_DELETE_USAGE2)
-		db_reply(server, "usage: DELETE --record KEY\n");
+		REPLY("usage: DELETE --record KEY");
 	return (0);
 }
 
@@ -53,8 +53,8 @@ int		db_err(t_server *server, const char *str)
 	char	err[256];
 
 	strerror_r(errno, err, 255);
-	asprintf(&buf, "%s: %s\n", str, err);
-	db_reply(server, "%s", buf);
+	asprintf(&buf, "%s: %s", str, err);
+	REPLY("%s", buf);
 	free(buf);
 	return (0);
 }
@@ -70,7 +70,10 @@ int		db_reply(t_server *server, const char *fmt, ...)
 	va_copy(clone1, ap);
 	va_copy(clone2, ap);
 	if (server->fd != STDOUT_FILENO)
+	{
 		i = vdprintf(server->fd, fmt, clone1);
+	}
 	i = vdprintf(STDOUT_FILENO, fmt, clone2);
+	dprintf(STDOUT_FILENO, "\n");
 	return (i);
 }
