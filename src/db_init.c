@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 16:20:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/26 17:28:25 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 18:12:57 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,6 @@ void		db_server_clean(t_server *server)
 	ft_strclr(server->line);
 	ft_strclr(server->dbpath);
 	ft_strclr(server->logpath);
+	if (server->files != 0)
+		arr_del(server->files);
 }

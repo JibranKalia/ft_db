@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/03 17:52:34 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 18:43:51 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,22 @@
 # include <netinet/in.h>
 
 # define PROTO_HASH_SIZE 10000000
+# define PROTO_ARRAY_SIZE 10
 # define DB_NAME_BUFF 50
 # define PORTNUMBER 12345
 # define ERR(M) db_err(server, M)
+# define REPLY(M) db_reply(server, M)
+
+/*
+** MAIN STRUCT
+*/
 
 typedef struct		s_server
 {
 	int		argc;
 	char		*line;
 	char		**args;
+	t_arr		*files;
 	int		fd;
 	bool		flag_db_load;
 	bool		flag_tbl_load;
@@ -55,15 +62,18 @@ typedef struct		s_server
 ** LSFILE
 */
 
-typedef struct stat		t_stat;
+typedef struct stat	t_stat;
 typedef struct dirent	t_dir;
-typedef struct			s_db_file
+typedef struct		s_db_file
 {
-	char				*path;
-	char				*name;
-	char				*value;
-	t_stat				statinfo;
-}						t_db_file;
+	char		*path;
+	char		*name;
+	char		*value;
+	t_stat		statinfo;
+}			t_db_file;
+int			db_arrinit(t_server *server);
+int			db_readvalue(t_server *server);
+int			db_ls(t_server *server);
 
 /*
 ** INIT
