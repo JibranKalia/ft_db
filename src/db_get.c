@@ -6,11 +6,35 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/03 19:04:57 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 20:38:55 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
+
+char	*db_parser(char *value)
+{
+	int	j;
+	size_t	len;
+	char	*buf;
+	
+	j = 0;
+	len = strlen(value);
+	len *= 2;
+	buf = (char *)ft_memalloc(len);
+	//strncpy(buf, "KEY: ", 5);
+	buf[0] = 'a';
+	printf("%s\n", buf);
+	j += 5;
+	while (*value != '}')
+	{
+		buf[j] = *value;
+		++value;
+		++j;
+	}
+
+	return (0);
+}
 
 int			db_get_print(t_server *server, FILE *fp, size_t size)
 {

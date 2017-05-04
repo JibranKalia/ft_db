@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/03 18:43:51 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 20:55:27 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct		s_server
 	int		fd;
 	bool		flag_db_load;
 	bool		flag_tbl_load;
+	bool		flag_value;
 	char		*dbpath;
 	char		*tblpath;
 	char		*logpath;
@@ -71,9 +72,7 @@ typedef struct		s_db_file
 	char		*value;
 	t_stat		statinfo;
 }			t_db_file;
-int			db_arrinit(t_server *server);
-int			db_readvalue(t_server *server);
-int			db_ls(t_server *server);
+int			db_getfiles(t_server *server);
 
 /*
 ** INIT
@@ -114,8 +113,9 @@ int			db_set(t_server *server);
 */
 
 int			db_get(t_server *server);
-int			db_get_print(t_server *server, FILE *fp, size_t size);
+int			db_getval(t_server *server);
 int			db_getall(t_server *server);
+char			*db_catvalue(t_server *server);
 
 /*
 ** LOAD

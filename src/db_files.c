@@ -6,13 +6,13 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 18:35:33 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 19:41:12 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 20:47:16 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
 
-void		file_del(void	*elm)
+void			file_del(void	*elm)
 {
 	if (elm == 0)
 		return ; ft_strdel(&((t_db_file *)elm)->name);
@@ -21,7 +21,7 @@ void		file_del(void	*elm)
 	ft_bzero(elm, sizeof(t_db_file));
 }
 
-int			db_ls(t_server *server)
+static int		db_ls(t_server *server)
 {
 	t_dir		*dp;
 	t_db_file	*tmp;
@@ -46,13 +46,13 @@ int			db_ls(t_server *server)
 	return (0);
 }
 
-int			db_readvalue(t_server *server)
+static int		db_readvalue(t_server *server)
 {
 	FILE			*fp;
 	t_db_file		**tmp;
 	int			i;
 	int			readsize;
-
+	
 	CHK1(server->files == NULL, ERR("File Array not present"), -1);
 	tmp = (t_db_file **)server->files->contents;
 	i = 0;
@@ -66,10 +66,11 @@ int			db_readvalue(t_server *server)
 		CHK1(fclose(fp) == EOF, ERR("FCLOSE ERROR"), -1);
 		++i;
 	}
+	server->flag_value = true;
 	return (0);
 }
 
-int			db_arrinit(t_server *server)
+static int		db_arrinit(t_server *server)
 {
 	t_arr		*files;
 
@@ -77,5 +78,20 @@ int			db_arrinit(t_server *server)
 	CHK1(files == NULL, ERR("Array Create Failed"), -1);
 	files->del = &file_del;
 	server->files = files;
+	return (0);
+}
+
+int			db_getfiles(t_server *server)
+{
+	int chk;
+
+	CHK(server->flag_value == true, 0);
+	if (server->files != NULL)
+		arr_del(server->files);
+	CHK(db_arrinit(server) == -1, -1);
+	chk = db_ls(server);
+	CHK1(((server->files->end == 0) || chk == -1), REPLY("No Records Found"), -1);
+	CHK(db_readvalue(server) == -1, -1);
+	server->flag_value = true;
 	return (0);
 }

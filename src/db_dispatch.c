@@ -6,12 +6,12 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 16:19:31 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 17:56:17 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 20:53:27 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
-# define FUNC_NUM 9
+# define FUNC_NUM 10
 
 static char		*g_db_strtable[FUNC_NUM] =
 {
@@ -20,6 +20,7 @@ static char		*g_db_strtable[FUNC_NUM] =
 	"CREATE",
 	"UPDATE",
 	"GET",
+	"GETVAL", 
 	"DELETE",
 	"EXIT",
 	"HELP",
@@ -33,6 +34,7 @@ static int		(*g_db_functable[]) (t_server *) =
 	&db_set,
 	&db_update,
 	&db_get,
+	&db_getval,
 	&db_delete,
 	&db_exit,
 	&db_help,

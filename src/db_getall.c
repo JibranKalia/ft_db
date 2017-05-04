@@ -6,13 +6,13 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:48 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 19:41:32 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/03 20:49:48 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
 
-int			db_getall_print(t_server *server)
+char			*db_catvalue(t_server *server)
 {
 	char			*buf;
 	int				len = 0;
@@ -22,7 +22,6 @@ int			db_getall_print(t_server *server)
 	t_db_file		**tmp;
 
 	i = 0;
-	CHK1(server->files == NULL, ERR("File Array not present"), -1);
 	tmp = (t_db_file **)server->files->contents;
 	while (i < server->files->end)
 	{
@@ -42,19 +41,23 @@ int			db_getall_print(t_server *server)
 		++j;
 	}
 	buf[j - 1] = 0; //Removing the last newline.
-	REPLY(buf);
-	free(buf);
+	return (buf);
+}
+
+int			db_getall_print(t_server *server)
+{
+	char	*tmp;
+	
+	CHK1(server->files == NULL, ERR("File Array not present"), -1);
+	tmp = db_catvalue(server);
+	REPLY(tmp);
+	free(tmp);
 	return (0);
 }
 
 int			db_getall(t_server *server)
 {
-	int chk;
-
-	CHK(db_arrinit(server) == -1, -1);
-	chk = db_ls(server);
-	CHK1(((server->files->end == 0) || chk == -1), REPLY("No Records Found"), -1);
-	CHK(db_readvalue(server) == -1, -1);
+	CHK(db_getfiles(server) == -1, -1);
 	CHK(db_getall_print(server) == -1, -1);
 	return (0);
 }
