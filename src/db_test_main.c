@@ -6,52 +6,132 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 11:42:37 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/04 11:52:49 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/04 15:06:58 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
+#include <time.h>
+#include <stdlib.h>
+#define LEN1 100
+#define LEN2 100
+#define BUFF_SIZE 1024 * 4
+
+typedef struct sockaddr_in	t_sockaddr_in;
+typedef struct hostent		t_hostent;
+
+typedef struct		t_db_test
+{
+	int				portno;
+	int				sockfd;
+	t_sockaddr_in	serv_addr;
+	t_hostent		*server;
+}			t_db_test;
+
+
+static char *rand_string(char *str, size_t size)
+{
+	size_t		n;
+	int			key;
+
+	n = 0;
+	const char charset[90] = "!#%&'()*++--./012345678 9;<=>?@ABCDFGHIJKLMNOPQRSTUVWXYZ[]^_`abcdefghijklmnoprstuvwxyz{|}~";
+	--size;
+	while (n < size)
+	{
+		key = rand() % (int) (sizeof charset - 1);
+		str[n] = charset[key];
+		++n;
+	}
+	str[size] = '\0';
+	return (str);
+}
+
+static	int		start_test(t_db_test *test)
+{
+	char	data[LEN1][LEN2];
+	char	buffer[BUFF_SIZE];
+	char	*out;
+	int		i;
+	int		n;
+
+	bzero(buffer, BUFF_SIZE);
+	snprintf(buffer, BUFF_SIZE, "LOAD --database db");
+	n = write(test->sockfd, buffer, strlen(buffer));
+//	DEBUG("Print = {%s}", buf);
+	CHECK(n < 0, RETURN(-1), "ERROR writing to socket");
+	bzero(buffer, BUFF_SIZE);
+	n = read(test->sockfd, buffer, 1024 * 4);
+	bzero(buffer, BUFF_SIZE);
+	snprintf(buffer, BUFF_SIZE, "LOAD --table test");
+	n = write(test->sockfd, buffer, strlen(buffer));
+//	DEBUG("Print = {%s}", buf);
+	bzero(buffer, BUFF_SIZE);
+	n = read(test->sockfd, buffer, 1024 * 4);
+	CHECK(n < 0, RETURN(-1), "ERROR writing to socket");
+	bzero(buffer, BUFF_SIZE);
+	i = 0;
+	while (i < LEN1)
+	{
+		rand_string(data[i], 10);
+		++i;
+	}
+	i = 0;
+	while (i < LEN1)
+	{
+		bzero(buffer, BUFF_SIZE);
+		snprintf(buffer, 1024, "SET %d %s", i, data[i]);
+		n = write(test->sockfd, buffer, strlen(buffer));
+		CHECK(n < 0, RETURN(-1), "ERROR writing to socket");
+		bzero(buffer, BUFF_SIZE);
+		bzero(buffer, 1024 * 4);
+		n = read(test->sockfd, buffer, 1024 * 4);
+		CHECK(n < 0, RETURN(-1), "ERROR reading from socket");
+		//CHECK(strncmp(buffer, "Record Updated", 12) != 0, RETURN(-1), "Error Saving Record");
+		++i;
+	}
+
+	i = 0;
+	while (i < LEN1)
+	{
+		bzero(buffer, 1024 * 4);
+		snprintf(buffer, 1024, "GET %d", i);
+		n = write(test->sockfd, buffer, strlen(buffer));
+		CHECK(n < 0, RETURN(-1), "ERROR writing to socket");
+		bzero(buffer, 1024 * 4);
+		n = read(test->sockfd, buffer, 1024 * 4);
+		CHECK(n < 0, RETURN(-1), "ERROR reading from socket");
+		out = strstr(buffer, data[i]);
+		CHECK(out == NULL, RETURN (-1), "String not found Record. Expected = %s\nFound = %s", data[i], buffer);
+		CHECK(strncmp(out, data[i], LEN2) != 0, RETURN(-1), "Incorrect Record. Expected = %s. Found = %s", data[i], buffer);
+		++i;
+	}
+	return (0);
+
+}
 
 int main(int argc, char **argv)
 {
-	int			sockfd;
+	t_db_test	*test;
+
 	int			chk;
-	int			portno;
-	int			n;
-	struct sockaddr_in	serv_addr;
-	struct hostent 		*server;
-	char			buffer[1024 * 4];
-
+	test = ft_memalloc(sizeof(t_db_test));
 	if (argc == 2)
-		portno = atoi(argv[2]);
+		test->portno = atoi(argv[1]);
 	else
-		portno = 12345;
-	server = gethostbyname(argv[2]);
-	ft_printf("%{green}Portno = %d\n%{eoc}", portno);
-	ft_printf("%{green}Hostname = %s\n%{eoc}", server->h_name);
-	sockfd = socket(AF_INET, SOCK_STREAM, 0);
-	CHECK(sockfd < 0, RETURN(-1), "Error Opening Socket");
-	CHECK(server == NULL, RETURN(-1), "Error no such host");
-	bzero(&serv_addr, sizeof(serv_addr));
-	serv_addr.sin_family = AF_INET;
-	memcpy((void *)server->h_addr, (void *)&serv_addr.sin_addr.s_addr, server->h_length);
-	serv_addr.sin_port = htons(portno);
-	chk = connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
+		test->portno = 12345;
+	test->server = gethostbyname("localhost");
+	ft_printf("%{green}Portno = %d\n%{eoc}", test->portno);
+	ft_printf("%{green}Hostname = %s\n%{eoc}", test->server->h_name);
+	test->sockfd = socket(AF_INET, SOCK_STREAM, 0);
+	CHECK(test->sockfd < 0, RETURN(-1), "Error Opening Socket");
+	CHECK(test->server == NULL, RETURN(-1), "Error no such host");
+	bzero(&test->serv_addr, sizeof(test->serv_addr));
+	test->serv_addr.sin_family = AF_INET;
+	memcpy((void *)test->server->h_addr, (void *)&test->serv_addr.sin_addr.s_addr, test->server->h_length);
+	test->serv_addr.sin_port = htons(test->portno);
+	chk = connect(test->sockfd, (struct sockaddr *)&test->serv_addr, sizeof(test->serv_addr));
 	CHECK(chk < 0, RETURN (-1), "ERROR connecting");
-
-	while (1)
-	{
-		printf("> ");
-		bzero(buffer, 1024 * 4);
-		fgets(buffer, 256, stdin);
-		if (strncmp(buffer, "exit", 5) == 0)
-			exit(1);
-		n = write(sockfd, buffer, strlen(buffer));
-		CHECK(n < 0, RETURN(-1), "ERROR writing to socket");
-		bzero(buffer, 256);
-		n = read(sockfd, buffer, 1024 * 4);
-		CHECK(n < 0, RETURN(-1), "ERROR writing to socket");
-		printf("%s\n",buffer);
-	}
+	CHK(start_test(test) == -1, -1);
 	return (0);
 }

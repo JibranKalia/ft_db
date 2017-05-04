@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:53:25 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/04/28 23:56:13 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/04 14:50:22 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	db_load(t_server *server)
 {
 	char		*tmp;
 
-	CHK1(server->argc != 3, REPLY("usage: LOAD [--database || --table] name"), 0);
+	DEBUG("Server argc = %d\n", server->argc);
+	CHK1(server->argc < 3, REPLY("usage: LOAD [--database || --table] name"), 0);
 	tmp = server->args[2];
 	if (strcmp(server->args[1], "--database") == 0)
 	{

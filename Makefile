@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/05/04 11:46:32 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/05/04 13:45:44 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,25 +43,24 @@ $(LIBFT):
 
 $(OBJ): %.o: %.c
 	@$(CC) -c $(CFLAGS) $< -o $@
-	@echo "\033[32mCompiled Project Object Files\033[0m"
 
 $(NAME): $(LIBFT) $(OBJ)
 	@$(CC) $(LDFLAGS) -o $@ $^
-	@echo "\033[32mCreated Executable\033[0m"
+	@echo "\033[32mCreated FTDB\033[0m"
 
 $(CLIENTOBJ): %.o: %.c
 	@$(CC) -c $(CFLAGS) $< -o $@
 
 $(CLIENT): $(LIBFT) $(CLIENTOBJ)
 	@$(CC) $(LDFLAGS) -o $@ $^
-	@echo "\033[32mCompiled Client\033[0m"
+	@echo "\033[32mCompiled CLIENT\033[0m"
 
 $(TESTOBJ): %.o: %.c
 	@$(CC) -c $(CFLAGS) $< -o $@
 
 $(TEST): $(LIBFT) $(TESTOBJ)
 	@$(CC) $(LDFLAGS) -o $@ $^
-	@echo "\033[32mCompiled Test\033[0m"
+	@echo "\033[32mCompiled TEST\033[0m"
 
 clean:
 	@make -C libft clean
