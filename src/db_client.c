@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 	int			n;
 	struct sockaddr_in	serv_addr;
 	struct hostent 		*server;
-	char			buffer[256];
+	char			buffer[1024 * 4];
 
 	if (argc == 2)
 		portno = atoi(argv[1]);
@@ -44,15 +44,15 @@ int main(int argc, char *argv[])
 	while (1)
 	{
 		printf("> ");
-		bzero(buffer, 256);
-		fgets(buffer, 255, stdin);
+		bzero(buffer, 1024 * 4);
+		fgets(buffer, 256, stdin);
 		if (strncmp(buffer, "exit", 5) == 0)
 			exit (1);
 		n = write(sockfd, buffer, strlen(buffer));
 		if (n < 0)
 			error("ERROR writing to socket");
 		bzero(buffer, 256);
-		n = read(sockfd, buffer, 255);
+		n = read(sockfd, buffer, 1024 * 4);
 		if (n < 0)
 			error("ERROR reading from socket");
 		printf("%s\n",buffer);
