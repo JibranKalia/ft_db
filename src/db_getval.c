@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 18:58:04 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/05 15:52:46 by aakin-al         ###   ########.fr       */
+/*   Updated: 2017/05/05 16:02:02 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	db_search(t_server *server)
 	char		buffer[BUFF_SIZE];
 
 	i = 0;
-	bzero(buff, BUFF_SIZE);
+	bzero(buffer, BUFF_SIZE);
 	tmp = (t_db_file **)server->files->contents;
 	while (i < server->files->end)
 	{
@@ -34,7 +34,7 @@ static int	db_search(t_server *server)
 	len = strlen(buffer);
 	buffer[len - 1] = 0;
 	REPLY(buffer);
-	bzero(buff, BUFF_SIZE);
+	bzero(buffer, BUFF_SIZE);
 	return (0);
 }
 
