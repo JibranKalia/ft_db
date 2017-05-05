@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 21:24:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/04 16:06:41 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 12:26:20 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,23 @@ static int	db_deletedb(t_server *server)
 	return (0);
 }
 
-int		db_deletekey(t_server *server)
+static int	db_deletekey(t_server *server)
 {
 	char	*filename;
 
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
 	CHK1(server->flag_tbl_load == false, db_msg(server, MSG_TBL_MISSING), 0);
 	CHK1(server->argc != 3, db_msg(server, MSG_DELETE_USAGE2), 0);
-	filename = ft_strjoinf("/", db_gethash(server, server->args[2]), STRJOIN_FREE_SRC2);
-	filename = ft_strjoinf(server->tblpath, filename, STRJOIN_FREE_SRC2);
-	CHK2(remove(filename) == -1, free(filename), db_err(server, "REMOVE ERROR"), -1);
+	asprintf(&filename, "%s/%s", server->tblpath,
+			db_gethash(server, server->args[2]));
+	CHK2(remove(filename) == -1, free(filename),
+			db_err(server, "REMOVE ERROR"), -1);
 	REPLY("Removing: %s", filename);
 	free(filename);
 	return (0);
 }
 
-int		db_delete(t_server *server)
+int			db_delete(t_server *server)
 {
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
 	CHK1(server->argc < 2, db_msg(server, MSG_DELETE_USAGE), 0);
@@ -69,7 +70,7 @@ int		db_delete(t_server *server)
 	return (0);
 }
 
-int		db_exit(t_server *server)
+int			db_exit(t_server *server)
 {
 	CHK1(server->argc != 1, REPLY("usage: EXIT"), 0);
 	REPLY("GOODBYE!");
