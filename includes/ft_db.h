@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/05 13:30:49 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 13:47:50 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <netinet/in.h>
-#include <netdb.h>
+# include <netdb.h>
 
 # define PROTO_HASH_SIZE 10000000
 # define PROTO_ARRAY_SIZE 10
@@ -45,108 +45,109 @@
 ** MAIN STRUCT
 */
 
-typedef struct		s_server
+typedef struct			s_server
 {
-	int		argc;
-	char		*line;
-	char		**args;
-	t_arr		*files;
-	int		fd;
-	bool		flag_db_load;
-	bool		flag_tbl_load;
-	char		*dbpath;
-	char		*tblpath;
-	char		*logpath;
-	size_t		hashsize;
-	int		portno;
-}			t_server;
+	int					argc;
+	char				*line;
+	char				**args;
+	t_arr				*files;
+	int					fd;
+	bool				flag_db_load;
+	bool				flag_tbl_load;
+	char				*dbpath;
+	char				*tblpath;
+	char				*logpath;
+	size_t				hashsize;
+	int					portno;
+}						t_server;
 
 /*
 ** LSFILE
 */
 
-typedef struct stat	t_stat;
+typedef struct stat		t_stat;
 typedef struct dirent	t_dir;
-typedef struct		s_db_file
+typedef struct			s_db_file
 {
-	char		*path;
-	char		*name;
-	char		*value;
-	t_stat		statinfo;
-}			t_db_file;
-int			db_getfiles(t_server *server);
+	char				*path;
+	char				*name;
+	char				*value;
+	t_stat				statinfo;
+}						t_db_file;
+
+int						db_getfiles(t_server *server);
 
 /*
 ** INIT
 */
 
-void			db_init();
-t_server		*db_server_init(void);
-void			db_server_clean(t_server *server);
+void					db_init();
+t_server				*db_server_init(void);
+void					db_server_clean(t_server *server);
 
 /*
 ** UTIL
 */
 
-int			db_clear(t_server *server);
-int			db_help(t_server *server);
-int			db_delete(t_server *server);
-int			db_exit(t_server *server);
-int			db_exitclear(t_server *server);
+int						db_clear(t_server *server);
+int						db_help(t_server *server);
+int						db_delete(t_server *server);
+int						db_exit(t_server *server);
+int						db_exitclear(t_server *server);
 
 /*
 ** DISPATCH
 */
 
-int			db_loop(t_server *server, int sock);
-int			db_dispatch(t_server *server);
-char			*db_read_line(void);
-void			db_split_line(t_server *server);
+int						db_loop(t_server *server, int sock);
+int						db_dispatch(t_server *server);
+char					*db_read_line(void);
+void					db_split_line(t_server *server);
 
 /*
 ** DISPATCH
 */
 
-int			db_update(t_server *server);
-int			db_set(t_server *server);
+int						db_update(t_server *server);
+int						db_set(t_server *server);
 
 /*
 ** GET
 */
 
-int			db_get(t_server *server);
-int			db_getval(t_server *server);
-int			db_getall(t_server *server);
-char			*db_catvalue(t_server *server);
-char			*db_printer(char *value);
+int						db_get(t_server *server);
+int						db_getval(t_server *server);
+int						db_getall(t_server *server);
+char					*db_catvalue(t_server *server);
+char					*db_printer(char *value);
 
 /*
 ** LOAD
 */
 
-int			db_load(t_server *server);
-int			db_loadtbl(t_server *server);
-int			db_loaddb(t_server *server);
+int						db_load(t_server *server);
+int						db_loadtbl(t_server *server);
+int						db_loaddb(t_server *server);
 
 /*
 ** HASHTABLE
 */
 
-char			*db_gethash(t_server *server, const char *key);
+char					*db_gethash(t_server *server, const char *key);
 
 /*
 ** REPLY
 */
 
-#define MSG_WELCOME 1
-#define MSG_HELP 2
-#define MSG_DB_MISSING 3
-#define MSG_TBL_MISSING 4
-#define MSG_DELETE_USAGE 5
-#define MSG_DELETE_USAGE2 6
+# define MSG_WELCOME 1
+# define MSG_HELP 2
+# define MSG_DB_MISSING 3
+# define MSG_TBL_MISSING 4
+# define MSG_DELETE_USAGE 5
+# define MSG_DELETE_USAGE2 6
 
-int			db_msg(t_server *server, int code);
-int			db_err(t_server *server, const char *str);
-int			db_reply(t_server *server, const char *fmt, ...);
+int						db_msg(t_server *server, int code);
+int						db_err(t_server *server, const char *str);
+int						db_reply(t_server *server, const char *fmt, ...);
 
 #endif
