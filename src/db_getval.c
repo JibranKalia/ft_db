@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 18:58:04 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/05 13:08:51 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 15:27:36 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,17 @@
 
 static int	db_search(t_server *server)
 {
-	char	*buf;
-	char	*out;
-	int		idx;
+	t_db_file	**tmp;
+	int		i;
 
-	buf = db_catvalue(server);
-	out = strstr(buf, server->args[1]);
-	CHK1(out == NULL, REPLY("Value Not Found"), 0);
-	idx = out - buf;
-	while (idx > 0)
+	i = 0;
+	tmp = (t_db_file **)server->files->contents;
+	while (i < server->files->end)
 	{
-		if (buf[idx] == '\n')
-			break ;
-		--idx;
+		if (strcasestr(strchr(tmp[i]->value,':'), server->args[1]))
+			REPLY(db_printer(tmp[i]->value));
+		i++;
 	}
-	while (*out)
-	{
-		if (*out == ',' || *out == '\n')
-		{
-			*out = 0;
-			break ;
-		}
-		++out;
-	}
-	REPLY(db_printer(&buf[idx]));
 	return (0);
 }
 
