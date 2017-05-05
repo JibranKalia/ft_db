@@ -6,14 +6,11 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/05 12:53:59 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 13:00:51 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
-#define STUPID2(a,b) do{a;b;}while(0)
-#define STUPID3(a,b,c) do{a;b;c;}while(0)
-#define STUPID4(a,b,c,d) do{a;b;c;d;}while(0)
 
 char		*db_printer(char *value)
 {
@@ -22,6 +19,7 @@ char		*db_printer(char *value)
 	char	*buf;
 
 	buf = ft_strnew(strlen(value) * 2);
+	value = (*value == '\n') ? ++value : value;
 	STUPID2(memcpy(buf, "KEY: ", 5), j = 5);
 	i = 0;
 	while (*value)

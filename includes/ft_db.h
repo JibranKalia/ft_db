@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/05 12:28:30 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 13:02:19 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@
 # define ERR(M) db_err(server, M)
 # define REPLY(M, ...) db_reply(server, M, ##__VA_ARGS__)
 # define GETVAL_CODE 5
+# define STUPID2(a,b) do{a;b;}while(0)
+# define STUPID3(a,b,c) do{a;b;c;}while(0)
+# define STUPID4(a,b,c,d) do{a;b;c;d;}while(0)
 
 /*
 ** MAIN STRUCT
