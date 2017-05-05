@@ -6,60 +6,38 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/04 16:10:59 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 12:53:59 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
+#define STUPID2(a,b) do{a;b;}while(0)
+#define STUPID3(a,b,c) do{a;b;c;}while(0)
+#define STUPID4(a,b,c,d) do{a;b;c;d;}while(0)
 
-char	*db_printer(char *value)
+char		*db_printer(char *value)
 {
-	int 	j; 
-	int	i;
-	int	len;
+	int		j;
+	int		i;
 	char	*buf;
 
-	j = 0;
-	len = strlen(value) * 2;
-	buf = ft_strnew(len);
-	if (*value == '\n')
-		++value;
-	memcpy(buf, "KEY: ", 5);
-	j = 5;
+	buf = ft_strnew(strlen(value) * 2);
+	STUPID2(memcpy(buf, "KEY: ", 5), j = 5);
 	i = 0;
 	while (*value)
 	{
 		if (*value == '\n')
-		{
-			memcpy(&buf[j], "\nKEY: ", 6);
-			++value;
-			j += 6;
-			i = 0;
-		}
+			STUPID4(memcpy(&buf[j], "\nKEY: ", 6), ++value, j += 6, i = 0);
 		else if (*value == ':')
 		{
 			if (i < 3)
-			{
-				memcpy(&buf[j], "\t", 1);
-				++j;
-			}
-			memcpy(&buf[j], "\t\t| VALUE: ", 11);
-			++value;
-			j += 11;
+				STUPID2(memcpy(&buf[j], "\t", 1), ++j);
+			STUPID3(memcpy(&buf[j], "\t\t| VALUE: ", 11), ++value, j += 11);
 		}
 		else if (*value == ',')
-		{
-			memcpy(&buf[j], "\t\t", 2);
-			j += 2;
-			++value;
-		}
+			STUPID3(memcpy(&buf[j], "\t\t", 2), j += 2, ++value);
 		else
-		{
-			buf[j] = *value;
-			++j;
-			++value;
-			++i;
-		}
+			STUPID4(buf[j] = *value, ++j, ++value, ++i);
 	}
 	buf[j] = 0;
 	return (buf);
@@ -71,7 +49,8 @@ int			db_get_print(t_server *server, FILE *fp, size_t size)
 	char	*parsed;
 
 	buf = ft_strnew(size);
-	CHK2(fgets(buf, size, fp) == NULL, free(buf), db_err(server, "FGETS ERROR"), -1);
+	CHK2(fgets(buf, size, fp) == NULL, free(buf),
+			db_err(server, "FGETS ERROR"), -1);
 	parsed = db_printer(buf);
 	REPLY(parsed);
 	free(buf);
@@ -90,19 +69,20 @@ int			db_get(t_server *server)
 	CHK1(server->flag_tbl_load == false, db_msg(server, MSG_TBL_MISSING), 0);
 	CHK1(server->argc != 2, REPLY("usage: GET key"), 0);
 	if (strncasecmp(server->args[1], "all", 3) == 0)
-		return(db_getall(server));
-	asprintf(&filename, "%s/%s", server->tblpath, db_gethash(server, server->args[1]));
+		return (db_getall(server));
+	asprintf(&filename, "%s/%s", server->tblpath,
+			db_gethash(server, server->args[1]));
 	fp = fopen(filename, "r");
 	if (fp == NULL)
 	{
-		(errno == ENOENT) ? REPLY("Record Not Found") : db_err(server, "FOPEN ERROR");
+		(errno == ENOENT) ? REPLY("Record Not Found") : ERR("FOPEN ERROR");
 		free(filename);
 		return (-1);
 	}
 	fd = fileno(fp);
-	CHK2(fstat(fd, &st) == -1, free(filename), db_err(server, "FSTAT ERROR"), -1);
+	CHK2(fstat(fd, &st) == -1, free(filename), ERR("FSTAT ERROR"), -1);
 	db_get_print(server, fp, st.st_size * 2);
-	CHK2(fclose(fp) == EOF, free(filename), db_err(server, "FCLOSE ERROR"), -1);
+	CHK2(fclose(fp) == EOF, free(filename), ERR("FCLOSE ERROR"), -1);
 	free(filename);
 	return (0);
 }
