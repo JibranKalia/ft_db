@@ -6,12 +6,12 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 16:19:31 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/04 16:23:33 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 12:23:27 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
-# define FUNC_NUM 10
+#define FUNC_NUM 9
 
 int8_t			g_commandcode = 0;
 
@@ -22,11 +22,10 @@ static char		*g_db_strtable[FUNC_NUM] =
 	"CREATE",
 	"UPDATE",
 	"GET",
-	"GETVAL", 
+	"GETVAL",
 	"DELETE",
 	"EXIT",
 	"HELP",
-	"CLEAR"
 };
 
 static int		(*g_db_functable[]) (t_server *) =
@@ -40,7 +39,6 @@ static int		(*g_db_functable[]) (t_server *) =
 	&db_delete,
 	&db_exit,
 	&db_help,
-	&db_clear
 };
 
 /*
@@ -53,14 +51,7 @@ int				db_help(t_server *server)
 	return (0);
 }
 
-int				db_clear(t_server *server)
-{
-	if (strncasecmp(server->args[0], "clear", 5) == 0)
-		system(server->args[0]);
-	return (0);
-}
-
-char				*db_strtrim(char *src)
+char			*db_strtrim(char *src)
 {
 	char		*to_free;
 	char		*dst;
@@ -104,7 +95,7 @@ char			*db_read_line(void)
 void			db_split_line(t_server *server)
 {
 	char	**tmp;
-	int	i;
+	int		i;
 
 	i = 0;
 	server->argc = ft_countwords(server->line, ' ');
