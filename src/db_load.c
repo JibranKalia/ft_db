@@ -6,13 +6,13 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:53:25 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/05 12:29:30 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 13:26:06 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_db.h"
 
-int	db_loaddb(t_server *server)
+static int	db_loaddb(t_server *server)
 {
 	if (server->dbpath == NULL)
 		server->dbpath = strdup("./db");
@@ -29,7 +29,7 @@ int	db_loaddb(t_server *server)
 	return (0);
 }
 
-int	db_loadtbl(t_server *server)
+static int	db_loadtbl(t_server *server)
 {
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
 	if (server->tblpath == NULL)
@@ -46,21 +46,15 @@ int	db_loadtbl(t_server *server)
 		server->flag_tbl_load = true;
 	server->logpath = ft_strjoin(server->tblpath, "/");
 	server->logpath = ft_strjoinf(server->logpath, "log", STRJOIN_FREE_SRC1);
-	//REPLY("Log Path = %s", server->logpath);
-	/**
-	if (stat(client->logpath, &st) == -1)
-		if (open(client->logpath, O_CREAT) == -1)
-			db_err(server, "OPEN ERROR");
-	**/
 	return (0);
 }
 
-int	db_load(t_server *server)
+int			db_load(t_server *server)
 {
 	char		*tmp;
 
-	///DEBUG("Server argc = %d\n", server->argc);
-	CHK1(server->argc < 3, REPLY("usage: LOAD [--database || --table] name"), 0);
+	CHK1(server->argc < 3,
+			REPLY("usage: LOAD [--database || --table] name"), 0);
 	tmp = server->args[2];
 	if (strcmp(server->args[1], "--database") == 0)
 	{

@@ -6,13 +6,13 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/05/05 12:20:37 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/05/05 13:24:13 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= ftdb
-CLIENT		:= client
-TEST		:= test
+CLIENT		:= client.out
+TEST		:= test.out
 CC		:= gcc
 CFLAGS		+= -Wall -Wextra -Werror
 CFLAGS		+= -I includes/ -I libft/includes/
@@ -26,11 +26,11 @@ SRC		:= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ		:= $(SRC:.c=.o)
 
 CLIENTFILES	:= db_client_main
-CLIENTSRC	:= $(addprefix src/, $(addsuffix .c, $(CLIENTFILES)))
+CLIENTSRC	:= $(addprefix client/, $(addsuffix .c, $(CLIENTFILES)))
 CLIENTOBJ	:= $(CLIENTSRC:.c=.o)
 
 TESTFILES	:= db_test_main
-TESTSRC		:= $(addprefix src/, $(addsuffix .c, $(TESTFILES)))
+TESTSRC		:= $(addprefix test/, $(addsuffix .c, $(TESTFILES)))
 TESTOBJ		:= $(TESTSRC:.c=.o)
 
 
