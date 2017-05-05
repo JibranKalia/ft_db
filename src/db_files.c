@@ -6,16 +6,17 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 18:35:33 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/05 12:29:50 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 12:33:04 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
 
-void			file_del(void	*elm)
+void			file_del(void *elm)
 {
 	if (elm == 0)
-		return ; ft_strdel(&((t_db_file *)elm)->name);
+		return ;
+	ft_strdel(&((t_db_file *)elm)->name);
 	ft_strdel(&((t_db_file *)elm)->path);
 	ft_strdel(&((t_db_file *)elm)->value);
 	ft_bzero(elm, sizeof(t_db_file));
@@ -39,7 +40,8 @@ static int		db_ls(t_server *server)
 		ft_asprintf(&tmp->path, "%s/%s", server->tblpath, dp->d_name);
 		tmp->name = ft_strdup(dp->d_name);
 		chk = lstat(tmp->path, &tmp->statinfo);
-		CHK3(chk == -1, file_del(&tmp), closedir(dirp), ERR("Lstat Failed"), -1);
+		CHK3(chk == -1, file_del(&tmp),
+				closedir(dirp), ERR("Lstat Failed"), -1);
 		arr_push(server->files, tmp);
 	}
 	closedir(dirp);
@@ -50,9 +52,9 @@ static int		db_readvalue(t_server *server)
 {
 	FILE			*fp;
 	t_db_file		**tmp;
-	int			i;
-	int			readsize;
-	
+	int				i;
+	int				readsize;
+
 	CHK1(server->files == NULL, ERR("File Array not present"), -1);
 	tmp = (t_db_file **)server->files->contents;
 	i = 0;
@@ -62,7 +64,8 @@ static int		db_readvalue(t_server *server)
 		CHK1(fp == NULL, ERR("FOPEN ERROR"), -1);
 		readsize = tmp[i]->statinfo.st_size + 1;
 		tmp[i]->value = ft_strnew(readsize);
-		CHK1(fgets(tmp[i]->value, readsize, fp) == NULL, ERR("FGETS ERROR"), -1);
+		CHK1(fgets(tmp[i]->value, readsize, fp) == NULL,
+				ERR("FGETS ERROR"), -1);
 		CHK1(fclose(fp) == EOF, ERR("FCLOSE ERROR"), -1);
 		++i;
 	}
@@ -80,7 +83,7 @@ static int		db_arrinit(t_server *server)
 	return (0);
 }
 
-int			db_getfiles(t_server *server)
+int				db_getfiles(t_server *server)
 {
 	int chk;
 
@@ -88,7 +91,8 @@ int			db_getfiles(t_server *server)
 		arr_del(server->files);
 	CHK(db_arrinit(server) == -1, -1);
 	chk = db_ls(server);
-	CHK1(((server->files->end == 0) || chk == -1), REPLY("No Records Found"), -1);
+	CHK1(((server->files->end == 0) || chk == -1),
+			REPLY("No Records Found"), -1);
 	CHK(db_readvalue(server) == -1, -1);
 	return (0);
 }
