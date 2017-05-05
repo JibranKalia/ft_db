@@ -6,14 +6,14 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/05/05 13:59:35 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/05/05 16:11:56 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= ftdb
-CLIENT		:= client.out
-TEST		:= test.out
-CC		:= gcc
+CLIENT		:= client
+TEST		:= test
+CC			:= gcc
 CFLAGS		+= -Wall -Wextra -Werror
 CFLAGS		+= -I includes/ -I libft/includes/
 LDFLAGS		:= -L libft/ -lft
@@ -26,11 +26,11 @@ SRC		:= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ		:= $(SRC:.c=.o)
 
 CLIENTFILES	:= db_client_main
-CLIENTSRC	:= $(addprefix client/, $(addsuffix .c, $(CLIENTFILES)))
+CLIENTSRC	:= $(addprefix util/, $(addsuffix .c, $(CLIENTFILES)))
 CLIENTOBJ	:= $(CLIENTSRC:.c=.o)
 
 TESTFILES	:= db_test_main
-TESTSRC		:= $(addprefix test/, $(addsuffix .c, $(TESTFILES)))
+TESTSRC		:= $(addprefix util/, $(addsuffix .c, $(TESTFILES)))
 TESTOBJ		:= $(TESTSRC:.c=.o)
 
 
@@ -64,12 +64,12 @@ $(TEST): $(LIBFT) $(TESTOBJ)
 
 clean:
 	@make -C libft clean
-	@rm -rf $(OBJ) $(CLIENTOBJ) $(TESTOBJ)
+	@rm -f $(OBJ) $(CLIENTOBJ) $(TESTOBJ)
 	@echo "\033[32mRemoved Object Files\033[0m"
 
 fclean: clean
 	@make -C libft fclean
-	@rm -rf $(NAME) $(CLIENT) $(TEST)
+	@rm -f $(NAME) $(CLIENT) $(TEST)
 	@echo "\033[32mRemoved Executable\033[0m"
 
 re: fclean all
