@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/05/04 16:22:58 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/05/05 12:20:37 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,12 +64,12 @@ $(TEST): $(LIBFT) $(TESTOBJ)
 
 clean:
 	@make -C libft clean
-	@rm -rf $(OBJ) $(CLIENTOBJ)
+	@rm -rf $(OBJ) $(CLIENTOBJ) $(TESTOBJ)
 	@echo "\033[32mRemoved Object Files\033[0m"
 
 fclean: clean
 	@make -C libft fclean
-	@rm -rf $(NAME) client
+	@rm -rf $(NAME) $(CLIENT) $(TEST)
 	@echo "\033[32mRemoved Executable\033[0m"
 
 re: fclean all
