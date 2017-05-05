@@ -6,36 +6,42 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/23 20:39:36 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/04 16:13:26 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 13:13:08 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_db.h>
 
-int	db_msg(t_server *server, int code)
+static void	db_msgwelcome(t_server *server)
+{
+	REPLY("*********************************************\n"
+			"Welcome to FT_DB!\n"
+			"Type HELP to get started\n"
+			"Have Fun and make sure to enjoy responsibly.\n"
+			"*********************************************");
+}
+
+static void	db_msghelp(t_server *server)
+{
+	REPLY("**********************************************************\n"
+			"Step 1: Choose Database. Use: LOAD --database database_name\n"
+			"Step 2: Choose Table. Use: LOAD --table table_name\n"
+			"Step 3: Save Record. Use: CREATE Key Value\n"
+			"Step 4: Retrieve Record: Use: GET Key\n"
+			"Step 5: Update Record: Use: UPDATE Key Value\n"
+			"Step 6: Retrieve Updated Record: Use: GET Key\n"
+			"Step 7: Delete Record. Use: DELETE --record KEY\n"
+			"Step 8: Check if deleted correctly: Use: GET Key\n"
+			"Step 9: Exit. Use: EXIT\n"
+			"**********************************************************");
+}
+
+int			db_msg(t_server *server, int code)
 {
 	if (code == MSG_WELCOME)
-	{
-		REPLY("*********************************************\n"
-				"Welcome to FT_DB!\n"
-				"Type HELP to get started\n"
-				"Have Fun and make sure to enjoy responsibly.\n"
-				"*********************************************");
-	}
+		db_msgwelcome(server);
 	else if (code == MSG_HELP)
-	{
-		REPLY( "**********************************************************\n"
-				"Step 1: Choose Database. Use: LOAD --database database_name\n"
-				"Step 2: Choose Table. Use: LOAD --table table_name\n"
-				"Step 3: Save Record. Use: CREATE Key Value\n"
-				"Step 4: Retrieve Record: Use: GET Key\n"
-				"Step 5: Update Record: Use: UPDATE Key Value\n"
-				"Step 6: Retrieve Updated Record: Use: GET Key\n"
-				"Step 7: Delete Record. Use: DELETE --record KEY\n"
-				"Step 8: Check if deleted correctly: Use: GET Key\n"
-				"Step 9: Exit. Use: EXIT\n"
-				"**********************************************************");
-	}
+		db_msghelp(server);
 	else if (code == MSG_DB_MISSING)
 		REPLY("Error: Database not found. Use: LOAD --database database_name");
 	else if (code == MSG_TBL_MISSING)
@@ -47,7 +53,7 @@ int	db_msg(t_server *server, int code)
 	return (0);
 }
 
-int		db_err(t_server *server, const char *str)
+int			db_err(t_server *server, const char *str)
 {
 	char	*buf;
 	char	err[256];
@@ -59,7 +65,7 @@ int		db_err(t_server *server, const char *str)
 	return (-1);
 }
 
-int		db_reply(t_server *server, const char *fmt, ...)
+int			db_reply(t_server *server, const char *fmt, ...)
 {
 	va_list		ap;
 	va_list		clone1;
