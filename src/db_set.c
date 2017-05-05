@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:51:30 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 21:15:19 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 12:29:12 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,7 @@ int			db_set(t_server *server)
 	free(hash);
 	free(filename);
 	if (chk != -1)
-	{
 		REPLY("Record Saved");
-		server->flag_value = false;
-	}
 	return ((chk == 0) ? 0 : -1);
 }
 
@@ -86,9 +83,6 @@ int			db_update(t_server *server)
 	free(hash);
 	free(filename);
 	if (chk != -1)
-	{
 		REPLY("Record Updated");
-		server->flag_value = false;
-	}
 	return ((chk == 0) ? 0 : -1);
 }

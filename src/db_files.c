@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 18:35:33 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/03 20:47:16 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 12:29:50 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ static int		db_readvalue(t_server *server)
 		CHK1(fclose(fp) == EOF, ERR("FCLOSE ERROR"), -1);
 		++i;
 	}
-	server->flag_value = true;
 	return (0);
 }
 
@@ -85,13 +84,11 @@ int			db_getfiles(t_server *server)
 {
 	int chk;
 
-	CHK(server->flag_value == true, 0);
 	if (server->files != NULL)
 		arr_del(server->files);
 	CHK(db_arrinit(server) == -1, -1);
 	chk = db_ls(server);
 	CHK1(((server->files->end == 0) || chk == -1), REPLY("No Records Found"), -1);
 	CHK(db_readvalue(server) == -1, -1);
-	server->flag_value = true;
 	return (0);
 }

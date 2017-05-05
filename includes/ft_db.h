@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/04 11:12:47 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 12:28:30 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct		s_server
 	int		fd;
 	bool		flag_db_load;
 	bool		flag_tbl_load;
-	bool		flag_value;
 	char		*dbpath;
 	char		*tblpath;
 	char		*logpath;

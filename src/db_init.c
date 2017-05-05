@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 16:20:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/04 16:15:28 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 12:28:52 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_server	*db_server_init(void)
 	server = (t_server *)ft_memalloc(sizeof(t_server));
 	server->flag_db_load = false;
 	server->flag_tbl_load = false;
-	server->flag_value = false;
 	server->fd = STDOUT_FILENO;
 	return (server);
 }
