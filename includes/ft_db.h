@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:21:49 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/05 13:47:50 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 15:45:51 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <netinet/in.h>
 # include <netdb.h>
 
+# define BUFF_SIZE 1024 * 4
 # define PROTO_HASH_SIZE 10000000
 # define PROTO_ARRAY_SIZE 10
 # define DB_NAME_BUFF 50

@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/25 11:49:59 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/05 13:30:15 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 15:46:08 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		db_tcpparse(t_server *server)
 {
-	char		buffer[1024 * 4];
+	char		buffer[BUFF_SIZE];
 
 	while (1)
 	{

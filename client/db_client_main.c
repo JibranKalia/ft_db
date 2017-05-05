@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 11:23:52 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/04 11:52:50 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 15:40:33 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,19 @@ int main(int argc, char **argv)
 	struct sockaddr_in	serv_addr;
 	struct hostent 		*server;
 	char			buffer[1024 * 4];
+	
+	DEBUG("ARGC = %d", argc);
 
-	if (argc == 4)
+	if (argc == 3)
 	{
-		server = gethostbyname(argv[2]);
-		portno = atoi(argv[3]);
+		server = gethostbyname(argv[1]);
+		portno = atoi(argv[2]);
 		ft_printf("%{green}Portno = %d\n%{eoc}", portno);
 		ft_printf("%{green}Hostname = %s\n%{eoc}", server->h_name);
 	}
-	else if (argc == 3)
+	else if (argc == 2)
 	{
-		portno = atoi(argv[2]);
+		portno = atoi(argv[1]);
 		server = gethostbyname("localhost");
 		ft_printf("%{green}Portno = %d\n%{eoc}", portno);
 		ft_printf("%{green}Hostname = %s\n%{eoc}", server->h_name);
