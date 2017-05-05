@@ -49,7 +49,7 @@ $(OBJ): %.o: %.c
 
 $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
-	@echo "\033[32mLibft Created\033[0m"
+	@echo "\033[32mCreated LIBFT\033[0m"
 
 clean:
 	@rm -f $(OBJ)

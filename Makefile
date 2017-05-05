@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/05/05 16:11:56 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/05/05 16:28:48 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,14 +53,14 @@ $(CLIENTOBJ): %.o: %.c
 
 $(CLIENT): $(LIBFT) $(CLIENTOBJ)
 	@$(CC) $(LDFLAGS) -o $@ $^
-	@echo "\033[32mCompiled CLIENT\033[0m"
+	@echo "\033[32mCreated CLIENT\033[0m"
 
 $(TESTOBJ): %.o: %.c
 	@$(CC) -c $(CFLAGS) $< -o $@
 
 $(TEST): $(LIBFT) $(TESTOBJ)
 	@$(CC) $(LDFLAGS) -o $@ $^
-	@echo "\033[32mCompiled TEST\033[0m"
+	@echo "\033[32mCreated TEST\033[0m"
 
 clean:
 	@make -C libft clean
