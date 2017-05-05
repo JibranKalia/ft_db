@@ -1,7 +1,5 @@
 ftdb
 db
-test
-client
 # Object files #
 ###################
 *.o
