@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:53:25 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/05 13:31:42 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 16:06:31 by aakin-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		db_loaddb(t_server *server)
 {
 	if (server->dbpath == NULL)
 		server->dbpath = strdup("./db");
-	REPLY("Database Path = %s", server->dbpath);
+	REPLY("Database Loaded");
 	if (mkdir(server->dbpath, 0777) == -1)
 	{
 		if (errno == EEXIST)
@@ -34,7 +34,7 @@ int		db_loadtbl(t_server *server)
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
 	if (server->tblpath == NULL)
 		server->tblpath = strdup("./db/tbl");
-	REPLY("Table Path = %s", server->tblpath);
+	REPLY("Table Loaded");
 	if (mkdir(server->tblpath, 0777) == -1)
 	{
 		if (errno == EEXIST)
