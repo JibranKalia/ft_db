@@ -6,13 +6,13 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 16:53:25 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/05 13:26:06 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 13:31:42 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_db.h"
 
-static int	db_loaddb(t_server *server)
+int		db_loaddb(t_server *server)
 {
 	if (server->dbpath == NULL)
 		server->dbpath = strdup("./db");
@@ -29,7 +29,7 @@ static int	db_loaddb(t_server *server)
 	return (0);
 }
 
-static int	db_loadtbl(t_server *server)
+int		db_loadtbl(t_server *server)
 {
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
 	if (server->tblpath == NULL)
@@ -49,7 +49,7 @@ static int	db_loadtbl(t_server *server)
 	return (0);
 }
 
-int			db_load(t_server *server)
+int		db_load(t_server *server)
 {
 	char		*tmp;
 

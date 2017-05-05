@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/25 11:49:59 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/04 16:23:34 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 13:30:15 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		db_tcpparse(t_server *server)
 	while (1)
 	{
 		bzero(buffer, 1024 * 4);
-		CHK1(read(server->fd, buffer, 1024 * 4) == -1, db_err(server, "ERROR READ"), -1);
+		CHK1(read(server->fd, buffer, 1024 * 4) == -1, ERR("ERROR READ"), -1);
 		server->line = strdup(buffer);
 		db_split_line(server);
 		db_dispatch(server);
@@ -51,16 +51,18 @@ int		db_tcpbegin(t_server *server)
 	struct sockaddr_in	serv_addr;
 	struct sockaddr_in	cli_addr;
 
-	CHK1((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1, db_err(server, "ERROR SOCKET"), -1)
+	CHK1((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1,
+			ERR("ERROR SOCKET"), -1);
 	bzero((void *)&serv_addr, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
 	serv_addr.sin_addr.s_addr = INADDR_ANY;
 	serv_addr.sin_port = htons(server->portno);
 	CHK1((bind(sockfd, (struct sockaddr *)&serv_addr,
-					sizeof(serv_addr))) == -1, db_err(server, "ERROR BIND"), -1);
+				sizeof(serv_addr))) == -1, ERR("ERROR BIND"), -1);
 	listen(sockfd, 5);
 	clilen = sizeof(cli_addr);
-	while ((newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, (socklen_t *)&clilen)))
+	while ((newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr,
+		(socklen_t *)&clilen)))
 	{
 		REPLY("Connection Established");
 		server->fd = newsockfd;
@@ -70,11 +72,11 @@ int		db_tcpbegin(t_server *server)
 	return (0);
 }
 
-int main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	t_server	*server;
 
-	CHK1((argc < 2), printf("Usage: %s [stdin || tcp] (FOR MVP use STDIN)", argv[0]), -1);
+	CHK1((argc < 2), printf("Usage: %s [stdin || tcp]", argv[0]), -1);
 	server = db_server_init();
 	if (strncasecmp(argv[1], "stdin", 5) == 0)
 		db_stdinparse(server);

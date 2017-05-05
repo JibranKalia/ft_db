@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   db_murmurhash.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/05/05 13:32:13 by jkalia            #+#    #+#             */
+/*   Updated: 2017/05/05 13:39:38 by jkalia           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /*
 ** `murmurhash.h' - murmurhash
 **
@@ -8,51 +20,61 @@
 
 uint32_t	db_murmurhash(const char *key, uint32_t len, uint32_t seed)
 {
-	uint32_t c1 = 0xcc9e2d51;
-	uint32_t c2 = 0x1b873593;
-	uint32_t r1 = 15;
-	uint32_t r2 = 13;
-	uint32_t m = 5;
-	uint32_t n = 0xe6546b64;
-	uint32_t h = 0;
-	uint32_t k = 0;
-	uint8_t *d = (uint8_t *) key; // 32 bit extract from `key'
-	const uint32_t *chunks = NULL;
-	const uint8_t *tail = NULL; // tail - last 8 bytes
-	int i = 0;
-	int l = len / 4; // chunk length
+	uint32_t		c1;
+	uint32_t		c2;
+	uint32_t		r1;
+	uint32_t		r2;
+	uint32_t		m;
+	uint32_t		n;
+	uint32_t		h;
+	uint32_t		k;
+	uint8_t			*d;
+	const uint32_t	*chunks;
+	const uint8_t	*tail;
+	int				i;
+	int				l;
 
+	c1 = 0xcc9e2d51;
+	c2 = 0x1b873593;
+	r1 = 15;
+	r2 = 13;
+	m = 5;
+	n = 0xe6546b64;
+	h = 0;
+	k = 0;
+	d = (uint8_t *)key;
+	chunks = NULL;
+	tail = NULL;
+	i = 0;
+	l = len / 4;
 	h = seed;
-	chunks = (const uint32_t *) (d + l * 4); // body
-	tail = (const uint8_t *) (d + l * 4); // last 8 byte chunk of `key'
-
-	// for each 4 byte chunk of `key'
-	for (i = -l; i != 0; ++i)
+	chunks = (const uint32_t *)(d + l * 4);
+	tail = (const uint8_t *)(d + l * 4);
+	i = -l;
+	while (i != 0)
 	{
-		// next 4 byte chunk of `key'
-    	k = chunks[i];
-		// encode next 4 byte chunk of `key'
+		k = chunks[i];
 		k *= c1;
 		k = (k << r1) | (k >> (32 - r1));
 		k *= c2;
-    	// append to hash
 		h ^= k;
 		h = (h << r2) | (h >> (32 - r2));
 		h = h * m + n;
+		++i;
 	}
-
 	k = 0;
-	// remainder
 	switch (len & 3)
-	{ // `len % 4'
-		case 3: k ^= (tail[2] << 16);
-		case 2: k ^= (tail[1] << 8);
+	{
+		case 3:
+		k ^= (tail[2] << 16);
+		case 2:
+		k ^= (tail[1] << 8);
 		case 1:
-				k ^= tail[0];
-				k *= c1;
-				k = (k << r1) | (k >> (32 - r1));
-				k *= c2;
-				h ^= k;
+		k ^= tail[0];
+		k *= c1;
+		k = (k << r1) | (k >> (32 - r1));
+		k *= c2;
+		h ^= k;
 	}
 	h ^= len;
 	h ^= (h >> 16);
@@ -63,7 +85,7 @@ uint32_t	db_murmurhash(const char *key, uint32_t len, uint32_t seed)
 	return (h);
 }
 
-char	*db_gethash(t_server *server, const char *key)
+char		*db_gethash(t_server *server, const char *key)
 {
 	uint32_t	seed;
 	uint32_t	hash;
@@ -78,4 +100,3 @@ char	*db_gethash(t_server *server, const char *key)
 	filename = ft_itoa_base(out, 10, "0123456789");
 	return (filename);
 }
-
