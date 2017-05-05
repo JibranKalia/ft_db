@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:51:30 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/05 12:29:12 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 13:18:10 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ static int		db_stringcheck(char *s)
 	}
 	return (0);
 }
+
 static int		db_writefile(char *filename, char *key, t_server *server)
 {
-	FILE		*fp;
+	FILE	*fp;
 	int		illegal;
 
 	illegal = db_stringcheck(server->args[2]);
@@ -38,11 +39,10 @@ static int		db_writefile(char *filename, char *key, t_server *server)
 	return (0);
 }
 
-int			db_set(t_server *server)
+int				db_set(t_server *server)
 {
-	char		*hash;
-	char		*filename;
-	int		chk;
+	char	*hash;
+	char	*filename;
 	int		illegal;
 
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
@@ -60,19 +60,19 @@ int			db_set(t_server *server)
 	{
 		CHK(ERR("ACCESS ERROR: "), -1);
 	}
-	chk = db_writefile(filename, server->args[1], server);
+	CHK2(db_writefile(filename, server->args[1], server) == -1,
+			free(hash), free(filename), -1);
 	free(hash);
 	free(filename);
-	if (chk != -1)
-		REPLY("Record Saved");
-	return ((chk == 0) ? 0 : -1);
+	REPLY("Record Saved");
+	return (0);
 }
 
-int			db_update(t_server *server)
+int				db_update(t_server *server)
 {
 	char		*hash;
 	char		*filename;
-	int		chk;
+	int			chk;
 
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
 	CHK1(server->flag_tbl_load == false, db_msg(server, MSG_TBL_MISSING), 0);
