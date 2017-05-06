@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/25 11:49:59 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/05 15:46:08 by aakin-al         ###   ########.fr       */
+/*   Updated: 2017/05/05 21:59:00 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int		db_tcpparse(t_server *server)
 
 	while (1)
 	{
-		bzero(buffer, 1024 * 4);
-		CHK1(read(server->fd, buffer, 1024 * 4) == -1, ERR("ERROR READ"), -1);
+		bzero(buffer, BUFF_SIZE);
+		CHK1(read(server->fd, buffer, BUFF_SIZE) == -1, ERR("ERROR READ"), -1);
 		server->line = strdup(buffer);
 		db_split_line(server);
 		db_dispatch(server);
@@ -41,6 +41,7 @@ int		db_stdinparse(t_server *server)
 		ft_tbldel(server->args);
 		ft_strclr(server->line);
 	}
+	return (0)
 }
 
 int		db_tcpbegin(t_server *server)

@@ -6,7 +6,7 @@
 /*   By: aakin-al <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 02:57:48 by aakin-al          #+#    #+#             */
-/*   Updated: 2017/05/05 13:00:51 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 21:53:58 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ int			db_get_print(t_server *server, FILE *fp, size_t size)
 	char	*parsed;
 
 	buf = ft_strnew(size);
-	CHK2(fgets(buf, size, fp) == NULL, free(buf),
-			db_err(server, "FGETS ERROR"), -1);
+	CHK2(fgets(buf, size, fp) == NULL, free(buf), ERR("FGETS ERROR"), -1);
 	parsed = db_printer(buf);
 	REPLY(parsed);
 	free(buf);
