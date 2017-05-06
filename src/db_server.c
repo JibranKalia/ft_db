@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/25 11:49:59 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/05 21:59:00 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 22:03:06 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		db_stdinparse(t_server *server)
 		ft_tbldel(server->args);
 		ft_strclr(server->line);
 	}
-	return (0)
+	return (0);
 }
 
 int		db_tcpbegin(t_server *server)
