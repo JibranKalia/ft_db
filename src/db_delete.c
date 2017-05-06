@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 21:24:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/05 12:26:20 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 21:50:59 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 
 static int	db_deletetbl(t_server *server)
 {
-	char	*buf;
+	char	*filename;
 
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
+	filename = server->tblpath;
 	CHK1(server->flag_tbl_load == false, db_msg(server, MSG_TBL_MISSING), 0);
-	buf = ft_strjoin("rm -rf ", server->tblpath);
-	REPLY("Removing: %s", server->tblpath);
-	system(buf);
+	CHK2(remove(filename) == -1, free(filename),
+			db_err(server, "REMOVE ERROR"), -1);
+	REPLY("Table Removed");
 	server->flag_tbl_load = false;
-	free(buf);
 	return (0);
 }
 
 static int	db_deletedb(t_server *server)
 {
-	char	*buf;
+	char	*filename;
 
 	CHK1(server->flag_db_load == false, db_msg(server, MSG_DB_MISSING), 0);
-	buf = ft_strjoin("rm -rf ", server->dbpath);
-	REPLY("Removing: %s", server->dbpath);
-	system(buf);
+	filename = server->dbpath;
+	CHK2(remove(filename) == -1, free(filename),
+			db_err(server, "REMOVE ERROR"), -1);
+	REPLY("Database Removed");
 	server->flag_db_load = false;
-	free(buf);
 	return (0);
 }
 
