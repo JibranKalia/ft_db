@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/23 20:39:36 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/05 13:13:08 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 17:02:12 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,17 @@ int			db_err(t_server *server, const char *str)
 int			db_reply(t_server *server, const char *fmt, ...)
 {
 	va_list		ap;
-	va_list		clone1;
-	va_list		clone2;
-	int			i;
+	va_list		clone;
+	char		*buf;
+	int			len;
 
 	va_start(ap, fmt);
-	va_copy(clone1, ap);
-	va_copy(clone2, ap);
+	va_copy(clone, ap);
+	len = vasprintf(&buf, fmt, clone);
 	if (server->fd != STDOUT_FILENO)
-	{
-		i = vdprintf(server->fd, fmt, clone1);
-	}
-	i = vdprintf(STDOUT_FILENO, fmt, clone2);
-	dprintf(STDOUT_FILENO, "\n");
-	va_end(clone1);
-	va_end(clone2);
+		write(server->fd, buf, len);
+	printf("%s\n", buf);
+	va_end(clone);
 	va_end(ap);
-	return (i);
+	return (len);
 }

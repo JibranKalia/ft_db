@@ -6,28 +6,13 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 11:42:37 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/04 15:06:58 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 16:45:43 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ft_db.h>
-#include <time.h>
-#include <stdlib.h>
+#include "util.h"
 #define LEN1 100
 #define LEN2 100
-#define BUFF_SIZE 1024 * 4
-
-typedef struct sockaddr_in	t_sockaddr_in;
-typedef struct hostent		t_hostent;
-
-typedef struct		t_db_test
-{
-	int				portno;
-	int				sockfd;
-	t_sockaddr_in	serv_addr;
-	t_hostent		*server;
-}			t_db_test;
-
 
 static char *rand_string(char *str, size_t size)
 {
@@ -47,7 +32,7 @@ static char *rand_string(char *str, size_t size)
 	return (str);
 }
 
-static	int		start_test(t_db_test *test)
+static	int		start_test(t_db_client *test)
 {
 	char	data[LEN1][LEN2];
 	char	buffer[BUFF_SIZE];
@@ -112,10 +97,10 @@ static	int		start_test(t_db_test *test)
 
 int main(int argc, char **argv)
 {
-	t_db_test	*test;
+	t_db_client	*test;
 
 	int			chk;
-	test = ft_memalloc(sizeof(t_db_test));
+	test = ft_memalloc(sizeof(t_db_client));
 	if (argc == 2)
 		test->portno = atoi(argv[1]);
 	else
