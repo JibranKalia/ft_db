@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/05/05 16:28:48 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/05/05 21:24:15 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ CLIENTFILES	:= db_client_main
 CLIENTSRC	:= $(addprefix util/, $(addsuffix .c, $(CLIENTFILES)))
 CLIENTOBJ	:= $(CLIENTSRC:.c=.o)
 
-TESTFILES	:= db_test_main
+TESTFILES	:= db_test_main db_test_buff
 TESTSRC		:= $(addprefix util/, $(addsuffix .c, $(TESTFILES)))
 TESTOBJ		:= $(TESTSRC:.c=.o)
 
