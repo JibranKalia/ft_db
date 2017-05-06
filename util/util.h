@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 16:35:21 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/05 21:26:03 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/05 21:42:33 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define UTIL_H
 # include <ft_db.h>
 # include <time.h>
-# define LEN1 50000
-# define LEN2 1000
+# define LEN1 100
+# define LEN2 10
 # define IN_BUFF 1024
 # define OUT_BUFF 1024 * 4
 
